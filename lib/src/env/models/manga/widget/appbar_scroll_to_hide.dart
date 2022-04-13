@@ -9,11 +9,13 @@ class AppBarToHide extends StatefulWidget implements PreferredSizeWidget {
   final double? elevate;
   final Text? title;
   final num position;
+  final bool isSelected;
   const AppBarToHide({
     Key? key,
     this.duration = const Duration(milliseconds: 400),
     this.height = kToolbarHeight,
     this.child,
+    this.isSelected = false,
     this.color,
     this.elevate,
     this.title,
@@ -79,6 +81,13 @@ class _AppBarToHideState extends State<AppBarToHide> {
       duration: widget.duration,
       height: isVisible ? widget.preferredSize.height : 0,
       child: AppBar(
+        // actions: [
+        //   if (widget.isSelected)
+        //     IconButton(
+        //       icon: Icon(Icons.done),
+        //       onPressed: ,
+        //     )
+        // ],
         title: widget.title,
         elevation: widget.elevate,
         backgroundColor: widget.color,

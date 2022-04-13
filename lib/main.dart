@@ -39,9 +39,10 @@ class _MyAppState extends State<_MyApp> with WidgetsBindingObserver {
         title: 'Flutter',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          useMaterial3: true,
+          colorSchemeSeed: Color.fromARGB(211, 75, 5, 174),
           textTheme: Texttheme1(),
           brightness: tema,
-          useMaterial3: true,
           checkboxTheme: Theme.of(context).checkboxTheme.copyWith(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
