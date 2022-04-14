@@ -1,11 +1,19 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:void_01/src/env/models/manga/homepage.dart';
 import 'package:void_01/src/env/models/manga/theme/brightnesstheme.dart';
 import 'package:void_01/src/env/models/manga/theme/texttheme.dart';
 
-void main() => runApp(_MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+  runApp(_MyApp());
+}
 
 class _MyApp extends StatefulWidget {
   @override

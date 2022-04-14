@@ -1,5 +1,6 @@
-import 'dart:math';
+// ignore_for_file: file_names, avoid_print
 
+import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:void_01/src/env/models/manga/sumary.dart';

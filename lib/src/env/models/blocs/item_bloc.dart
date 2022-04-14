@@ -4,6 +4,7 @@ import 'package:void_01/src/env/models/blocs/Item_state.dart';
 import 'package:void_01/src/env/models/item/repository.dart';
 
 class ItemBloc extends Bloc<ItemEvent, ItemState> {
+  // ignore: non_constant_identifier_names
   final _ItemRepo = Itemrepository();
 
   ItemBloc() : super(ItemInitialState()) {
@@ -24,8 +25,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
     on<RemoveItemEvent>(
       (event, emit) => emit(
         ItemSuccessState(
-          itens: _ItemRepo.removeItem(
-              event.title, event.icon, event.urlfoto, event.descr),
+          itens: _ItemRepo.removeItem(event.title),
         ),
       ),
     );

@@ -14,13 +14,8 @@ class AddItemEvent extends ItemEvent {
 
 class RemoveItemEvent extends ItemEvent {
   Item title;
-  Item urlfoto;
-  Item icon;
-  Item descr;
 
-  RemoveItemEvent(
-      {required this.title,
-      required this.icon,
-      required this.urlfoto,
-      required this.descr});
+  RemoveItemEvent({
+    required this.title,
+  });
 }

@@ -1,4 +1,5 @@
-import 'package:http/http.dart';
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:void_01/src/env/models/item/item.dart';
 
 class Itemrepository {
@@ -89,11 +90,9 @@ class Itemrepository {
     return _Item;
   }
 
-  List<Item> removeItem(Item title, Item urlfoto, Item icon, Item desc) {
+  List<Item> removeItem(Item title) {
     _Item.remove(title);
-    _Item.remove(urlfoto);
-    _Item.remove(icon);
-    _Item.remove(desc);
+
     return _Item;
   }
 }
