@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:void_01/src/env/models/blocs/item_bloc.dart';
+import 'package:void_01/src/env/models/blocs/item_events.dart';
+import 'package:void_01/src/env/models/item/item.dart';
+
 class AppBarToHide extends StatefulWidget implements PreferredSizeWidget {
   final Widget? child;
   final ScrollController controller;
@@ -9,13 +13,14 @@ class AppBarToHide extends StatefulWidget implements PreferredSizeWidget {
   final double? elevate;
   final Text? title;
   final num position;
-  final bool isSelected;
+  final dynamic controllerdrag;
+
   const AppBarToHide({
     Key? key,
     this.duration = const Duration(milliseconds: 400),
     this.height = kToolbarHeight,
     this.child,
-    this.isSelected = false,
+    required this.controllerdrag,
     this.color,
     this.elevate,
     this.title,
@@ -32,7 +37,7 @@ class AppBarToHide extends StatefulWidget implements PreferredSizeWidget {
 
 class _AppBarToHideState extends State<AppBarToHide> {
   bool isVisible = true;
-
+  late final ItemBloc bloc;
   @override
   void initState() {
     super.initState();
@@ -43,17 +48,10 @@ class _AppBarToHideState extends State<AppBarToHide> {
   @override
   void dispose() {
     widget.controller.removeListener(listen);
+
     super.dispose();
   }
 
-  // void listen() {
-  //   final direction = widget.controller.position.userScrollDirection;
-  //   if (direction == ScrollDirection.forward) {
-  //     show();
-  //   } else if (direction == ScrollDirection.reverse) {
-  //     hide();
-  //   }
-  // }
   void listen() {
     if (widget.controller.position.pixels >= widget.position) {
       hide();
@@ -81,13 +79,6 @@ class _AppBarToHideState extends State<AppBarToHide> {
       duration: widget.duration,
       height: isVisible ? widget.preferredSize.height : 0,
       child: AppBar(
-        // actions: [
-        //   if (widget.isSelected)
-        //     IconButton(
-        //       icon: Icon(Icons.done),
-        //       onPressed: ,
-        //     )
-        // ],
         title: widget.title,
         elevation: widget.elevate,
         backgroundColor: widget.color,

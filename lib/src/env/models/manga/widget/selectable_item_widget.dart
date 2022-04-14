@@ -52,12 +52,16 @@ class _SelectableItemWidgetState extends State<SelectableItemWidget> {
         Positioned(
           bottom: widget.isSelected ? 2 * 11 : 2,
           right: widget.isSelected ? 2 * 11 : 2,
-          child: CircleAvatar(
-            backgroundColor: Colors.transparent,
-            backgroundImage: CachedNetworkImageProvider(
-                widget.itens[widget.index].icon!,
-                cacheKey: widget.itens[widget.index].icon!),
-          ),
+          child: (widget.isSelected == true)
+              ? const CircleAvatar(
+                  child: Icon(Icons.check),
+                )
+              : CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  backgroundImage: CachedNetworkImageProvider(
+                      widget.itens[widget.index].icon!,
+                      cacheKey: widget.itens[widget.index].icon!),
+                ),
         ),
       ],
     );

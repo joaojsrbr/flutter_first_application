@@ -40,7 +40,7 @@ class _MyAppState extends State<_MyApp> with WidgetsBindingObserver {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           useMaterial3: true,
-          colorSchemeSeed: Color.fromARGB(211, 75, 5, 174),
+          colorSchemeSeed: Color.fromARGB(236, 63, 3, 146),
           textTheme: Texttheme1(),
           brightness: tema,
           checkboxTheme: Theme.of(context).checkboxTheme.copyWith(

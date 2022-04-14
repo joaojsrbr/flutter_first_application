@@ -3,7 +3,6 @@ import 'package:void_01/src/env/models/item/item.dart';
 
 class Itemrepository {
   final List<Item> _Item = [];
-  final List<Item> _icon = [];
 
   List<Item> loadItem() {
     _Item.addAll([
