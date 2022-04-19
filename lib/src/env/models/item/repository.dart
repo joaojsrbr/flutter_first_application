@@ -73,7 +73,7 @@ class Itemrepository {
       Item(
           key: 7,
           urlfoto:
-              "https://neoxscans.net/wp-content/uploads/2021/05/OmniscientCapa.png.webp",
+              "https://www.asurascans.com/wp-content/uploads/2021/02/cover4.gif",
           title: "The Regressed Demon Lord is Kind [Novel]",
           icon:
               "https://cdn.discordapp.com/icons/290931718708527114/a_44cf7cea00070f135e450ed5c3df1003.webp",
@@ -83,15 +83,6 @@ class Itemrepository {
 
     return _Item;
   }
-
-  // List<Item> loadicon() {
-  //   _icon.addAll([
-  //     Item(
-  //         icon:
-  //             "https://neoxscans.net/wp-content/uploads/2021/05/cropped-neoxscans-32x32.png")
-  //   ]);
-  //   return _icon;
-  // }
 
   List<Item> addItem(Item title) {
     _Item.add(title);

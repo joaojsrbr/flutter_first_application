@@ -79,6 +79,7 @@ class _SelectViewState extends State<SelectView>
               ),
               decoration: BoxDecoration(
                 image: DecorationImage(
+                  filterQuality: FilterQuality.high,
                   image: CachedNetworkImageProvider(
                       widget.itens[widget.index].urlfoto!,
                       cacheKey: widget.itens[widget.index].urlfoto!),

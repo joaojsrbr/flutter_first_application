@@ -131,7 +131,11 @@ class _Homepage2State extends State<Homepage2> {
       floatingActionButton: (isSelected)
           ? FloatingActionButton(
               onPressed: () {
-                onPressed(itens);
+                final Selectedindex = controllerdrag.value.selectedIndexes
+                    .map<dynamic>((index) => itens[index].key);
+
+                print(Selectedindex);
+                onPressed(itens, Selectedindex);
               },
               child: const Icon(Icons.done),
             )
@@ -139,27 +143,20 @@ class _Homepage2State extends State<Homepage2> {
     );
   }
 
-  void onPressed(dynamic itens) {
+  void onPressed(dynamic itens, dynamic Selectedindex) {
     setState(
       () {
-        final Selectedindex = controllerdrag.value.selectedIndexes
-            .map<dynamic>((index) => itens[index].key);
-        print(Selectedindex);
-        Selectedindex.forEach(
-          (element) => bloc.add(
-            RemoveItemEvent(
-              key: itens[element],
-            ),
-          ),
-        );
-        controllerdrag.clear();
+        Selectedindex.forEach((element) => bloc.add(
+              RemoveItemEvent(
+                key: itens[element],
+              ),
+            ));
         controllerdrag.clear();
       },
     );
   }
 
   Widget _gridbuild({itens}) {
-    // int selectedCard = -1;
     return DragSelectGridView(
       shrinkWrap: true,
       primary: false,

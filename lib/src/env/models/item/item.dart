@@ -26,3 +26,10 @@ class Item {
     return data;
   }
 }
+
+class Item2 {
+  Item list;
+  int id;
+
+  Item2({required this.id, required this.list});
+}
