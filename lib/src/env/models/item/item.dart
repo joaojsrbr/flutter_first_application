@@ -1,9 +1,11 @@
+import 'package:xid/xid.dart';
+
 class Item {
   String? title;
   String? urlfoto;
   String? descr;
   String? icon;
-  int? key;
+  Xid? key;
 
   Item({this.title, this.urlfoto, this.descr, this.icon, this.key});
 
@@ -25,11 +27,4 @@ class Item {
 
     return data;
   }
-}
-
-class Item2 {
-  Item list;
-  int id;
-
-  Item2({required this.id, required this.list});
 }

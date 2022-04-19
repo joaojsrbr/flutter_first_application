@@ -118,7 +118,9 @@ class _Homepage2State extends State<Homepage2> {
   }) {
     final isSelected = controllerdrag.value.isSelecting;
     return Scaffold(
-      body: _gridbuild(itens: itens),
+      body: RefreshIndicator(
+          onRefresh: () async => bloc.add(LoadItemEvent()),
+          child: _gridbuild(itens: itens)),
       appBar: AppBarToHide(
         selection: controllerdrag.value,
         height: 80,
@@ -130,6 +132,7 @@ class _Homepage2State extends State<Homepage2> {
       ),
       floatingActionButton: (isSelected)
           ? FloatingActionButton(
+              backgroundColor: Colors.red,
               onPressed: () {
                 final Selectedindex = controllerdrag.value.selectedIndexes
                     .map<dynamic>((index) => itens[index].key);
@@ -143,14 +146,16 @@ class _Homepage2State extends State<Homepage2> {
     );
   }
 
-  void onPressed(dynamic itens, dynamic Selectedindex) {
+  void onPressed(dynamic itens, Selectedindex) {
     setState(
       () {
-        Selectedindex.forEach((element) => bloc.add(
-              RemoveItemEvent(
-                key: itens[element],
-              ),
-            ));
+        Selectedindex.forEach((element) {
+          bloc.add(
+            RemoveItemEvent(
+              key: element,
+            ),
+          );
+        });
         controllerdrag.clear();
       },
     );
