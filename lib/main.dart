@@ -44,21 +44,20 @@ class _MyAppState extends State<_MyApp> with WidgetsBindingObserver {
     return ValueListenableBuilder(
       valueListenable: PreferenciaTema.tema,
       builder: (BuildContext context, Brightness tema, _) => MaterialApp(
-        title: 'Flutter',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          useMaterial3: true,
-          colorSchemeSeed: Color.fromARGB(236, 63, 3, 146),
-          textTheme: Texttheme1(),
-          brightness: tema,
-          checkboxTheme: Theme.of(context).checkboxTheme.copyWith(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
+          title: 'Flutter',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            useMaterial3: true,
+            colorSchemeSeed: Color.fromARGB(236, 63, 3, 146),
+            textTheme: Texttheme1(),
+            brightness: tema,
+            checkboxTheme: Theme.of(context).checkboxTheme.copyWith(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                 ),
-              ),
-        ),
-        home: Homepage2(),
-      ),
+          ),
+          home: Homepage2()),
     );
   }
 }

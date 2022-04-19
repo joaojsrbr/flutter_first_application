@@ -46,7 +46,7 @@ class _ManagaPageState extends State<MangaPage> {
 
 Widget CustomScrollView2({desc, title, image, context}) {
   return CustomScrollView(
-    physics: BouncingScrollPhysics(),
+    physics: NeverScrollableScrollPhysics(),
     slivers: [
       SliverPersistentHeader(
         pinned: true,
@@ -105,54 +105,3 @@ Widget _BoxAdapter({backgroundColor}) => SliverToBoxAdapter(
         },
       ),
     );
-
-// Widget CustomScrollView1({desc, title, image}) {
-//   return CustomScrollView(
-//     physics: BouncingScrollPhysics(),
-//     slivers: <Widget>[
-//       SliverAppBar(
-//         pinned: true,
-//         primary: true,
-//         floating: true,
-//         snap: true,
-//       ),
-//       _HeaderOne(
-//         desc: desc,
-//         title: title!,
-//         image: image,
-//       ),
-//       _BoxAdapter(backgroundColor: _backgroundColor),
-//     ],
-//   );
-// }
-
-// Widget _HeaderOne({title, desc, image}) => SliverPersistentHeader(
-//       floating: false,
-//       pinned: true,
-//       delegate: SliverHeader(
-//         title: title,
-//         desc: desc,
-//         maxHeight: 290.0,
-//         minHeight: 82.0,
-//         image: image,
-//       ),
-//     );
-
-// Widget _builderHeader(
-//     {String? title,
-//     double maxHeight = 30,
-//     double minHeight = 30,
-//     Color color = Colors.white}) {
-//   return SliverPersistentHeader(
-//     pinned: true,
-//     floating: true,
-//     delegate: SliverHeader(
-//       maxHeight: maxHeight,
-//       minHeight: minHeight,
-//       child: Container(
-//         color: color,
-//         child: Text(title!),
-//       ),
-//     ),
-//   );
-// }

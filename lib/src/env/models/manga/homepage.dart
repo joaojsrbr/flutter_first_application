@@ -3,16 +3,13 @@
 import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:void_01/src/env/models/blocs/item_bloc.dart';
-
+import 'package:void_01/src/env/models/manga/animated_detail_header_gridview.dart';
 import 'package:void_01/src/env/models/manga/config.dart';
-import 'package:animations/animations.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:void_01/src/env/models/manga/mangapage.dart';
-import 'package:void_01/src/env/models/manga/widget/appbar_scroll_to_hide.dart';
+import 'package:void_01/src/env/models/manga/grid_build_widget.dart';
 import 'package:void_01/src/env/models/manga/widget/navbar_scroll_to_hide_widget.dart';
-import 'package:void_01/src/env/models/manga/widget/selected_item_widget.dart';
 
+import 'package:void_01/src/env/models/blocs/item_bloc.dart';
+import 'package:void_01/src/env/models/manga/widget/sliverheader/SliverHeader_env.dart';
 import '../blocs/Item_events.dart';
 import '../blocs/Item_state.dart';
 
@@ -26,14 +23,14 @@ class Homepage2 extends StatefulWidget {
 class _Homepage2State extends State<Homepage2> {
   late final ItemBloc bloc;
   late ScrollController _scrollController;
-  final controllerdrag = DragSelectGridViewController();
+  final _controllerdrag = DragSelectGridViewController();
 
   @override
   void initState() {
     super.initState();
     bloc = ItemBloc();
     bloc.add(LoadItemEvent());
-    controllerdrag.addListener(rebuild);
+    _controllerdrag.addListener(rebuild);
     _scrollController = ScrollController();
   }
 
@@ -41,8 +38,23 @@ class _Homepage2State extends State<Homepage2> {
   void dispose() {
     _scrollController.dispose();
     bloc.close();
-    controllerdrag.removeListener(rebuild);
+    _controllerdrag.removeListener(rebuild);
     super.dispose();
+  }
+
+  void onPressed(Selectedindex) {
+    setState(
+      () {
+        Selectedindex.forEach((element) {
+          bloc.add(
+            RemoveItemEvent(
+              key: element,
+            ),
+          );
+        });
+        _controllerdrag.clear();
+      },
+    );
   }
 
   void rebuild() => setState(() {});
@@ -61,6 +73,7 @@ class _Homepage2State extends State<Homepage2> {
             );
           } else if (state is ItemSuccessState) {
             return MainListaManga(
+              context: context,
               itens: itens,
             );
           }
@@ -113,106 +126,69 @@ class _Homepage2State extends State<Homepage2> {
     );
   }
 
-  Widget MainListaManga({
-    required itens,
-  }) {
-    final isSelected = controllerdrag.value.isSelecting;
+  Widget MainListaManga({required itens, required context}) {
+    final isSelected = _controllerdrag.value.isSelecting;
     return Scaffold(
-      body: RefreshIndicator(
-          onRefresh: () async => bloc.add(LoadItemEvent()),
-          child: _gridbuild(itens: itens)),
-      appBar: AppBarToHide(
-        selection: controllerdrag.value,
-        height: 80,
-        position: 100,
-        duration: const Duration(milliseconds: 250),
-        elevate: 0.0,
-        color: Colors.transparent,
-        controller: _scrollController,
+      body: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
+        slivers: [
+          // (_controllerdrag.value.isSelecting)
+          //     ? SliverAppBar(
+          //         key: const Key('selecting'),
+          //         title: Text(
+          //             '${_controllerdrag.value.amount} item(s) selected…'),
+          //         titleSpacing: 0,
+          //         leading: _controllerdrag.value.isSelecting
+          //             ? const CloseButton()
+          //             : Container(),
+          //       )
+          //     : const SliverAppBar(
+          //         snap: true,
+          //         floating: true,
+          //         key: Key('not-selecting'),
+          //         title: Text("HomePage"),
+          //         leading: SizedBox(width: 0, height: 0),
+          //         leadingWidth: 0,
+          //       ),
+          SliverPersistentHeader(
+            pinned: true,
+            floating: true,
+            delegate: SliverHeader_env(
+              // maxExtend: MediaQuery.of(context).size.height,
+              maxExtend: 200,
+              mixExtend: 90,
+              builder: (percent) {
+                return AnimatedDetailGridView(
+                  title: "Homepage",
+                  controllerdrag: _controllerdrag,
+                  scrollController: _scrollController,
+                  itens: itens,
+                  isSelected: isSelected,
+                  percent: percent,
+                );
+              },
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: gridbuild(
+                itens: itens,
+                controllerdrag: _controllerdrag,
+                scrollController: _scrollController),
+          )
+        ],
       ),
       floatingActionButton: (isSelected)
           ? FloatingActionButton(
               backgroundColor: Colors.red,
               onPressed: () {
-                final Selectedindex = controllerdrag.value.selectedIndexes
+                final Selectedindex = _controllerdrag.value.selectedIndexes
                     .map<dynamic>((index) => itens[index].key);
-
                 print(Selectedindex);
-                onPressed(itens, Selectedindex);
+                onPressed(Selectedindex);
               },
               child: const Icon(Icons.done),
             )
           : Container(),
-    );
-  }
-
-  void onPressed(dynamic itens, Selectedindex) {
-    setState(
-      () {
-        Selectedindex.forEach((element) {
-          bloc.add(
-            RemoveItemEvent(
-              key: element,
-            ),
-          );
-        });
-        controllerdrag.clear();
-      },
-    );
-  }
-
-  Widget _gridbuild({itens}) {
-    return DragSelectGridView(
-      shrinkWrap: true,
-      primary: false,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 10,
-      ),
-      physics: const BouncingScrollPhysics(),
-      itemCount: itens.length,
-      scrollController: _scrollController,
-      gridController: controllerdrag,
-      itemBuilder: (BuildContext ctxt, index, selected) {
-        return AnimationConfiguration.staggeredGrid(
-          columnCount: itens.length,
-          position: index,
-          child: ScaleAnimation(
-            duration: const Duration(milliseconds: 500),
-            child: FadeInAnimation(
-              child: Padding(
-                padding:
-                    const EdgeInsets.only(top: 4, left: 5, right: 4, bottom: 8),
-                child: OpenContainer(
-                  openColor: Colors.transparent,
-                  closedElevation: 0,
-                  openElevation: 0,
-                  closedColor: Colors.transparent,
-                  openShape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15))),
-                  closedShape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15))),
-                  transitionType: ContainerTransitionType.fade,
-                  transitionDuration: const Duration(milliseconds: 670),
-                  openBuilder: (context, _) => MangaPage(
-                      title: itens[index].title,
-                      image: itens[index].urlfoto,
-                      desc: itens[index].descr),
-                  closedBuilder: (context, VoidCallback openContainer) =>
-                      GestureDetector(
-                    onTap: openContainer,
-                    child: SelectView(
-                      itens: itens,
-                      index: index,
-                      isSelected: selected,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 }
