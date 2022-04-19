@@ -25,7 +25,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
     on<RemoveItemEvent>(
       (event, emit) => emit(
         ItemSuccessState(
-          itens: _ItemRepo.removeItem(event.title),
+          itens: _ItemRepo.removeItem(event.key),
         ),
       ),
     );

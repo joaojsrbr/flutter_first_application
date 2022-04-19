@@ -1,3 +1,4 @@
+import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/material.dart';
 
 class AppBarToHide extends StatefulWidget implements PreferredSizeWidget {
@@ -7,17 +8,17 @@ class AppBarToHide extends StatefulWidget implements PreferredSizeWidget {
   final double height;
   final Color? color;
   final double? elevate;
-  final Text? title;
   final num position;
+  final dynamic selection;
 
   const AppBarToHide({
     Key? key,
+    this.selection = const Selection.empty(),
     this.duration = const Duration(milliseconds: 400),
     this.height = kToolbarHeight,
     this.child,
     this.color,
     this.elevate,
-    this.title,
     this.position = 200,
     required this.controller,
   }) : super(key: key);
@@ -69,13 +70,29 @@ class _AppBarToHideState extends State<AppBarToHide> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      key: widget.key,
       duration: widget.duration,
       height: isVisible ? widget.preferredSize.height : 0,
-      child: AppBar(
-        title: widget.title,
-        elevation: widget.elevate,
-        backgroundColor: widget.color,
+      child: AnimatedSwitcher(
+        duration: kThemeAnimationDuration,
+        child: widget.selection.isSelecting
+            ? AppBar(
+                key: const Key('selecting'),
+                title: Text('${widget.selection.amount} item(s) selected…'),
+                elevation: widget.elevate,
+                titleSpacing: 0,
+                leading: widget.selection.isSelecting
+                    ? const CloseButton()
+                    : Container(),
+                backgroundColor: widget.color,
+              )
+            : AppBar(
+                key: const Key('not-selecting'),
+                title: const Text("HomePage"),
+                elevation: widget.elevate,
+                leading: const SizedBox(width: 0, height: 0),
+                leadingWidth: 0,
+                backgroundColor: widget.color,
+              ),
       ),
     );
   }

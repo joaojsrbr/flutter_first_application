@@ -8,7 +8,6 @@ class ConfigPage extends StatefulWidget {
 }
 
 class _ConfigState extends State<ConfigPage> {
-  late int indexscreen;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:void_01/src/env/models/manga/homepage.dart';
-import 'package:void_01/src/env/models/manga/theme/brightnesstheme.dart';
-import 'package:void_01/src/env/models/manga/theme/texttheme.dart';
+import 'package:void_01/src/env/models/manga/theme/brightness_theme.dart';
+import 'package:void_01/src/env/models/manga/theme/text_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

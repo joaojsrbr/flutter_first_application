@@ -13,9 +13,9 @@ class AddItemEvent extends ItemEvent {
 }
 
 class RemoveItemEvent extends ItemEvent {
-  Item title;
+  Item key;
 
   RemoveItemEvent({
-    required this.title,
+    required this.key,
   });
 }

@@ -3,12 +3,12 @@ class Item {
   String? urlfoto;
   String? descr;
   String? icon;
-  int? id;
+  int? key;
 
-  Item({this.title, this.urlfoto, this.descr, this.icon});
+  Item({this.title, this.urlfoto, this.descr, this.icon, this.key});
 
   Item.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    key = json['key'];
     title = json['title'];
     urlfoto = json['done'];
     descr = json['descr'];
@@ -17,11 +17,12 @@ class Item {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
+    data['key'] = key;
     data['title'] = title;
     data['urlfoto'] = urlfoto;
     data['descr'] = descr;
     data['icon'] = icon;
+
     return data;
   }
 }
