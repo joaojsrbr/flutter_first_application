@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../../theme/dark_theme_provider.dart';
 
 class AnimatedDetailGridView extends StatefulWidget {
   final double percent;
@@ -39,13 +42,13 @@ class _AnimatedDetailGridViewState extends State<AnimatedDetailGridView> {
 
   @override
   Widget build(BuildContext context) {
-    const _toptext = 50.0;
     // const _toptext1 = 160.0;
-    final _currentsizetest =
-        (_toptext * (1.0 - widget.percent)).clamp(90 / 2, _toptext);
     // final _currenttoptext =
     //     (_toptext1 * (1 - widget.percent)).clamp(160.0, _toptext1);
     // print(percent);
+    const _toptext = 50.0;
+    final _currentsizetest =
+        (_toptext * (1.0 - widget.percent)).clamp(90 / 2, _toptext);
     return Material(
       child: Column(children: [
         Expanded(

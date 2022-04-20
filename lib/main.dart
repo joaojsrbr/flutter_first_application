@@ -1,64 +1,55 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:void_01/src/env/models/manga/homepage.dart';
-import 'package:void_01/src/env/models/manga/theme/brightness_theme.dart';
-import 'package:void_01/src/env/models/manga/theme/text_theme.dart';
-import 'package:void_01/theme/lib_color_schemes.g.dart';
+import 'package:void_01/theme/ThemeData.dart';
+import 'package:void_01/theme/dark_theme_provider.dart';
 
 void main() async {
+  appInit();
+}
+
+appInit() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
-  runApp(_MyApp());
+  runApp(MyApp());
 }
 
-class _MyApp extends StatefulWidget {
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
-  State<_MyApp> createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<_MyApp> with WidgetsBindingObserver {
+class _MyAppState extends State<MyApp> {
+  DarkThemeProvider themeChangeProvider = DarkThemeProvider();
+
   @override
   void initState() {
-    WidgetsBinding.instance!.addObserver(this);
-    PreferenciaTema.setTema();
     super.initState();
+    getCurrentAppTheme();
   }
 
-  @override
-  void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangePlatformBrightness() {
-    PreferenciaTema.setTema();
+  void getCurrentAppTheme() async {
+    themeChangeProvider.darkTheme =
+        await themeChangeProvider.darkThemePreference.getTheme();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: PreferenciaTema.tema,
-      builder: (BuildContext context, Brightness tema, _) => MaterialApp(
-          title: 'Flutter',
+    return ChangeNotifierProvider(
+      create: (_) {
+        return themeChangeProvider;
+      },
+      child: Consumer<DarkThemeProvider>(
+        builder: (BuildContext context, value, child) => MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            useMaterial3: true,
-            colorScheme:
-                tema == Brightness.dark ? darkColorScheme : lightColorScheme,
-            textTheme: Texttheme1(),
-            checkboxTheme: Theme.of(context).checkboxTheme.copyWith(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-          ),
-          home: Homepage2()),
+          theme: Styles.themeData(themeChangeProvider.darkTheme, context,
+              themeChangeProvider.colorTheme),
+          home: Homepage2(),
+        ),
+      ),
     );
   }
 }
