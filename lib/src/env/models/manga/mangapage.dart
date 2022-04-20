@@ -46,7 +46,7 @@ class _ManagaPageState extends State<MangaPage> {
 
 Widget CustomScrollView2({desc, title, image, context}) {
   return CustomScrollView(
-    physics: NeverScrollableScrollPhysics(),
+    physics: const BouncingScrollPhysics(),
     slivers: [
       SliverPersistentHeader(
         pinned: true,

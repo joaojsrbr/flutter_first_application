@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:void_01/src/env/models/manga/homepage.dart';
 import 'package:void_01/src/env/models/manga/theme/brightness_theme.dart';
 import 'package:void_01/src/env/models/manga/theme/text_theme.dart';
+import 'package:void_01/theme/lib_color_schemes.g.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,9 +49,9 @@ class _MyAppState extends State<_MyApp> with WidgetsBindingObserver {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             useMaterial3: true,
-            colorSchemeSeed: Color.fromARGB(236, 63, 3, 146),
+            colorScheme:
+                tema == Brightness.dark ? darkColorScheme : lightColorScheme,
             textTheme: Texttheme1(),
-            brightness: tema,
             checkboxTheme: Theme.of(context).checkboxTheme.copyWith(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),

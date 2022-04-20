@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, avoid_print
 
 import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/material.dart';
@@ -132,30 +132,12 @@ class _Homepage2State extends State<Homepage2> {
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
-          // (_controllerdrag.value.isSelecting)
-          //     ? SliverAppBar(
-          //         key: const Key('selecting'),
-          //         title: Text(
-          //             '${_controllerdrag.value.amount} item(s) selected…'),
-          //         titleSpacing: 0,
-          //         leading: _controllerdrag.value.isSelecting
-          //             ? const CloseButton()
-          //             : Container(),
-          //       )
-          //     : const SliverAppBar(
-          //         snap: true,
-          //         floating: true,
-          //         key: Key('not-selecting'),
-          //         title: Text("HomePage"),
-          //         leading: SizedBox(width: 0, height: 0),
-          //         leadingWidth: 0,
-          //       ),
           SliverPersistentHeader(
             pinned: true,
             floating: true,
             delegate: SliverHeader_env(
               // maxExtend: MediaQuery.of(context).size.height,
-              maxExtend: 200,
+              maxExtend: 100,
               mixExtend: 90,
               builder: (percent) {
                 return AnimatedDetailGridView(
