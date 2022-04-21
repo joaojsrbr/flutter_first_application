@@ -15,6 +15,8 @@ appInit() async {
   runApp(MyApp());
 }
 
+late _MyAppState settingUI;
+
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -29,11 +31,17 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     getCurrentAppTheme();
+    getCurrentAppColor();
   }
 
   void getCurrentAppTheme() async {
     themeChangeProvider.darkTheme =
         await themeChangeProvider.darkThemePreference.getTheme();
+  }
+
+  void getCurrentAppColor() async {
+    themeChangeProvider.colorTheme =
+        await themeChangeProvider.darkThemePreference.getColor();
   }
 
   @override
