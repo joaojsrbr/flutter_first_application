@@ -4,13 +4,11 @@ import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_01/src/env/models/manga/animated_detail_header_gridview.dart';
-import 'package:void_01/src/env/models/manga/config.dart';
+import 'package:void_01/src/env/models/manga/config/config.dart';
 import 'package:void_01/src/env/models/manga/grid_build_widget.dart';
 import 'package:void_01/src/env/models/manga/widget/navbar_scroll_to_hide_widget.dart';
-
 import 'package:void_01/src/env/models/blocs/item_bloc.dart';
 import 'package:void_01/src/env/models/manga/widget/sliverheader/SliverHeader_env.dart';
-
 import '../blocs/Item_events.dart';
 import '../blocs/Item_state.dart';
 
@@ -133,14 +131,14 @@ class _Homepage2State extends State<Homepage2> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: CustomScrollView(
+        controller: _scrollController,
         physics: const BouncingScrollPhysics(),
         slivers: [
           SliverPersistentHeader(
-            pinned: true,
             floating: true,
             delegate: SliverHeader_env(
               // maxExtend: MediaQuery.of(context).size.height,
-              maxExtend: 130,
+              maxExtend: 110,
               mixExtend: 90,
               builder: (percent) {
                 return AnimatedDetailGridView(
