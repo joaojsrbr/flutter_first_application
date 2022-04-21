@@ -85,6 +85,7 @@ class _Homepage2State extends State<Homepage2> {
     ];
 
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: screen[indexscreen],
       bottomNavigationBar: ScrollToHideWidgetState(
         controller: _scrollController,
@@ -130,6 +131,7 @@ class _Homepage2State extends State<Homepage2> {
   Widget MainListaManga({required itens, required context}) {
     final isSelected = _controllerdrag.value.isSelecting;
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
@@ -138,7 +140,7 @@ class _Homepage2State extends State<Homepage2> {
             floating: true,
             delegate: SliverHeader_env(
               // maxExtend: MediaQuery.of(context).size.height,
-              maxExtend: 100,
+              maxExtend: 130,
               mixExtend: 90,
               builder: (percent) {
                 return AnimatedDetailGridView(

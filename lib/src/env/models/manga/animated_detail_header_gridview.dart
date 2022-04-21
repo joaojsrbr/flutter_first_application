@@ -49,8 +49,9 @@ class _AnimatedDetailGridViewState extends State<AnimatedDetailGridView> {
     const _toptext = 50.0;
     final _currentsizetest =
         (_toptext * (1.0 - widget.percent)).clamp(90 / 2, _toptext);
-    return Material(
-      child: Column(children: [
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.onSecondary,
+      body: Column(children: [
         Expanded(
             child: PageView(
           children: [

@@ -34,8 +34,8 @@ class _ManagaPageState extends State<MangaPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: CustomScrollView2(
+    return Scaffold(
+      body: CustomScrollView2(
           desc: widget.desc,
           title: widget.title!,
           image: widget.image!,
