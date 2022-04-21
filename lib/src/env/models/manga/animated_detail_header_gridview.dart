@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../../../../theme/dark_theme_provider.dart';
 
 class AnimatedDetailGridView extends StatefulWidget {
   final double percent;
