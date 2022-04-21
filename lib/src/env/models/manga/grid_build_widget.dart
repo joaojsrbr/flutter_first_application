@@ -12,7 +12,7 @@ Widget gridbuild({itens, scrollController, controllerdrag}) {
       crossAxisCount: 2,
       crossAxisSpacing: 10,
     ),
-    padding: const EdgeInsets.all(0),
+    padding: const EdgeInsets.only(top: 4),
     physics: const BouncingScrollPhysics(),
     itemCount: itens.length,
     gridController: controllerdrag,
