@@ -35,6 +35,7 @@ class _ManagaPageState extends State<MangaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: CustomScrollView2(
           desc: widget.desc,
           title: widget.title!,
@@ -71,7 +72,7 @@ Widget CustomScrollView2({desc, title, image, context}) {
 
 //--------------------------------------------------------------------//
 
-Widget _BoxAdapter({backgroundColor}) => SliverToBoxAdapter(
+Widget _BoxAdapter() => SliverToBoxAdapter(
       child: ListView.separated(
         padding: EdgeInsets.only(
           top: 0,
@@ -89,7 +90,7 @@ Widget _BoxAdapter({backgroundColor}) => SliverToBoxAdapter(
             children: [
               Divider(
                 height: 0.0,
-                color: backgroundColor,
+                color: Theme.of(context).colorScheme.surfaceVariant,
               ),
               ListTile(
                 onTap: () {
