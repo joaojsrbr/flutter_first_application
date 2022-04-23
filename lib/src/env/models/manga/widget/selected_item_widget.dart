@@ -82,7 +82,7 @@ class _SelectViewState extends State<SelectView>
                   filterQuality: FilterQuality.high,
                   image: CachedNetworkImageProvider(
                       widget.itens[widget.index].urlfoto!,
-                      cacheKey: widget.itens[widget.index].urlfoto!),
+                      cacheKey: widget.itens[widget.index].urlfoto),
                   fit: BoxFit.cover,
                   colorFilter:
                       const ColorFilter.mode(Colors.black26, BlendMode.darken),

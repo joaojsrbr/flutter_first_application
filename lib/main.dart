@@ -3,8 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:void_01/src/env/models/manga/homepage.dart';
-import 'package:void_01/theme/ThemeData.dart';
 import 'package:void_01/theme/dark_theme_provider.dart';
+import 'package:void_01/theme/hex_color.dart';
+import 'package:void_01/theme/text_theme.dart';
 
 void main() async {
   appInit();
@@ -12,36 +13,38 @@ void main() async {
 
 appInit() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  runApp(_Myapphome());
 }
 
-late _MyAppState settingUI;
-
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+class _Myapphome extends StatefulWidget {
+  const _Myapphome({Key? key}) : super(key: key);
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<_Myapphome> createState() => __MyapphomeState();
 }
 
-class _MyAppState extends State<MyApp> {
+class __MyapphomeState extends State<_Myapphome> {
   DarkThemeProvider themeChangeProvider = DarkThemeProvider();
-
+  ConfigProvider configProvider = ConfigProvider();
   @override
   void initState() {
-    super.initState();
     getCurrentAppTheme();
-    getCurrentAppColor();
+    getCurrentconfig();
+    super.initState();
   }
 
   void getCurrentAppTheme() async {
     themeChangeProvider.darkTheme =
         await themeChangeProvider.darkThemePreference.getTheme();
+    themeChangeProvider.colorTheme =
+        await themeChangeProvider.colorThemePreference.getColor();
   }
 
-  void getCurrentAppColor() async {
-    themeChangeProvider.colorTheme =
-        await themeChangeProvider.darkThemePreference.getColor();
+  void getCurrentconfig() async {
+    configProvider.config1 =
+        await configProvider.config1TrueorFalsePreference.getbool1();
+    configProvider.config2 =
+        await configProvider.config1TrueorFalsePreference.getbool2();
   }
 
   @override
@@ -53,8 +56,13 @@ class _MyAppState extends State<MyApp> {
       child: Consumer<DarkThemeProvider>(
         builder: (BuildContext context, value, child) => MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: Styles.themeData(themeChangeProvider.darkTheme, context,
-              themeChangeProvider.colorTheme),
+          theme: ThemeData(
+              useMaterial3: true,
+              textTheme: Texttheme1(context),
+              brightness: themeChangeProvider.darkTheme
+                  ? Brightness.dark
+                  : Brightness.light,
+              colorSchemeSeed: hexToColor(themeChangeProvider.colorTheme)),
           home: Homepage2(),
         ),
       ),

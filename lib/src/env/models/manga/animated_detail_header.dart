@@ -41,7 +41,7 @@ class AnimatedDetailHeader extends StatelessWidget {
                     fit: BoxFit.cover,
 
                     image: CachedNetworkImageProvider(imageURL!,
-                        cacheKey: imageURL!),
+                        cacheKey: imageURL),
                   ),
                 ),
                 child: Stack(

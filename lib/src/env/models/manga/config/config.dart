@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
-import 'package:void_01/src/env/models/manga/config/colorpick.dart';
 import '../../../../../theme/dark_theme_provider.dart';
 
 class ConfigPage extends StatefulWidget {
@@ -12,45 +12,35 @@ class ConfigPage extends StatefulWidget {
 }
 
 class _ConfigState extends State<ConfigPage> {
-  Future<void> colorPicker(List<Color> appColors, onColorChange) async {
-    final status = await showDialog(
-          barrierDismissible: true,
-          context: context,
-          builder: (context) => MyAlertDialog(
-            title: const Text(
-              'Pick Color',
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            content: SingleChildScrollView(
-              child: ColorPicker(
-                availableColors: appColors,
-                pickerColor: Colors.deepOrangeAccent,
-                onColorChanged: onColorChange,
-              ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(true);
-                },
-                child: const Text('Done'),
-              ),
-            ],
-          ),
-        ) ??
-        false;
-    if (status) {}
-  }
+  Color currentColor = Colors.amber;
+  PaletteType _paletteType = PaletteType.hsl;
+  bool _displayThumbColor = true;
+  final List<ColorLabelType> _labelTypes = [
+    ColorLabelType.hsl,
+    ColorLabelType.hsv
+  ];
+  bool _enableAlpha = true;
+  bool _displayHexInputBar = false;
 
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
+    // final configchange = Provider.of<ConfigProvider>(context);
+    final List<ColorLabelType> _labelTypes = [
+      ColorLabelType.hsl,
+      ColorLabelType.hsv
+    ];
+
     void onPrimaryColorChange(Color value) {
       themeChange.colorTheme = '#${value.value.toRadixString(16)}';
     }
+
+    void changeColor(Color color) => setState(
+          () {
+            currentColor = color;
+            onPrimaryColorChange(color);
+          },
+        );
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -72,29 +62,100 @@ class _ConfigState extends State<ConfigPage> {
           sections: [
             SettingsSection(
               title: const Text(
-                'Settings',
+                'Color',
                 style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               tiles: <SettingsTile>[
-                SettingsTile(
-                  trailing: const Icon(
-                    Icons.abc,
-                  ),
+                SettingsTile.navigation(
                   title: const Text('Accent Color'),
                   leading: const Icon(
                     Icons.color_lens_outlined,
                   ),
                   onPressed: (_) {
-                    colorPicker(primaryColors, onPrimaryColorChange);
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          titlePadding: const EdgeInsets.all(0),
+                          contentPadding: const EdgeInsets.all(0),
+                          content: SingleChildScrollView(
+                            child: ColorPicker(
+                              pickerColor: currentColor,
+                              onColorChanged: changeColor,
+                              colorPickerWidth: 300,
+                              pickerAreaHeightPercent: 0.7,
+                              labelTypes: _labelTypes,
+                              enableAlpha: true,
+                              displayThumbColor: true,
+                              paletteType: _paletteType,
+                              pickerAreaBorderRadius: const BorderRadius.all(
+                                Radius.circular(8),
+                              ),
+                              hexInputBar: _displayHexInputBar,
+                            ),
+                          ),
+                        );
+                      },
+                    );
                   },
                 ),
                 SettingsTile.switchTile(
                   activeSwitchColor: Theme.of(context).colorScheme.primary,
+                  title: const Text('    Display HEX Label Text'),
+                  leading: const Icon(
+                    Icons.color_lens_outlined,
+                  ),
+                  initialValue: false,
+                  onToggle: (bool value) => setState(
+                    () => value == value,
+                  ),
+                ),
+                SettingsTile.switchTile(
+                  leading: const Icon(
+                    Icons.color_lens_outlined,
+                  ),
+                  activeSwitchColor: Theme.of(context).colorScheme.primary,
+                  title: const Text('    Display RGB Label Text'),
+                  initialValue: _labelTypes.contains(ColorLabelType.rgb),
+                  onToggle: (bool value) => setState(
+                    () => value
+                        ? _labelTypes.add(ColorLabelType.rgb)
+                        : _labelTypes.remove(ColorLabelType.rgb),
+                  ),
+                ),
+                SettingsTile.switchTile(
+                  leading: const Icon(
+                    Icons.color_lens_outlined,
+                  ),
+                  activeSwitchColor: Theme.of(context).colorScheme.primary,
+                  title: const Text('    Display HSV Label Text'),
+                  initialValue: _labelTypes.contains(ColorLabelType.hsv),
+                  onToggle: (bool value) => setState(
+                    () => value
+                        ? _labelTypes.add(ColorLabelType.hsv)
+                        : _labelTypes.remove(ColorLabelType.hsv),
+                  ),
+                ),
+                SettingsTile.switchTile(
+                  leading: const Icon(
+                    Icons.color_lens_outlined,
+                  ),
+                  activeSwitchColor: Theme.of(context).colorScheme.primary,
+                  title: const Text('    Display HSL Label Text'),
+                  initialValue: _labelTypes.contains(ColorLabelType.hsl),
+                  onToggle: (bool value) => setState(
+                    () => value
+                        ? _labelTypes.add(ColorLabelType.hsl)
+                        : _labelTypes.remove(ColorLabelType.hsl),
+                  ),
+                ),
+                SettingsTile.switchTile(
+                  activeSwitchColor: Theme.of(context).colorScheme.primary,
                   key: const Key('DarkMode'),
-                  initialValue: themeChange.darkTheme == true,
+                  initialValue: themeChange.darkTheme,
                   onToggle: (value) {
                     themeChange.darkTheme = value;
                   },
@@ -136,33 +197,3 @@ class MyAlertDialog extends StatelessWidget {
         actions: actions,
       );
 }
-
-List<Color> primaryColors = <Color>[
-  Colors.red,
-  Colors.pink,
-  Colors.purple,
-  Colors.deepPurple,
-  Colors.blue,
-  Colors.indigo,
-  Colors.cyan,
-  Colors.teal,
-  Colors.orange,
-  Colors.deepOrange,
-  Colors.amber,
-  Colors.brown,
-  Colors.grey,
-  Colors.blueGrey,
-  Colors.black,
-];
-
-
-//  Widget _buildBox({required Widget widget}) => Container(
-//         height: 130,
-//         decoration: const BoxDecoration(
-//           color: Colors.green,
-//           borderRadius: BorderRadius.all(
-//             Radius.circular(8),
-//           ),
-//         ),
-//         child: widget,
-//       );
