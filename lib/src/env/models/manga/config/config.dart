@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
+import 'package:void_01/theme/hex_color.dart';
 import '../../../../../theme/dark_theme_provider.dart';
 
 class ConfigPage extends StatefulWidget {
@@ -12,32 +13,17 @@ class ConfigPage extends StatefulWidget {
 }
 
 class _ConfigState extends State<ConfigPage> {
-  Color currentColor = Colors.amber;
-  PaletteType _paletteType = PaletteType.hsl;
-  bool _displayThumbColor = true;
-  final List<ColorLabelType> _labelTypes = [
-    ColorLabelType.hsl,
-    ColorLabelType.hsv
-  ];
-  bool _enableAlpha = true;
-  bool _displayHexInputBar = false;
+  final PaletteType _paletteType = PaletteType.hsl;
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
-    // final configchange = Provider.of<ConfigProvider>(context);
-    final List<ColorLabelType> _labelTypes = [
-      ColorLabelType.hsl,
-      ColorLabelType.hsv
-    ];
-
+    final _themeChange = Provider.of<DarkThemeProvider>(context);
     void onPrimaryColorChange(Color value) {
-      themeChange.colorTheme = '#${value.value.toRadixString(16)}';
+      _themeChange.colorTheme = '#${value.value.toRadixString(16)}';
     }
 
     void changeColor(Color color) => setState(
           () {
-            currentColor = color;
             onPrimaryColorChange(color);
           },
         );
@@ -62,18 +48,29 @@ class _ConfigState extends State<ConfigPage> {
           sections: [
             SettingsSection(
               title: const Text(
-                'Color',
+                'Settings',
                 style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               tiles: <SettingsTile>[
-                SettingsTile.navigation(
-                  title: const Text('Accent Color'),
-                  leading: const Icon(
-                    Icons.color_lens_outlined,
-                  ),
+                SettingsTile.switchTile(
+                  activeSwitchColor: Theme.of(context).colorScheme.primary,
+                  key: const Key('DarkMode'),
+                  initialValue: _themeChange.darkTheme,
+                  onToggle: (value) {
+                    _themeChange.darkTheme = value;
+                  },
+                  leading: Icon(_themeChange.darkTheme
+                      ? Icons.dark_mode
+                      : Icons.light_mode),
+                  title: const Text('DarkMode'),
+                ),
+                SettingsTile(
+                  key: const Key('Color'),
+                  title: const Text('Color'),
+                  leading: const Icon(Icons.color_lens),
                   onPressed: (_) {
                     showDialog(
                       context: context,
@@ -82,19 +79,21 @@ class _ConfigState extends State<ConfigPage> {
                           titlePadding: const EdgeInsets.all(0),
                           contentPadding: const EdgeInsets.all(0),
                           content: SingleChildScrollView(
-                            child: ColorPicker(
-                              pickerColor: currentColor,
-                              onColorChanged: changeColor,
-                              colorPickerWidth: 300,
-                              pickerAreaHeightPercent: 0.7,
-                              labelTypes: _labelTypes,
-                              enableAlpha: true,
-                              displayThumbColor: true,
-                              paletteType: _paletteType,
-                              pickerAreaBorderRadius: const BorderRadius.all(
-                                Radius.circular(8),
+                            child: Material(
+                              child: ColorPicker(
+                                pickerColor: Color(
+                                    hexStringToHexInt(_themeChange.colorTheme)),
+                                onColorChanged: changeColor,
+                                colorPickerWidth: 300,
+                                pickerAreaHeightPercent: 0.7,
+                                enableAlpha: true,
+                                displayThumbColor: true,
+                                paletteType: _paletteType,
+                                pickerAreaBorderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(8),
+                                  topRight: Radius.circular(8),
+                                ),
                               ),
-                              hexInputBar: _displayHexInputBar,
                             ),
                           ),
                         );
@@ -102,67 +101,38 @@ class _ConfigState extends State<ConfigPage> {
                     );
                   },
                 ),
+              ],
+            ),
+            SettingsSection(
+              title: const Text(
+                'config2',
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              tiles: <SettingsTile>[
                 SettingsTile.switchTile(
                   activeSwitchColor: Theme.of(context).colorScheme.primary,
-                  title: const Text('    Display HEX Label Text'),
+                  title: const Text('themeChange.config1'),
                   leading: const Icon(
                     Icons.color_lens_outlined,
                   ),
-                  initialValue: false,
-                  onToggle: (bool value) => setState(
-                    () => value == value,
-                  ),
-                ),
-                SettingsTile.switchTile(
-                  leading: const Icon(
-                    Icons.color_lens_outlined,
-                  ),
-                  activeSwitchColor: Theme.of(context).colorScheme.primary,
-                  title: const Text('    Display RGB Label Text'),
-                  initialValue: _labelTypes.contains(ColorLabelType.rgb),
-                  onToggle: (bool value) => setState(
-                    () => value
-                        ? _labelTypes.add(ColorLabelType.rgb)
-                        : _labelTypes.remove(ColorLabelType.rgb),
-                  ),
-                ),
-                SettingsTile.switchTile(
-                  leading: const Icon(
-                    Icons.color_lens_outlined,
-                  ),
-                  activeSwitchColor: Theme.of(context).colorScheme.primary,
-                  title: const Text('    Display HSV Label Text'),
-                  initialValue: _labelTypes.contains(ColorLabelType.hsv),
-                  onToggle: (bool value) => setState(
-                    () => value
-                        ? _labelTypes.add(ColorLabelType.hsv)
-                        : _labelTypes.remove(ColorLabelType.hsv),
-                  ),
-                ),
-                SettingsTile.switchTile(
-                  leading: const Icon(
-                    Icons.color_lens_outlined,
-                  ),
-                  activeSwitchColor: Theme.of(context).colorScheme.primary,
-                  title: const Text('    Display HSL Label Text'),
-                  initialValue: _labelTypes.contains(ColorLabelType.hsl),
-                  onToggle: (bool value) => setState(
-                    () => value
-                        ? _labelTypes.add(ColorLabelType.hsl)
-                        : _labelTypes.remove(ColorLabelType.hsl),
-                  ),
-                ),
-                SettingsTile.switchTile(
-                  activeSwitchColor: Theme.of(context).colorScheme.primary,
-                  key: const Key('DarkMode'),
-                  initialValue: themeChange.darkTheme,
+                  initialValue: _themeChange.config1,
                   onToggle: (value) {
-                    themeChange.darkTheme = value;
+                    _themeChange.config1 = value;
                   },
-                  leading: Icon(themeChange.darkTheme
-                      ? Icons.dark_mode
-                      : Icons.light_mode),
-                  title: const Text('DarkMode'),
+                ),
+                SettingsTile.switchTile(
+                  leading: const Icon(
+                    Icons.color_lens_outlined,
+                  ),
+                  activeSwitchColor: Theme.of(context).colorScheme.primary,
+                  title: const Text('themeChange.config2'),
+                  initialValue: _themeChange.config2,
+                  onToggle: (value) {
+                    _themeChange.config2 = value;
+                  },
                 ),
               ],
             ),
@@ -171,29 +141,4 @@ class _ConfigState extends State<ConfigPage> {
       ),
     );
   }
-}
-
-class MyAlertDialog extends StatelessWidget {
-  const MyAlertDialog({
-    required this.content,
-    required this.title,
-    this.actions,
-    Key? key,
-  }) : super(key: key);
-
-  final Widget title;
-  final List<Widget>? actions;
-  final Widget content;
-
-  @override
-  Widget build(BuildContext context) => AlertDialog(
-        title: Center(child: title),
-        clipBehavior: Clip.antiAlias,
-        backgroundColor: Theme.of(context).colorScheme.background,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        content: content,
-        actions: actions,
-      );
 }

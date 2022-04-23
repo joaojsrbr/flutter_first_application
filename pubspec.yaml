@@ -39,17 +39,16 @@ dependencies:
 flutter_native_splash:
   android: true
   image: "assets/app/Backhole.png"
-  color_dark: "#042a49"
-  color: "#ffffff"
+  color_dark: "#111111"
+  color: "#3F51B5"
   android_12:
     image: "assets/app/news_avd_assets/splash_screen_news_avd_preview.gif"
-    icon_background_color: "#111111"
 
 flutter_icons:
-  image_path: "assets/app/Backhole_preview_rev_1.png"
-  android: "launcher_icon"
-  adaptive_icon_background: "#FFFFFF"
-  adaptive_icon_foreground: "assets/app/Backhole.png"
+  android: true
+  image_path: "assets/app/Backhole.png"
+  adaptive_icon_background: "#ffffff"
+
 
 dev_dependencies:
   flutter_test:
@@ -59,5 +58,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  assets:
-    - assets/app/splash_screen_news_avd_preview.gif

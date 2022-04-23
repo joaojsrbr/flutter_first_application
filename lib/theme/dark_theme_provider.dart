@@ -41,26 +41,3 @@ class DarkThemeProvider with ChangeNotifier {
     notifyListeners();
   }
 }
-
-class ConfigProvider with ChangeNotifier {
-  Config1TrueorFalsePreference config1TrueorFalsePreference =
-      Config1TrueorFalsePreference();
-
-  bool _config1 = false;
-  bool _config2 = false;
-
-  bool get config1 => _config1;
-  bool get config2 => _config2;
-
-  set config1(bool value) {
-    _config1 = value;
-    config1TrueorFalsePreference.setbool1(value);
-    notifyListeners();
-  }
-
-  set config2(bool value) {
-    _config2 = value;
-    config1TrueorFalsePreference.setbool2(value);
-    notifyListeners();
-  }
-}

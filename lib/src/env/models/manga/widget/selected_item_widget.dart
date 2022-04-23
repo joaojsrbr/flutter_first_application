@@ -1,5 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../../../theme/dark_theme_provider.dart';
 
 class SelectView extends StatefulWidget {
   final dynamic itens;
@@ -58,6 +61,7 @@ class _SelectViewState extends State<SelectView>
 
   @override
   Widget build(BuildContext context) {
+    final themeChange = Provider.of<DarkThemeProvider>(context);
     return AnimatedBuilder(
       animation: scaleAnimation,
       builder: (context, child) => Transform.scale(
@@ -72,20 +76,24 @@ class _SelectViewState extends State<SelectView>
                   widget.itens[widget.index].title!,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Colors.white.withOpacity(1),
+                    color: themeChange.darkTheme
+                        ? Theme.of(context).colorScheme.primary.withOpacity(1)
+                        : Theme.of(context)
+                            .colorScheme
+                            .onPrimary
+                            .withOpacity(1),
                     fontSize: 15,
                   ),
                 ),
               ),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  filterQuality: FilterQuality.high,
                   image: CachedNetworkImageProvider(
                       widget.itens[widget.index].urlfoto!,
                       cacheKey: widget.itens[widget.index].urlfoto),
                   fit: BoxFit.cover,
-                  colorFilter:
-                      const ColorFilter.mode(Colors.black26, BlendMode.darken),
+                  colorFilter: ColorFilter.mode(
+                      Colors.black.withOpacity(0.32), BlendMode.darken),
                 ),
                 borderRadius: BorderRadius.circular(12),
               ),
@@ -94,10 +102,9 @@ class _SelectViewState extends State<SelectView>
               bottom: 2,
               right: 2,
               child: CircleAvatar(
-                backgroundColor: Colors.transparent,
                 backgroundImage: CachedNetworkImageProvider(
                     widget.itens[widget.index].icon!,
-                    cacheKey: widget.itens[widget.index].icon!),
+                    cacheKey: widget.itens[widget.index].icon),
               ),
             ),
           ],

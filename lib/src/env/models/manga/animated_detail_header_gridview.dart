@@ -39,55 +39,55 @@ class _AnimatedDetailGridViewState extends State<AnimatedDetailGridView> {
 
   @override
   Widget build(BuildContext context) {
-    // const _toptext1 = 160.0;
-    // final _currenttoptext =
-    //     (_toptext1 * (1 - widget.percent)).clamp(160.0, _toptext1);
-    // print(percent);
     const _toptext = 50.0;
     final _currentsizetest =
         (_toptext * (1.0 - widget.percent)).clamp(90 / 2, _toptext);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onSecondary,
-      body: Column(children: [
-        Expanded(
+      body: Column(
+        children: [
+          Expanded(
             child: PageView(
-          children: [
-            Stack(
               children: [
-                widget.controllerdrag.value.isSelecting
-                    ? Positioned(
-                        top: _currentsizetest,
-                        left: 10,
-                        right: 2,
-                        key: const Key('selecting'),
-                        child: Text(
-                          '${widget.controllerdrag.value.amount} item(s) selected…',
-                          style: const TextStyle(
-                            fontSize: 23,
-                            letterSpacing: -0.2,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      )
-                    : Positioned(
-                        top: _currentsizetest,
-                        left: 10,
-                        right: 2,
-                        key: const Key('not-selecting'),
-                        child: const Text(
-                          "Home Page",
-                          style: TextStyle(
-                            fontSize: 23,
-                            letterSpacing: -0.2,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      )
+                Stack(
+                  children: [
+                    widget.controllerdrag.value.isSelecting
+                        ? Positioned(
+                            top: _currentsizetest,
+                            left: 10,
+                            right: 2,
+                            key: const Key('selecting'),
+                            child: Text(
+                              '${widget.controllerdrag.value.amount} item(s) selected…',
+                              style: const TextStyle(
+                                fontSize: 23,
+                                letterSpacing: -0.2,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          )
+                        : Positioned(
+                            top: _currentsizetest,
+                            left: 10,
+                            right: 2,
+                            key: const Key('not-selecting'),
+                            child: Text(
+                              widget.title,
+                              style: TextStyle(
+                                fontSize: 23,
+                                color: Theme.of(context).colorScheme.primary,
+                                letterSpacing: -0.2,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          )
+                  ],
+                )
               ],
-            )
-          ],
-        )),
-      ]),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

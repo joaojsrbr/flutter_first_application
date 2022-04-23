@@ -98,7 +98,7 @@ class _Homepage2State extends State<Homepage2> {
             onDestinationSelected: (index) =>
                 setState(() => indexscreen = index),
             height: 60,
-            backgroundColor: Colors.transparent,
+            backgroundColor: Theme.of(context).colorScheme.onSecondary,
             labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
             destinations: const [
               NavigationDestination(
