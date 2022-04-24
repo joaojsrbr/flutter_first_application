@@ -30,7 +30,6 @@ dependencies:
   shared_preferences: ^2.0.13
   provider: ^6.0.2
   settings_ui: ^2.0.2
-  string_to_hex: ^0.2.2
   flutter_colorpicker: ^1.0.3
   flutter_native_splash: ^1.2.0
   flutter_launcher_icons: ^0.9.1
@@ -48,7 +47,7 @@ flutter_native_splash:
 flutter_icons:
   android: true
   image_path: "assets/app/Backhole.png"
-  adaptive_icon_background: "#ffffff"
+
 
 
 dev_dependencies:
@@ -59,7 +58,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  # assets:
-  #   - assets/lottie/minimalist-dark-mode-switcher.json
+  assets:
+    - assets/lottie/53164-light-dark-mode-button.json
   # assets:
   #   - assets/app/881e975af06ff67857544c7b64e65cbc.gif

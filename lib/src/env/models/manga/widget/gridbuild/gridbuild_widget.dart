@@ -3,7 +3,7 @@ import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:void_01/src/env/models/manga/mangapage.dart';
-import 'package:void_01/src/env/models/manga/widget/selected_item_widget.dart';
+import 'package:void_01/src/env/models/manga/widget/scroll_disableindicator_selecteditem/selected_item_widget.dart';
 
 Widget gridbuild({itens, scrollController, controllerdrag}) {
   return DragSelectGridView(

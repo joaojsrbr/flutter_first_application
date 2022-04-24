@@ -1,7 +1,6 @@
-// ignore_for_file: file_names, avoid_print
-
 import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:void_01/src/env/models/manga/sumary.dart';
 
@@ -49,7 +48,9 @@ class SliverHeader extends SliverPersistentHeaderDelegate {
     final _currentImagesize =
         (_maxsizeimage * (1 - possition)).clamp(minHeight, maxHeight);
     double disappear(double shrinkOffset) => 1 - shrinkOffset / maxHeight;
-    print(possition);
+    if (kDebugMode) {
+      print(possition);
+    }
 
     // final size = MediaQuery.of(context).size;
     return Material(

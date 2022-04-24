@@ -1,11 +1,7 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import 'package:void_01/src/env/models/manga/widget/sliverheader/SliverHeader_env.dart';
-
-import 'animated_detail_header.dart';
+import 'package:void_01/src/env/models/manga/widget/animated_detail_header.dart';
+import 'package:void_01/src/env/models/manga/widget/sliverheader/sliver_header_prod.dart';
 
 class MangaPage extends StatefulWidget {
   final String? title, desc;
@@ -18,6 +14,7 @@ class MangaPage extends StatefulWidget {
 }
 
 class _ManagaPageState extends State<MangaPage> {
+  // ScrollController
   late ScrollController _scrollController;
 
   @override
@@ -37,7 +34,7 @@ class _ManagaPageState extends State<MangaPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: CustomScrollView2(
+      body: _customScrollView2(
           desc: widget.desc,
           title: widget.title!,
           image: widget.image!,
@@ -46,13 +43,15 @@ class _ManagaPageState extends State<MangaPage> {
   }
 }
 
-Widget CustomScrollView2({desc, title, image, context}) {
+//--------------------------------------------------------------------//
+
+Widget _customScrollView2({desc, title, image, context}) {
   return CustomScrollView(
     physics: const BouncingScrollPhysics(),
     slivers: [
       SliverPersistentHeader(
         pinned: true,
-        delegate: SliverHeader_env(
+        delegate: SliverHeaderenv(
           // maxExtend: MediaQuery.of(context).size.height,
           maxExtend: 420,
           mixExtend: 160,
@@ -66,14 +65,17 @@ Widget CustomScrollView2({desc, title, image, context}) {
           },
         ),
       ),
-      _BoxAdapter()
+      const SliverToBoxAdapter(
+        child: SizedBox(height: 50),
+      ),
+      _boxAdapter()
     ],
   );
 }
 
 //--------------------------------------------------------------------//
 
-Widget _BoxAdapter() => SliverToBoxAdapter(
+Widget _boxAdapter() => SliverToBoxAdapter(
       child: ListView.separated(
         padding: const EdgeInsets.only(
           top: 0,

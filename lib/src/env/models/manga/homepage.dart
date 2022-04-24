@@ -1,16 +1,15 @@
-// ignore_for_file: non_constant_identifier_names, avoid_print
-
 import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:void_01/src/env/models/manga/animated_detail_header_gridview.dart';
+import 'package:void_01/src/env/models/blocs/Item_events.dart';
+import 'package:void_01/src/env/models/blocs/Item_state.dart';
+
 import 'package:void_01/src/env/models/manga/config/config.dart';
-import 'package:void_01/src/env/models/manga/grid_build_widget.dart';
-import 'package:void_01/src/env/models/manga/widget/navbar_scroll_to_hide_widget.dart';
+import 'package:void_01/src/env/models/manga/widget/animated_detail_header_gridview.dart';
+import 'package:void_01/src/env/models/manga/widget/gridbuild/gridbuild_widget.dart';
 import 'package:void_01/src/env/models/blocs/item_bloc.dart';
-import 'package:void_01/src/env/models/manga/widget/sliverheader/SliverHeader_env.dart';
-import '../blocs/Item_events.dart';
-import '../blocs/Item_state.dart';
+import 'package:void_01/src/env/models/manga/widget/appbar_navbar/navbar_scroll_to_hide_widget.dart';
+import 'package:void_01/src/env/models/manga/widget/sliverheader/sliver_header_prod.dart';
 
 class Homepage2 extends StatefulWidget {
   const Homepage2({Key? key}) : super(key: key);
@@ -20,8 +19,13 @@ class Homepage2 extends StatefulWidget {
 }
 
 class _Homepage2State extends State<Homepage2> {
+  // sreen index
+  int indexscreen = 0;
+  // Bloc
   late final ItemBloc bloc;
+  // Scroll Controller
   late ScrollController _scrollController;
+  // Select Controller
   final _controllerdrag = DragSelectGridViewController();
 
   @override
@@ -41,16 +45,18 @@ class _Homepage2State extends State<Homepage2> {
     super.dispose();
   }
 
-  void onPressed(Selectedindex) {
+  void onPressed(selectedindex) {
     setState(
       () {
-        Selectedindex.forEach((element) {
-          bloc.add(
-            RemoveItemEvent(
-              key: element,
-            ),
-          );
-        });
+        selectedindex.forEach(
+          (element) {
+            bloc.add(
+              RemoveItemEvent(
+                key: element,
+              ),
+            );
+          },
+        );
         _controllerdrag.clear();
       },
     );
@@ -58,7 +64,6 @@ class _Homepage2State extends State<Homepage2> {
 
   void rebuild() => setState(() {});
 
-  int indexscreen = 0;
   @override
   Widget build(BuildContext context) {
     final screen = [
@@ -71,7 +76,7 @@ class _Homepage2State extends State<Homepage2> {
               child: CircularProgressIndicator(),
             );
           } else if (state is ItemSuccessState) {
-            return MainListaManga(
+            return _listaManga(
               context: context,
               itens: itens,
             );
@@ -126,7 +131,7 @@ class _Homepage2State extends State<Homepage2> {
     );
   }
 
-  Widget MainListaManga({required itens, required context}) {
+  Widget _listaManga({required itens, required context}) {
     final isSelected = _controllerdrag.value.isSelecting;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -136,7 +141,7 @@ class _Homepage2State extends State<Homepage2> {
         slivers: [
           SliverPersistentHeader(
             floating: true,
-            delegate: SliverHeader_env(
+            delegate: SliverHeaderenv(
               // maxExtend: MediaQuery.of(context).size.height,
               maxExtend: 110,
               mixExtend: 90,
@@ -164,10 +169,9 @@ class _Homepage2State extends State<Homepage2> {
           ? FloatingActionButton(
               backgroundColor: Colors.red,
               onPressed: () {
-                final Selectedindex = _controllerdrag.value.selectedIndexes
+                final selectedindex = _controllerdrag.value.selectedIndexes
                     .map<dynamic>((index) => itens[index].key);
-                print(Selectedindex);
-                onPressed(Selectedindex);
+                onPressed(selectedindex);
               },
               child: const Icon(Icons.done),
             )

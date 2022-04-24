@@ -1,4 +1,5 @@
 // ignore_for_file: constant_identifier_names
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DarkThemePreference {
@@ -15,6 +16,8 @@ class DarkThemePreference {
   }
 }
 
+//
+
 class ColorThemePreference {
   static const COLOR_STATUS = "COLORSTATUS";
 
@@ -28,6 +31,8 @@ class ColorThemePreference {
     return prefs1.getString(COLOR_STATUS) ?? '#ff020106';
   }
 }
+
+//
 
 class Config1TrueorFalsePreference {
   static const CONFIG1_STATUS = "CONFIG1_STATUS";
