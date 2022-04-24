@@ -25,7 +25,6 @@ class _AnimatedDetailGridViewState extends State<AnimatedDetailGridView> {
   @override
   void initState() {
     super.initState();
-
     widget.controllerdrag.addListener(rebuild);
   }
 

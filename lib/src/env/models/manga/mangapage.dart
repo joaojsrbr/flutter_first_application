@@ -1,5 +1,6 @@
-// ignore_for_file: file_names, prefer_const_literals_to_create_immutables, prefer_const_constructors, non_constant_identifier_names, avoid_print
+// ignore_for_file: non_constant_identifier_names
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:void_01/src/env/models/manga/widget/sliverheader/SliverHeader_env.dart';
@@ -74,7 +75,7 @@ Widget CustomScrollView2({desc, title, image, context}) {
 
 Widget _BoxAdapter() => SliverToBoxAdapter(
       child: ListView.separated(
-        padding: EdgeInsets.only(
+        padding: const EdgeInsets.only(
           top: 0,
         ),
         separatorBuilder: (context, index) => const Divider(
@@ -83,7 +84,7 @@ Widget _BoxAdapter() => SliverToBoxAdapter(
         ),
         itemCount: 20,
         primary: false,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         shrinkWrap: true,
         itemBuilder: (BuildContext context, index) {
           return Stack(
@@ -94,7 +95,9 @@ Widget _BoxAdapter() => SliverToBoxAdapter(
               ),
               ListTile(
                 onTap: () {
-                  print("asdasdas");
+                  if (kDebugMode) {
+                    print("asdasdas");
+                  }
                 },
                 title: const Text(
                   "asdasdasdasd",
