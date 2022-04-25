@@ -1,16 +1,22 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:void_01/src/env/models/blocs/Item_events.dart';
 
 class AnimatedDetailGridView extends StatefulWidget {
   final double percent;
   final String title;
   final dynamic itens;
+  final VoidCallback? onPressed;
   final dynamic controllerdrag;
   final dynamic scrollController;
   final bool isSelected;
+  final dynamic bloc;
   const AnimatedDetailGridView({
     required this.itens,
+    this.onPressed,
     required this.percent,
     required this.title,
+    required this.bloc,
     required this.controllerdrag,
     required this.scrollController,
     required this.isSelected,
@@ -34,13 +40,52 @@ class _AnimatedDetailGridViewState extends State<AnimatedDetailGridView> {
     super.dispose();
   }
 
+  void onPressed(selectedindex) {
+    setState(
+      () {
+        selectedindex.forEach(
+          (element) {
+            widget.bloc.add(
+              RemoveItemEvent(
+                key: element,
+              ),
+            );
+          },
+        );
+        widget.controllerdrag.clear();
+      },
+    );
+  }
+
   void rebuild() => setState(() {});
+
+  Widget buildButton(
+          {required String text,
+          required IconData icon,
+          required void Function()? onPressed}) =>
+      ElevatedButton(
+        style: ElevatedButton.styleFrom(primary: Colors.red),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(
+              child: Icon(
+                icon,
+              ),
+            ),
+          ],
+        ),
+        onPressed: onPressed,
+      );
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasMaterialLocalizations(context));
     const _toptext = 50.0;
     final _currentsizetest =
-        (_toptext * (1.0 - widget.percent)).clamp(90 / 2, _toptext);
+        (_toptext * (1.0 - widget.percent)).clamp(35.0, _toptext);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onSecondary,
       body: Column(
@@ -56,28 +101,82 @@ class _AnimatedDetailGridViewState extends State<AnimatedDetailGridView> {
                             left: 10,
                             right: 2,
                             key: const Key('selecting'),
-                            child: Text(
-                              '${widget.controllerdrag.value.amount} item(s) selected…',
-                              style: const TextStyle(
-                                fontSize: 23,
-                                letterSpacing: -0.2,
-                                fontWeight: FontWeight.bold,
-                              ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                widget.controllerdrag.value.isSelecting
+                                    ? IconButton(
+                                        onPressed: () {
+                                          if (widget.onPressed != null) {
+                                            widget.onPressed!();
+                                          } else {
+                                            Navigator.maybePop(context);
+                                          }
+                                        },
+                                        icon: const Icon(Icons.close),
+                                        tooltip:
+                                            MaterialLocalizations.of(context)
+                                                .closeButtonTooltip,
+                                      )
+                                    : const SizedBox(
+                                        height: 0,
+                                        width: 0,
+                                      ),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.05,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    '${widget.controllerdrag.value.amount}',
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      letterSpacing: -0.2,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    if (kDebugMode) {
+                                      print("add");
+                                    }
+                                  },
+                                  icon: const Icon(Icons.add),
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.delete_outline),
+                                  onPressed: () {
+                                    final selectedindex = widget
+                                        .controllerdrag.value.selectedIndexes
+                                        .map<dynamic>(
+                                            (index) => widget.itens[index].key);
+                                    onPressed(selectedindex);
+                                  },
+                                ),
+                              ],
                             ),
                           )
                         : Positioned(
                             top: _currentsizetest,
                             left: 10,
-                            right: 2,
                             key: const Key('not-selecting'),
-                            child: Text(
-                              widget.title,
-                              style: TextStyle(
-                                fontSize: 23,
-                                color: Theme.of(context).colorScheme.primary,
-                                letterSpacing: -0.2,
-                                fontWeight: FontWeight.bold,
-                              ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  widget.title,
+                                  style: TextStyle(
+                                    fontSize: 23,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    letterSpacing: -0.2,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
                           )
                   ],

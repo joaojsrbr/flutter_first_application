@@ -60,5 +60,6 @@ flutter:
   uses-material-design: true
   assets:
     - assets/lottie/53164-light-dark-mode-button.json
+    - assets/lottie/97353-colors-fork.json
   # assets:
   #   - assets/app/881e975af06ff67857544c7b64e65cbc.gif

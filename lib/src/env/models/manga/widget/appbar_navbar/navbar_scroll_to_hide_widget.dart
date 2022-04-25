@@ -21,6 +21,7 @@ class ScrollToHideWidgetState extends StatefulWidget {
 
 class __ScrollToHideWidgetStateState extends State<ScrollToHideWidgetState> {
   bool isVisible = true;
+  late final AnimationController _controller;
 
   @override
   void initState() {
@@ -68,6 +69,33 @@ class __ScrollToHideWidgetStateState extends State<ScrollToHideWidgetState> {
     return AnimatedContainer(
       duration: widget.duration,
       height: isVisible ? widget.height : 0,
+      child: Wrap(
+        children: [widget.child],
+      ),
+    );
+  }
+}
+
+class ScrollWidgetState extends StatefulWidget {
+  final Widget child;
+  final double height;
+
+  const ScrollWidgetState({
+    Key? key,
+    this.height = kBottomNavigationBarHeight,
+    required this.child,
+  }) : super(key: key);
+
+  @override
+  State<ScrollWidgetState> createState() => _ScrollWidgetStateState();
+}
+
+class _ScrollWidgetStateState extends State<ScrollWidgetState> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(color: Colors.transparent),
+      height: widget.height,
       child: Wrap(
         children: [widget.child],
       ),

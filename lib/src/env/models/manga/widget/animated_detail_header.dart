@@ -30,9 +30,8 @@ class _AnimatedDetailHeaderState extends State<AnimatedDetailHeader>
   @override
   void initState() {
     _controller = AnimationController(
-      vsync: this,
-    );
-    _controller.duration = const Duration(milliseconds: 134);
+        vsync: this, duration: const Duration(milliseconds: 134));
+
     super.initState();
   }
 
@@ -70,7 +69,6 @@ class _AnimatedDetailHeaderState extends State<AnimatedDetailHeader>
                         Colors.black.withOpacity(0.36), BlendMode.darken),
                     // filterQuality: FilterQuality.high,
                     fit: BoxFit.cover,
-
                     image: CachedNetworkImageProvider(widget.imageURL!,
                         cacheKey: widget.imageURL),
                   ),

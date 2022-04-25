@@ -53,13 +53,17 @@ class __MyapphomeState extends State<_Myapphome> {
         builder: (BuildContext context, value, child) => MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-              useMaterial3: true,
-              textTheme: texttheme1(),
+            useMaterial3: true,
+            textTheme: texttheme1(),
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Color(
+                hexStringToHexInt(_themeChangeProvider.colorTheme),
+              ),
               brightness: _themeChangeProvider.darkTheme
                   ? Brightness.dark
                   : Brightness.light,
-              colorSchemeSeed:
-                  Color(hexStringToHexInt(_themeChangeProvider.colorTheme))),
+            ),
+          ),
           home: Homepage2(),
         ),
       ),

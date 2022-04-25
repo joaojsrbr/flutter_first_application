@@ -45,6 +45,13 @@ class _Homepage2State extends State<Homepage2> {
     super.dispose();
   }
 
+  bottomac() {
+    print("asdasd");
+    // final selectedindex = _controllerdrag.value.selectedIndexes
+    //     .map<dynamic>((index) => itens[index].key);
+    // onPressed(selectedindex);
+  }
+
   void onPressed(selectedindex) {
     setState(
       () {
@@ -66,7 +73,7 @@ class _Homepage2State extends State<Homepage2> {
 
   @override
   Widget build(BuildContext context) {
-    final screen = [
+    final _screen = [
       BlocBuilder<ItemBloc, ItemState>(
         bloc: bloc,
         builder: (context, state) {
@@ -89,93 +96,173 @@ class _Homepage2State extends State<Homepage2> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: screen[indexscreen],
-      bottomNavigationBar: ScrollToHideWidgetState(
-        controller: _scrollController,
-        child: NavigationBarTheme(
-          data: NavigationBarThemeData(
-            labelTextStyle: MaterialStateProperty.all(
-              const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+      body: _screen[indexscreen],
+      bottomNavigationBar: _controllerdrag.value.isSelecting
+          ? Container(
+              height: 0,
+            )
+          : ScrollToHideWidgetState(
+              controller: _scrollController,
+              child: NavigationBarTheme(
+                data: NavigationBarThemeData(
+                  labelTextStyle: MaterialStateProperty.all(
+                    const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                  ),
+                ),
+                child: NavigationBar(
+                  selectedIndex: indexscreen,
+                  onDestinationSelected: (index) =>
+                      setState(() => indexscreen = index),
+                  height: 60,
+                  backgroundColor: Theme.of(context).colorScheme.onSecondary,
+                  labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+                  destinations: const [
+                    NavigationDestination(
+                      selectedIcon: Icon(
+                        Icons.book_rounded,
+                      ),
+                      label: "Manga",
+                      icon: Icon(
+                        Icons.book_outlined,
+                      ),
+                    ),
+                    NavigationDestination(
+                      selectedIcon: Icon(
+                        Icons.settings,
+                      ),
+                      label: "Config",
+                      icon: Icon(
+                        Icons.settings_outlined,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
-          child: NavigationBar(
-            selectedIndex: indexscreen,
-            onDestinationSelected: (index) =>
-                setState(() => indexscreen = index),
-            height: 60,
-            backgroundColor: Theme.of(context).colorScheme.onSecondary,
-            labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-            destinations: const [
-              NavigationDestination(
-                selectedIcon: Icon(
-                  Icons.book_rounded,
-                ),
-                label: "Manga",
-                icon: Icon(
-                  Icons.book_outlined,
-                ),
-              ),
-              NavigationDestination(
-                selectedIcon: Icon(
-                  Icons.settings,
-                ),
-                label: "Config",
-                icon: Icon(
-                  Icons.settings_outlined,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
+
+  // Widget _buttombar({itens, context}) {
+  //   // int indexbuttom = 0;
+
+  //   void addlista() {}
+  //   bottomac() {
+  //     print("asdasd");
+  //     // final selectedindex = _controllerdrag.value.selectedIndexes
+  //     //     .map<dynamic>((index) => itens[index].key);
+  //     // onPressed(selectedindex);
+  //   }
+
+  //   // List buttomaction = [bottomac, addlista];
+
+  //   return Padding(
+  //     padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+  //     child: Align(
+  //       alignment: const Alignment(0.0, 1.0),
+  //       child: ScrollWidgetState(
+  //         height: 80,
+  //         child: ClipRRect(
+  //           borderRadius: const BorderRadius.all(Radius.circular(8)),
+  //           child: Container(
+  //             color: Theme.of(context).colorScheme.background,
+  //             child: Row(
+  //               // mainAxisSize: MainAxisSize.min,
+  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //               children: [
+  //                 SizedBox(
+  //                   width: MediaQuery.of(context).size.width * 0.02,
+  //                 ),
+  //                 Expanded(
+  //                   child: ElevatedButton(
+  //                     child: Text('Excruir'),
+  //                     onPressed: () {},
+  //                     bottomac
+  //                   ),
+  //                 ),
+  //                 SizedBox(
+  //                   width: MediaQuery.of(context).size.width * 0.02,
+  //                 ),
+  //                 Expanded(
+  //                   child: ElevatedButton(
+  //                     child: Text('Hello'),
+  //                     onPressed: null,
+  //                   ),
+  //                 ),
+  //                 SizedBox(
+  //                   width: MediaQuery.of(context).size.width * 0.02,
+  //                 ),
+  //                 Expanded(
+  //                   child: ElevatedButton(
+  //                     child: Text('Hi'),
+  //                     onPressed: null,
+  //                   ),
+  //                 ),
+  //                 SizedBox(
+  //                   width: MediaQuery.of(context).size.width * 0.02,
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _listaManga({required itens, required context}) {
     final isSelected = _controllerdrag.value.isSelecting;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: CustomScrollView(
-        controller: _scrollController,
-        physics: const BouncingScrollPhysics(),
-        slivers: [
-          SliverPersistentHeader(
-            floating: true,
-            delegate: SliverHeaderenv(
-              // maxExtend: MediaQuery.of(context).size.height,
-              maxExtend: 110,
-              mixExtend: 90,
-              builder: (percent) {
-                return AnimatedDetailGridView(
-                  title: "Homepage",
-                  controllerdrag: _controllerdrag,
-                  scrollController: _scrollController,
-                  itens: itens,
-                  isSelected: isSelected,
-                  percent: percent,
-                );
-              },
+      body: Stack(children: [
+        CustomScrollView(
+          controller: _scrollController,
+          physics: const BouncingScrollPhysics(),
+          slivers: [
+            SliverPersistentHeader(
+              pinned: isSelected ? true : false,
+              floating: true,
+              delegate: SliverHeaderenv(
+                // maxExtend: MediaQuery.of(context).size.height,
+                maxExtend: 110,
+                mixExtend: 90,
+                builder: (percent) {
+                  return AnimatedDetailGridView(
+                    title: "Homepage",
+                    bloc: bloc,
+                    controllerdrag: _controllerdrag,
+                    scrollController: _scrollController,
+                    itens: itens,
+                    isSelected: isSelected,
+                    percent: percent,
+                  );
+                },
+              ),
             ),
-          ),
-          SliverToBoxAdapter(
-            child: gridbuild(
-                itens: itens,
-                controllerdrag: _controllerdrag,
-                scrollController: _scrollController),
-          )
-        ],
-      ),
-      floatingActionButton: (isSelected)
-          ? FloatingActionButton(
-              backgroundColor: Colors.red,
-              onPressed: () {
-                final selectedindex = _controllerdrag.value.selectedIndexes
-                    .map<dynamic>((index) => itens[index].key);
-                onPressed(selectedindex);
-              },
-              child: const Icon(Icons.done),
+            SliverToBoxAdapter(
+              child: gridbuild(
+                  itens: itens,
+                  controllerdrag: _controllerdrag,
+                  scrollController: _scrollController),
             )
-          : Container(),
+          ],
+        ),
+        // _controllerdrag.value.isSelecting
+        //     ? _buttombar(itens: itens, context: context)
+        //     : Container(
+        //         height: 0,
+        //       )
+      ]),
+      // floatingActionButton: (isSelected)
+      //     ? FloatingActionButton(
+      //         backgroundColor: Colors.red,
+      //         onPressed: () {
+      //           final selectedindex = _controllerdrag.value.selectedIndexes
+      //               .map<dynamic>((index) => itens[index].key);
+      //           onPressed(selectedindex);
+      //         },
+      //         child: const Icon(Icons.done),
+      //       )
+      //     : Container(),
     );
   }
 }
