@@ -45,13 +45,6 @@ class _Homepage2State extends State<Homepage2> {
     super.dispose();
   }
 
-  bottomac() {
-    print("asdasd");
-    // final selectedindex = _controllerdrag.value.selectedIndexes
-    //     .map<dynamic>((index) => itens[index].key);
-    // onPressed(selectedindex);
-  }
-
   void onPressed(selectedindex) {
     setState(
       () {

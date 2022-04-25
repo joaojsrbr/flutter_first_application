@@ -21,7 +21,6 @@ class ScrollToHideWidgetState extends StatefulWidget {
 
 class __ScrollToHideWidgetStateState extends State<ScrollToHideWidgetState> {
   bool isVisible = true;
-  late final AnimationController _controller;
 
   @override
   void initState() {
