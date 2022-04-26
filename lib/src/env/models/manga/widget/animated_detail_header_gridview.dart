@@ -1,6 +1,10 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:void_01/src/env/models/blocs/Item_events.dart';
+import 'package:void_01/src/env/models/item/item.dart';
+import 'package:xid/xid.dart';
+
+import '../../../../../theme/dark_theme_provider.dart';
 
 class AnimatedDetailGridView extends StatefulWidget {
   final double percent;
@@ -28,6 +32,7 @@ class AnimatedDetailGridView extends StatefulWidget {
 }
 
 class _AnimatedDetailGridViewState extends State<AnimatedDetailGridView> {
+  List<Item2> fav = [];
   @override
   void initState() {
     super.initState();
@@ -83,9 +88,28 @@ class _AnimatedDetailGridViewState extends State<AnimatedDetailGridView> {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterialLocalizations(context));
+
     const _toptext = 50.0;
+
     final _currentsizetest =
         (_toptext * (1.0 - widget.percent)).clamp(35.0, _toptext);
+
+    final _themeChange = Provider.of<DarkThemeProvider>(context);
+
+    addonPressed() {
+      setState(
+        () {
+          final _keys = widget.controllerdrag.value.selectedIndexes
+              .map<dynamic>((index) => widget.itens[index]);
+          _keys.forEach((element) {
+            fav.add(Item2(key: Xid(), list: element));
+          });
+          widget.controllerdrag.clear();
+        },
+      );
+      print(fav);
+    }
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onSecondary,
       body: Column(
@@ -139,20 +163,23 @@ class _AnimatedDetailGridViewState extends State<AnimatedDetailGridView> {
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    if (kDebugMode) {
-                                      print("add");
-                                    }
+                                    addonPressed();
+                                    _themeChange.stringPreference.setstring([
+                                      fav[0].list.title,
+                                      fav[0].list.urlfoto,
+                                      fav[0].list.descr
+                                    ]);
                                   },
                                   icon: const Icon(Icons.add),
                                 ),
                                 IconButton(
                                   icon: const Icon(Icons.delete_outline),
                                   onPressed: () {
-                                    final selectedindex = widget
+                                    final key = widget
                                         .controllerdrag.value.selectedIndexes
                                         .map<dynamic>(
                                             (index) => widget.itens[index].key);
-                                    onPressed(selectedindex);
+                                    onPressed(key);
                                   },
                                 ),
                               ],

@@ -5,23 +5,16 @@ import 'package:xid/xid.dart';
 
 class Itemrepository {
   final List<Item> _Item = [];
+  final List<Item2> _Item2 = [];
+
   var xid = Xid();
   List<Item> loadItem() {
     _Item.addAll([
       Item(
           key: Xid(),
           urlfoto:
-              "https://neoxscans.net/wp-content/uploads/2022/02/TheWorldAfterTheEndCapa-175x238.png",
-          title: "Solo Max-Level Newbie",
-          icon:
-              "https://cdn.discordapp.com/icons/290931718708527114/a_44cf7cea00070f135e450ed5c3df1003.webp",
-          descr:
-              "Jinhyuk, o personagem principal, um viciado completo, foi o único a ter visto o final da [Torre dos Testes], mas à medida que a popularidade do jogo diminui, fica difícil manter a vida com o jogo.\nJinhyuk quer terminar o jogo assim porque ele viu o final. Naquele mesmo dia, a [Torre dos Testes] se tornou uma realidade.\nJinhyuk, que conhece todos os elementos do jogo, controla tudo mais rápido do que qualquer um!\n“Vou te mostrar o que é um profissional de verdade.”"),
-      Item(
-          key: Xid(),
-          urlfoto:
               "https://www.asurascans.com/wp-content/uploads/2021/02/cover4.gif",
-          title: "The Regressed Demon Lord is Kind [Novel]",
+          title: "1",
           icon:
               "https://cdn.discordapp.com/icons/290931718708527114/a_44cf7cea00070f135e450ed5c3df1003.webp",
           descr:
@@ -30,7 +23,7 @@ class Itemrepository {
           key: Xid(),
           urlfoto:
               "https://www.asurascans.com/wp-content/uploads/2021/02/cover4.gif",
-          title: "The Regressed Demon Lord is Kind [Novel]",
+          title: "2",
           icon:
               "https://cdn.discordapp.com/icons/290931718708527114/a_44cf7cea00070f135e450ed5c3df1003.webp",
           descr:
@@ -39,7 +32,7 @@ class Itemrepository {
           key: Xid(),
           urlfoto:
               "https://www.asurascans.com/wp-content/uploads/2021/02/cover4.gif",
-          title: "The Regressed Demon Lord is Kind [Novel]",
+          title: "3",
           icon:
               "https://cdn.discordapp.com/icons/290931718708527114/a_44cf7cea00070f135e450ed5c3df1003.webp",
           descr:
@@ -48,7 +41,7 @@ class Itemrepository {
           key: Xid(),
           urlfoto:
               "https://www.asurascans.com/wp-content/uploads/2021/02/cover4.gif",
-          title: "The Regressed Demon Lord is Kind [Novel]",
+          title: "4",
           icon:
               "https://cdn.discordapp.com/icons/290931718708527114/a_44cf7cea00070f135e450ed5c3df1003.webp",
           descr:
@@ -57,7 +50,7 @@ class Itemrepository {
           key: Xid(),
           urlfoto:
               "https://www.asurascans.com/wp-content/uploads/2021/02/cover4.gif",
-          title: "The Regressed Demon Lord is Kind [Novel]",
+          title: "5",
           icon:
               "https://cdn.discordapp.com/icons/290931718708527114/a_44cf7cea00070f135e450ed5c3df1003.webp",
           descr:
@@ -66,7 +59,7 @@ class Itemrepository {
           key: Xid(),
           urlfoto:
               "https://www.asurascans.com/wp-content/uploads/2021/02/cover4.gif",
-          title: "The Regressed Demon Lord is Kind [Novel]",
+          title: "6",
           icon:
               "https://cdn.discordapp.com/icons/290931718708527114/a_44cf7cea00070f135e450ed5c3df1003.webp",
           descr:
@@ -75,7 +68,7 @@ class Itemrepository {
           key: Xid(),
           urlfoto:
               "https://www.asurascans.com/wp-content/uploads/2021/02/cover4.gif",
-          title: "The Regressed Demon Lord is Kind [Novel]",
+          title: "7",
           icon:
               "https://cdn.discordapp.com/icons/290931718708527114/a_44cf7cea00070f135e450ed5c3df1003.webp",
           descr:
@@ -84,7 +77,7 @@ class Itemrepository {
           key: Xid(),
           urlfoto:
               "https://www.asurascans.com/wp-content/uploads/2021/02/cover4.gif",
-          title: "The Regressed Demon Lord is Kind [Novel]",
+          title: "8",
           icon:
               "https://cdn.discordapp.com/icons/290931718708527114/a_44cf7cea00070f135e450ed5c3df1003.webp",
           descr:
@@ -94,9 +87,9 @@ class Itemrepository {
     return _Item;
   }
 
-  List<Item> addItem(Item title) {
-    _Item.add(title);
-    return _Item;
+  addItem(List key) {
+    // _Item2.add(Item2(key: Xid(), list: key));
+    return _Item2;
   }
 
   List<Item> removeItem(Xid key) {

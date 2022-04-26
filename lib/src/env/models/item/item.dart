@@ -1,5 +1,23 @@
 import 'package:xid/xid.dart';
 
+class Item2 {
+  dynamic list;
+  Xid? key;
+  Item2({this.list, this.key});
+  Item2.fromJson(Map<String, dynamic> json) {
+    key = json['key'];
+    list = json['list'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['key'] = key;
+    data['list'] = list;
+
+    return data;
+  }
+}
+
 class Item {
   String? title;
   String? urlfoto;

@@ -1,4 +1,3 @@
-import 'package:void_01/src/env/models/item/item.dart';
 import 'package:xid/xid.dart';
 
 abstract class ItemEvent {}
@@ -6,10 +5,10 @@ abstract class ItemEvent {}
 class LoadItemEvent extends ItemEvent {}
 
 class AddItemEvent extends ItemEvent {
-  Item item;
+  List key;
 
   AddItemEvent({
-    required this.item,
+    required this.key,
   });
 }
 

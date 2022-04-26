@@ -1,7 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:void_01/src/env/models/blocs/Item_events.dart';
-import 'package:void_01/src/env/models/blocs/Item_state.dart';
-import 'package:void_01/src/env/models/item/repository.dart';
+
+import '../item/repository.dart';
+import 'Item_events.dart';
+import 'item_state.dart';
 
 class ItemBloc extends Bloc<ItemEvent, ItemState> {
   // ignore: non_constant_identifier_names
@@ -12,14 +13,16 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
       (event, emit) => emit(
         ItemSuccessState(
           itens: _ItemRepo.loadItem(),
+          // itens2: [],
         ),
       ),
     );
     on<AddItemEvent>(
       (event, emit) => emit(
         ItemSuccessState(
-          itens: _ItemRepo.addItem(event.item),
-        ),
+            // itens: _ItemRepo.loadItem(),
+            // itens2: _ItemRepo.addItem(event.key),
+            ),
       ),
     );
     on<RemoveItemEvent>(

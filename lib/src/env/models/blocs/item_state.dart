@@ -1,9 +1,9 @@
 import 'package:void_01/src/env/models/item/item.dart';
 
 abstract class ItemState {
-  List<Item> itens;
+  List<Item>? itens;
 
-  ItemState({required this.itens});
+  ItemState({this.itens});
 }
 
 class ItemInitialState extends ItemState {
@@ -11,7 +11,9 @@ class ItemInitialState extends ItemState {
 }
 
 class ItemSuccessState extends ItemState {
-  ItemSuccessState({
-    required List<Item> itens,
-  }) : super(itens: itens);
+  ItemSuccessState({List<Item>? itens}) : super(itens: itens);
 }
+
+// class Item2SuccessState extends ItemState {
+//   Item2SuccessState({required List? itens2}) : super(itens2: itens2);
+// }

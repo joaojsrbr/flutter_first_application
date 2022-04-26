@@ -2,14 +2,17 @@ import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:void_01/src/env/models/blocs/Item_events.dart';
-import 'package:void_01/src/env/models/blocs/Item_state.dart';
+
+import 'package:void_01/src/env/models/blocs/item_bloc.dart';
 
 import 'package:void_01/src/env/models/manga/config/config.dart';
 import 'package:void_01/src/env/models/manga/widget/animated_detail_header_gridview.dart';
 import 'package:void_01/src/env/models/manga/widget/gridbuild/gridbuild_widget.dart';
-import 'package:void_01/src/env/models/blocs/item_bloc.dart';
+
 import 'package:void_01/src/env/models/manga/widget/appbar_navbar/navbar_scroll_to_hide_widget.dart';
 import 'package:void_01/src/env/models/manga/widget/sliverheader/sliver_header_prod.dart';
+
+import '../blocs/item_state.dart';
 
 class Homepage2 extends StatefulWidget {
   const Homepage2({Key? key}) : super(key: key);
@@ -69,17 +72,17 @@ class _Homepage2State extends State<Homepage2> {
     final _screen = [
       BlocBuilder<ItemBloc, ItemState>(
         bloc: bloc,
+        key: const Key('Bloc'),
         builder: (context, state) {
           final itens = state.itens;
+
+          // print(itens2![1].list![0].title);
           if (state is ItemInitialState) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (state is ItemSuccessState) {
-            return _listaManga(
-              context: context,
-              itens: itens,
-            );
+            return _listaManga(context: context, itens: itens);
           }
           return Container();
         },
