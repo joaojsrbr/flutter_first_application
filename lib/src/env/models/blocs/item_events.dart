@@ -5,7 +5,7 @@ abstract class ItemEvent {}
 class LoadItemEvent extends ItemEvent {}
 
 class AddItemEvent extends ItemEvent {
-  List key;
+  dynamic key;
 
   AddItemEvent({
     required this.key,

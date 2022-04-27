@@ -4,7 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:void_01/theme/hex_color.dart';
-import '../../../../../theme/dark_theme_provider.dart';
+import '../../../../../../theme/dark_theme_provider.dart';
 
 class ConfigPage extends StatefulWidget {
   const ConfigPage({Key? key}) : super(key: key);
@@ -103,12 +103,12 @@ class _ConfigState extends State<ConfigPage> with TickerProviderStateMixin {
                       : Lottie.asset(
                           'assets/lottie/53164-light-dark-mode-button.json',
                           width: 70,
+                          controller: _controller,
                           onLoaded: (c) {
                             _controller.duration = c.duration;
 
-                            _controller.reverse();
+                            _controller.forward();
                           },
-                          controller: _controller,
                         ),
                   // leading: Icon(_themeChange.darkTheme
                   //     ? Icons.dark_mode
@@ -118,8 +118,13 @@ class _ConfigState extends State<ConfigPage> with TickerProviderStateMixin {
                 SettingsTile(
                   key: const Key('Color'),
                   title: const Text('Color'),
-                  leading: Lottie.asset('assets/lottie/97353-colors-fork.json',
-                      width: 70, height: 70),
+                  leading: const SizedBox(
+                    width: 70,
+                    child: Icon(
+                      Icons.color_lens_outlined,
+                      size: 29,
+                    ),
+                  ),
                   onPressed: (_) {
                     showDialog(
                       context: context,
@@ -167,10 +172,8 @@ class _ConfigState extends State<ConfigPage> with TickerProviderStateMixin {
                   leading: const Icon(
                     Icons.color_lens_outlined,
                   ),
-                  initialValue: _themeChange.config1,
-                  onToggle: (value) {
-                    _themeChange.config1 = value;
-                  },
+                  initialValue: false,
+                  onToggle: (value) {},
                 ),
                 SettingsTile.switchTile(
                   leading: const Icon(
@@ -178,10 +181,8 @@ class _ConfigState extends State<ConfigPage> with TickerProviderStateMixin {
                   ),
                   activeSwitchColor: Theme.of(context).colorScheme.primary,
                   title: const Text('themeChange.config2'),
-                  initialValue: _themeChange.config2,
-                  onToggle: (value) {
-                    _themeChange.config2 = value;
-                  },
+                  initialValue: false,
+                  onToggle: (value) {},
                 ),
               ],
             ),

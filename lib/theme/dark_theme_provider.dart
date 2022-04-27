@@ -6,25 +6,16 @@ class DarkThemeProvider with ChangeNotifier {
   ColorThemePreference colorThemePreference = ColorThemePreference();
   Config1TrueorFalsePreference config1TrueorFalsePreference =
       Config1TrueorFalsePreference();
-  StringPreference stringPreference = StringPreference();
 
   bool _config1 = false;
   bool _config2 = false;
   bool _darkTheme = false;
   String _colorTheme = '#ff020106';
-  List _list2 = [];
 
-  List get list2 => _list2;
   bool get config1 => _config1;
   bool get config2 => _config2;
   bool get darkTheme => _darkTheme;
   String get colorTheme => _colorTheme;
-
-  set list2(value) {
-    _list2 = value;
-    stringPreference.setstring(value);
-    notifyListeners();
-  }
 
   set config1(bool value) {
     _config1 = value;

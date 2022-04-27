@@ -5,9 +5,8 @@ import 'package:xid/xid.dart';
 
 class Itemrepository {
   final List<Item> _Item = [];
-  final List<Item2> _Item2 = [];
+  final List _Item2 = [];
 
-  var xid = Xid();
   List<Item> loadItem() {
     _Item.addAll([
       Item(
@@ -87,9 +86,14 @@ class Itemrepository {
     return _Item;
   }
 
-  addItem(List key) {
-    // _Item2.add(Item2(key: Xid(), list: key));
+  addItem(key) {
+    _Item2.add(key);
+
     return _Item2;
+  }
+
+  readitens() {
+    return _Item;
   }
 
   List<Item> removeItem(Xid key) {

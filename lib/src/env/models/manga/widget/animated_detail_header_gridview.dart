@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:void_01/src/env/models/blocs/Item_events.dart';
-import 'package:void_01/src/env/models/item/item.dart';
-import 'package:xid/xid.dart';
 
-import '../../../../../theme/dark_theme_provider.dart';
+import 'package:void_01/src/env/models/blocs/Item_events.dart';
 
 class AnimatedDetailGridView extends StatefulWidget {
   final double percent;
@@ -32,10 +28,10 @@ class AnimatedDetailGridView extends StatefulWidget {
 }
 
 class _AnimatedDetailGridViewState extends State<AnimatedDetailGridView> {
-  List<Item2> fav = [];
   @override
   void initState() {
     super.initState();
+
     widget.controllerdrag.addListener(rebuild);
   }
 
@@ -46,17 +42,26 @@ class _AnimatedDetailGridViewState extends State<AnimatedDetailGridView> {
   }
 
   void onPressed(selectedindex) {
+    selectedindex.forEach(
+      (element) {
+        widget.bloc.add(
+          RemoveItemEvent(
+            key: element,
+          ),
+        );
+      },
+    );
+    widget.controllerdrag.clear();
+  }
+
+  addonPressed() {
     setState(
       () {
-        selectedindex.forEach(
-          (element) {
-            widget.bloc.add(
-              RemoveItemEvent(
-                key: element,
-              ),
-            );
-          },
-        );
+        final _keys = widget.controllerdrag.value.selectedIndexes
+            .map<dynamic>((index) => widget.itens[index]);
+        _keys.forEach((element) {
+          widget.bloc.add(AddItemEvent(key: element));
+        });
         widget.controllerdrag.clear();
       },
     );
@@ -89,26 +94,14 @@ class _AnimatedDetailGridViewState extends State<AnimatedDetailGridView> {
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterialLocalizations(context));
 
-    const _toptext = 50.0;
+    const _toptext = 45.0;
 
     final _currentsizetest =
-        (_toptext * (1.0 - widget.percent)).clamp(35.0, _toptext);
+        (50.0 * (1.0 - widget.percent)).clamp(45.0, 100.0 / 2);
+    final _currentsizetes2t =
+        (_toptext * (1.0 - widget.percent)).clamp(35.0, 55.0);
 
-    final _themeChange = Provider.of<DarkThemeProvider>(context);
-
-    addonPressed() {
-      setState(
-        () {
-          final _keys = widget.controllerdrag.value.selectedIndexes
-              .map<dynamic>((index) => widget.itens[index]);
-          _keys.forEach((element) {
-            fav.add(Item2(key: Xid(), list: element));
-          });
-          widget.controllerdrag.clear();
-        },
-      );
-      print(fav);
-    }
+    // final _themeChange = Provider.of<DarkThemeProvider>(context);
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onSecondary,
@@ -121,8 +114,8 @@ class _AnimatedDetailGridViewState extends State<AnimatedDetailGridView> {
                   children: [
                     widget.controllerdrag.value.isSelecting
                         ? Positioned(
-                            top: _currentsizetest,
-                            left: 10,
+                            top: _currentsizetes2t,
+                            left: 2,
                             right: 2,
                             key: const Key('selecting'),
                             child: Row(
@@ -131,6 +124,9 @@ class _AnimatedDetailGridViewState extends State<AnimatedDetailGridView> {
                               children: [
                                 widget.controllerdrag.value.isSelecting
                                     ? IconButton(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
                                         onPressed: () {
                                           if (widget.onPressed != null) {
                                             widget.onPressed!();
@@ -154,7 +150,10 @@ class _AnimatedDetailGridViewState extends State<AnimatedDetailGridView> {
                                 Expanded(
                                   child: Text(
                                     '${widget.controllerdrag.value.amount}',
-                                    style: const TextStyle(
+                                    style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
                                       fontSize: 20,
                                       letterSpacing: -0.2,
                                       fontWeight: FontWeight.bold,
@@ -162,17 +161,16 @@ class _AnimatedDetailGridViewState extends State<AnimatedDetailGridView> {
                                   ),
                                 ),
                                 IconButton(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
                                   onPressed: () {
                                     addonPressed();
-                                    _themeChange.stringPreference.setstring([
-                                      fav[0].list.title,
-                                      fav[0].list.urlfoto,
-                                      fav[0].list.descr
-                                    ]);
                                   },
                                   icon: const Icon(Icons.add),
                                 ),
                                 IconButton(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
                                   icon: const Icon(Icons.delete_outline),
                                   onPressed: () {
                                     final key = widget

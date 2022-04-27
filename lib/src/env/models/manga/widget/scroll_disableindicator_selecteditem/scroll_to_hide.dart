@@ -52,6 +52,7 @@ class _AppBarToHideState extends State<AppBarToHideScoll2> {
   //     hide();
   //   }
   // }
+
   void listen() {
     if (widget.controller.position.pixels >= widget.position) {
       hide();

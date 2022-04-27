@@ -36,7 +36,7 @@ Widget gridbuild({itens, scrollController, controllerdrag}) {
                 closedShape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15))),
                 transitionType: ContainerTransitionType.fade,
-                transitionDuration: const Duration(milliseconds: 850),
+                transitionDuration: const Duration(milliseconds: 1500),
                 openBuilder: (context, _) => MangaPage(
                     title: itens[index].title,
                     image: itens[index].urlfoto,

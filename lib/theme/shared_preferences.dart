@@ -57,16 +57,3 @@ class Config1TrueorFalsePreference {
     return prefs1.getBool(CONFIG1_STATUS) ?? false;
   }
 }
-
-class StringPreference {
-  static const IFAV_STATUS = "IFAV_STATUS";
-  setstring(value) async {
-    SharedPreferences prefs1 = await SharedPreferences.getInstance();
-    prefs1.setStringList(IFAV_STATUS, value);
-  }
-
-  Future<List> getstring() async {
-    SharedPreferences prefs1 = await SharedPreferences.getInstance();
-    return prefs1.getStringList(IFAV_STATUS) ?? [];
-  }
-}
