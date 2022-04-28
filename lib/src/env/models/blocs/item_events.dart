@@ -1,11 +1,13 @@
-import 'package:xid/xid.dart';
+import '../item/item.dart';
 
 abstract class ItemEvent {}
 
 class LoadItemEvent extends ItemEvent {}
 
+class LoadItemEvent2 extends ItemEvent {}
+
 class AddItemEvent extends ItemEvent {
-  dynamic key;
+  List<Item> key;
 
   AddItemEvent({
     required this.key,
@@ -13,7 +15,7 @@ class AddItemEvent extends ItemEvent {
 }
 
 class RemoveItemEvent extends ItemEvent {
-  Xid key;
+  List<int> key;
 
   RemoveItemEvent({
     required this.key,

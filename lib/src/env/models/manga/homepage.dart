@@ -1,14 +1,18 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
 import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:void_01/src/env/models/blocs/Item_events.dart';
 import 'package:void_01/src/env/models/blocs/item_bloc.dart';
-import 'package:void_01/src/env/models/manga/widget/animated_detail_header_gridview.dart';
-import 'package:void_01/src/env/models/manga/widget/config/config.dart';
-import 'package:void_01/src/env/models/manga/widget/gridbuild/gridbuild_widget.dart';
+import 'package:void_01/src/env/models/manga/fav_page.dart';
+import 'package:void_01/src/env/models/manga/widget/configs/config.dart';
+
 import 'package:void_01/src/env/models/manga/widget/appbar_navbar/navbar_scroll_to_hide_widget.dart';
-import 'package:void_01/src/env/models/manga/widget/sliverheader/sliver_header_prod.dart';
+import 'package:void_01/src/env/models/manga/widget/sliverheader/custom_Sliver_Person.dart';
+
+import '../blocs/item_events.dart';
 import '../blocs/item_state.dart';
+import '../item/item.dart';
 
 class Homepage2 extends StatefulWidget {
   const Homepage2({Key? key}) : super(key: key);
@@ -18,6 +22,7 @@ class Homepage2 extends StatefulWidget {
 }
 
 class _Homepage2State extends State<Homepage2> {
+  List selecionadas = [];
   // sreen index
   int indexscreen = 0;
   // Bloc
@@ -38,27 +43,10 @@ class _Homepage2State extends State<Homepage2> {
 
   @override
   void dispose() {
-    _scrollController.dispose();
     bloc.close();
+    _scrollController.dispose();
     _controllerdrag.removeListener(rebuild);
     super.dispose();
-  }
-
-  void onPressed(selectedindex) {
-    setState(
-      () {
-        selectedindex.forEach(
-          (element) {
-            bloc.add(
-              RemoveItemEvent(
-                key: element,
-              ),
-            );
-          },
-        );
-        _controllerdrag.clear();
-      },
-    );
   }
 
   void rebuild() => setState(() {});
@@ -67,6 +55,7 @@ class _Homepage2State extends State<Homepage2> {
   Widget build(BuildContext context) {
     final _screen = [
       _listaManga(context: context),
+      const FavoritePage(),
       const ConfigPage(),
     ];
 
@@ -103,6 +92,11 @@ class _Homepage2State extends State<Homepage2> {
                       ),
                     ),
                     NavigationDestination(
+                      selectedIcon: Icon(Icons.favorite_border),
+                      label: "Favorito",
+                      icon: Icon(Icons.favorite_outline),
+                    ),
+                    NavigationDestination(
                       selectedIcon: Icon(
                         Icons.settings,
                       ),
@@ -119,63 +113,48 @@ class _Homepage2State extends State<Homepage2> {
   }
 
   Widget _listaManga({required context}) {
-    final isSelected = _controllerdrag.value.isSelecting;
-    return Stack(
-      children: [
-        BlocBuilder<ItemBloc, ItemState>(
-          bloc: bloc,
-          builder: (context, state) {
-            final itens = state.itens;
-            return CustomScrollView(
-              controller: _scrollController,
-              physics: const BouncingScrollPhysics(),
-              slivers: [
-                SliverPersistentHeader(
-                  pinned: isSelected ? true : false,
-                  floating: true,
-                  delegate: SliverHeaderenv(
-                    // maxExtend: MediaQuery.of(context).size.height,
-                    maxExtend: 110,
-                    mixExtend: 90,
-                    builder: (percent) {
-                      return AnimatedDetailGridView(
-                        title: "Homepage",
-                        bloc: bloc,
-                        controllerdrag: _controllerdrag,
-                        scrollController: _scrollController,
-                        itens: itens,
-                        isSelected: isSelected,
-                        percent: percent,
-                      );
-                    },
-                  ),
+    return BlocBuilder<ItemBloc, ItemState>(
+      bloc: bloc,
+      builder: (context, state) {
+        final itens = state.itens;
+        void addonPressed() {
+          final _keys = _controllerdrag.value.selectedIndexes
+              .map<Item>((index) => itens![index])
+              .toList();
+
+          bloc.add(AddItemEvent(key: _keys));
+          // _keys.forEach((element) {
+          //   bloc.add(AddItemEvent(key: element));
+          // });
+          _controllerdrag.clear();
+        }
+
+        void onremovePressed() {
+          final key = _controllerdrag.value.selectedIndexes
+              .map<dynamic>((index) => itens![index].key);
+          key.forEach(
+            (element) {
+              bloc.add(
+                RemoveItemEvent(
+                  key: element,
                 ),
-                // SliverAppBar(
-                //     toolbarHeight: 30,
-                //     floating: true,
-                //     pinned: true,
-                //     snap: true,
-                //     backgroundColor: Colors.red),
-                SliverPersistentHeader(
-                    floating: true,
-                    pinned: true,
-                    delegate: SliverHeaderenv(
-                        maxExtend: 40,
-                        mixExtend: 20.0,
-                        builder: (percent) => Container(
-                              color: Colors.red,
-                            ))),
-                SliverToBoxAdapter(
-                  child: gridbuild(
-                      itens: itens,
-                      controllerdrag: _controllerdrag,
-                      scrollController: _scrollController),
-                )
-              ],
-            );
-          },
-        ),
-      ],
+              );
+            },
+          );
+          _controllerdrag.clear();
+        }
+
+        return CustomSliverPerson(
+          pinned: true,
+          floating: true,
+          controllerdrag: _controllerdrag,
+          scrollController: _scrollController,
+          itens: itens,
+          onaddPressed: addonPressed,
+          onremovePresed: onremovePressed,
+          title: 'HomePage',
+        );
+      },
     );
   }
 }

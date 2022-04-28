@@ -1,25 +1,25 @@
+import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/material.dart';
-
-import 'package:void_01/src/env/models/blocs/Item_events.dart';
 
 class AnimatedDetailGridView extends StatefulWidget {
   final double percent;
-  final String title;
+  final String? title;
   final dynamic itens;
+  final VoidCallback? onaddPressed;
+  final VoidCallback? onremovePresed;
+  final DragSelectGridViewController controllerdrag;
+  final ScrollController scrollController;
+
   final VoidCallback? onPressed;
-  final dynamic controllerdrag;
-  final dynamic scrollController;
-  final bool isSelected;
-  final dynamic bloc;
   const AnimatedDetailGridView({
     required this.itens,
     this.onPressed,
+    this.onremovePresed,
+    this.onaddPressed,
     required this.percent,
-    required this.title,
-    required this.bloc,
+    this.title,
     required this.controllerdrag,
     required this.scrollController,
-    required this.isSelected,
     Key? key,
   }) : super(key: key);
 
@@ -39,32 +39,6 @@ class _AnimatedDetailGridViewState extends State<AnimatedDetailGridView> {
   void dispose() {
     widget.controllerdrag.removeListener(rebuild);
     super.dispose();
-  }
-
-  void onPressed(selectedindex) {
-    selectedindex.forEach(
-      (element) {
-        widget.bloc.add(
-          RemoveItemEvent(
-            key: element,
-          ),
-        );
-      },
-    );
-    widget.controllerdrag.clear();
-  }
-
-  addonPressed() {
-    setState(
-      () {
-        final _keys = widget.controllerdrag.value.selectedIndexes
-            .map<dynamic>((index) => widget.itens[index]);
-        _keys.forEach((element) {
-          widget.bloc.add(AddItemEvent(key: element));
-        });
-        widget.controllerdrag.clear();
-      },
-    );
   }
 
   void rebuild() => setState(() {});
@@ -92,8 +66,6 @@ class _AnimatedDetailGridViewState extends State<AnimatedDetailGridView> {
 
   @override
   Widget build(BuildContext context) {
-    assert(debugCheckHasMaterialLocalizations(context));
-
     const _toptext = 45.0;
 
     final _currentsizetest =
@@ -163,22 +135,14 @@ class _AnimatedDetailGridViewState extends State<AnimatedDetailGridView> {
                                 IconButton(
                                   color:
                                       Theme.of(context).colorScheme.secondary,
-                                  onPressed: () {
-                                    addonPressed();
-                                  },
+                                  onPressed: widget.onaddPressed,
                                   icon: const Icon(Icons.add),
                                 ),
                                 IconButton(
                                   color:
                                       Theme.of(context).colorScheme.secondary,
                                   icon: const Icon(Icons.delete_outline),
-                                  onPressed: () {
-                                    final key = widget
-                                        .controllerdrag.value.selectedIndexes
-                                        .map<dynamic>(
-                                            (index) => widget.itens[index].key);
-                                    onPressed(key);
-                                  },
+                                  onPressed: widget.onremovePresed,
                                 ),
                               ],
                             ),
@@ -192,7 +156,7 @@ class _AnimatedDetailGridViewState extends State<AnimatedDetailGridView> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  widget.title,
+                                  widget.title!,
                                   style: TextStyle(
                                     fontSize: 23,
                                     color:
@@ -203,9 +167,9 @@ class _AnimatedDetailGridViewState extends State<AnimatedDetailGridView> {
                                 ),
                               ],
                             ),
-                          )
+                          ),
                   ],
-                )
+                ),
               ],
             ),
           ),
