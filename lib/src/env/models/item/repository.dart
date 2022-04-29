@@ -1,13 +1,24 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:flutter/cupertino.dart';
-
 import 'package:void_01/src/env/models/item/item.dart';
 
 import 'package:xid/xid.dart';
 
-class Itemrepository extends ChangeNotifier {
+class Itemrepository {
   final List<Item> _Item = [];
+
+  final List<Item> _item2 = [];
+
+  List<Item> addItem(List<Item> key) {
+    key.forEach((c) {
+      if (!_item2.any((a) => a.key == c.key)) {
+        _item2.add(c);
+        print(_item2);
+      }
+    });
+    return _item2;
+  }
+
   var xid = Xid();
 
   List<Item> loadItem() {

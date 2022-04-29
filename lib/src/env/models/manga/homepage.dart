@@ -55,7 +55,9 @@ class _Homepage2State extends State<Homepage2> {
   Widget build(BuildContext context) {
     final _screen = [
       _listaManga(context: context),
-      const FavoritePage(),
+      FavoritePage(
+        bloc: bloc,
+      ),
       const ConfigPage(),
     ];
 
@@ -92,7 +94,7 @@ class _Homepage2State extends State<Homepage2> {
                       ),
                     ),
                     NavigationDestination(
-                      selectedIcon: Icon(Icons.favorite_border),
+                      selectedIcon: Icon(Icons.favorite),
                       label: "Favorito",
                       icon: Icon(Icons.favorite_outline),
                     ),

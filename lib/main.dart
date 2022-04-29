@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:provider/provider.dart';
-import 'package:void_01/src/env/models/item/favorepository.dart';
 import 'package:void_01/src/env/models/manga/homepage.dart';
 import 'package:void_01/theme/dark_theme_provider.dart';
 import 'package:void_01/theme/hex_color.dart';
 import 'package:void_01/theme/texttheme.dart';
 
-import 'src/env/models/manga/widget/configs/hive_config.dart';
-
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   _appInit();
 }
 
 _appInit() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await HiveConfig.start();
   runApp(const _Myapphome());
 }
 
@@ -52,11 +49,6 @@ class __MyapphomeState extends State<_Myapphome> {
         ChangeNotifierProvider(
           create: (_) {
             return _themeChangeProvider;
-          },
-        ),
-        ChangeNotifierProvider(
-          create: (_) {
-            return Favrepository();
           },
         ),
       ],
