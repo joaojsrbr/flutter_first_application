@@ -28,7 +28,7 @@ class ColorThemePreference {
 
   Future<String> getColor() async {
     SharedPreferences prefs1 = await SharedPreferences.getInstance();
-    return prefs1.getString(COLOR_STATUS) ?? '#ff020106';
+    return prefs1.getString(COLOR_STATUS) ?? '#4520d6';
   }
 }
 

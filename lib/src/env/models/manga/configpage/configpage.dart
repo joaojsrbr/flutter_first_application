@@ -1,49 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
+import 'package:void_01/src/env/models/manga/configpage/configpage_controller.dart';
+import 'package:void_01/theme/dark_theme_provider.dart';
 import 'package:void_01/theme/hex_color.dart';
-import '../../../../../../theme/dark_theme_provider.dart';
 
-class ConfigPage extends StatefulWidget {
+class ConfigPage extends GetView<ConfigPageController> {
   const ConfigPage({Key? key}) : super(key: key);
-
-  @override
-  State<ConfigPage> createState() => _ConfigState();
-}
-
-class _ConfigState extends State<ConfigPage> with TickerProviderStateMixin {
-  final PaletteType _paletteType = PaletteType.hsl;
-
-  late final AnimationController _controller;
-
-  @override
-  void initState() {
-    _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 134));
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     final _themeChange = Provider.of<DarkThemeProvider>(context);
-    void onPrimaryColorChange(Color value) {
-      _themeChange.colorTheme = '#${value.value.toRadixString(16)}';
-    }
-
-    void changeColor(Color color) => setState(
-          () {
-            onPrimaryColorChange(color);
-          },
-        );
+    Get.put(ConfigPageController(themeChange: _themeChange));
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -82,10 +53,10 @@ class _ConfigState extends State<ConfigPage> with TickerProviderStateMixin {
                     // _themeChange.darkTheme = value;
                     if (_themeChange.darkTheme == false) {
                       _themeChange.darkTheme = true;
-                      _controller.forward();
+                      controller.controller.forward();
                     } else {
                       _themeChange.darkTheme = false;
-                      _controller.reverse();
+                      controller.controller.reverse();
                     }
                   },
                   leading: _themeChange.darkTheme
@@ -93,21 +64,21 @@ class _ConfigState extends State<ConfigPage> with TickerProviderStateMixin {
                           'assets/lottie/53164-light-dark-mode-button.json',
                           width: 70,
                           onLoaded: (c) {
-                            _controller.duration = c.duration;
+                            controller.controller.duration = c.duration;
                             _themeChange.darkTheme
-                                ? _controller.forward()
-                                : _controller.reverse();
+                                ? controller.controller.forward()
+                                : controller.controller.reverse();
                           },
-                          controller: _controller,
+                          controller: controller.controller,
                         )
                       : Lottie.asset(
                           'assets/lottie/53164-light-dark-mode-button.json',
                           width: 70,
-                          controller: _controller,
+                          controller: controller.controller,
                           onLoaded: (c) {
-                            _controller.duration = c.duration;
+                            controller.controller.duration = c.duration;
 
-                            _controller.forward();
+                            controller.controller.forward();
                           },
                         ),
                   // leading: Icon(_themeChange.darkTheme
@@ -137,12 +108,12 @@ class _ConfigState extends State<ConfigPage> with TickerProviderStateMixin {
                               child: ColorPicker(
                                 pickerColor: Color(
                                     hexStringToHexInt(_themeChange.colorTheme)),
-                                onColorChanged: changeColor,
+                                onColorChanged: controller.changeColor,
                                 colorPickerWidth: 300,
                                 pickerAreaHeightPercent: 0.7,
                                 enableAlpha: true,
                                 displayThumbColor: true,
-                                paletteType: _paletteType,
+                                paletteType: controller.paletteType,
                                 pickerAreaBorderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(8),
                                   topRight: Radius.circular(8),

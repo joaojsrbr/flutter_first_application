@@ -9,8 +9,8 @@ class AnimatedDetailGridView extends StatefulWidget {
   final VoidCallback? onremovePresed;
   final DragSelectGridViewController controllerdrag;
   final ScrollController scrollController;
-
   final VoidCallback? onPressed;
+
   const AnimatedDetailGridView({
     required this.itens,
     this.onPressed,

@@ -1,15 +1,14 @@
-import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:void_01/src/env/models/manga/homepage/homepage_controller.dart';
 
 import 'package:void_01/src/env/models/manga/widget/sliverheader/sliver_header_prod.dart';
 
 import '../animated_detail_header_gridview.dart';
-import '../gridbuild/gridbuild_widget.dart';
+import '../grid_build/gridbuild_widget.dart';
 
-class CustomSliverPerson extends StatelessWidget {
+class CustomSliverPerson2 extends StatelessWidget {
   final dynamic itens;
-  final DragSelectGridViewController controllerdrag;
-  final ScrollController scrollController;
   final double maxExtend;
   final double mixExtend;
   final VoidCallback? onaddPressed;
@@ -19,7 +18,7 @@ class CustomSliverPerson extends StatelessWidget {
   final String title;
   final ScrollPhysics physics;
 
-  const CustomSliverPerson({
+  const CustomSliverPerson2({
     Key? key,
     required this.itens,
     this.title = '',
@@ -30,14 +29,13 @@ class CustomSliverPerson extends StatelessWidget {
     this.mixExtend = 90.0,
     this.onaddPressed,
     this.onremovePresed,
-    required this.controllerdrag,
-    required this.scrollController,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final Homepage2Controller _c = Get.find();
     return CustomScrollView(
-      controller: scrollController,
+      controller: _c.scrollController,
       physics: physics,
       slivers: [
         SliverPersistentHeader(
@@ -53,8 +51,8 @@ class CustomSliverPerson extends StatelessWidget {
                 title: title,
                 onremovePresed: onremovePresed,
                 onaddPressed: onaddPressed,
-                controllerdrag: controllerdrag,
-                scrollController: scrollController,
+                controllerdrag: _c.controllerdrag,
+                scrollController: _c.scrollController,
                 itens: itens,
                 percent: percent,
               );
@@ -63,9 +61,8 @@ class CustomSliverPerson extends StatelessWidget {
         ),
         SliverToBoxAdapter(
           child: gridbuild(
-              itens: itens,
-              controllerdrag: controllerdrag,
-              scrollController: scrollController),
+            itens: itens,
+          ),
         ),
       ],
     );

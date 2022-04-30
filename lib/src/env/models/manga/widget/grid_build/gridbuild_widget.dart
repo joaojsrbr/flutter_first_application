@@ -2,10 +2,13 @@ import 'package:animations/animations.dart';
 import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:void_01/src/env/models/manga/mangapage.dart';
-import 'package:void_01/src/env/models/manga/widget/scroll_disableindicator_selecteditem/selected_item_widget.dart';
+import 'package:get/get.dart';
+import 'package:void_01/src/env/models/manga/homepage/homepage_controller.dart';
+import 'package:void_01/src/env/models/manga/mangapage/mangapage.dart';
+import 'package:void_01/src/env/models/manga/widget/selected_item/selected_item.dart';
 
-Widget gridbuild({itens, scrollController, controllerdrag}) {
+Widget gridbuild({itens}) {
+  final Homepage2Controller _c = Get.put(Homepage2Controller());
   return DragSelectGridView(
     shrinkWrap: true,
     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -15,7 +18,7 @@ Widget gridbuild({itens, scrollController, controllerdrag}) {
     padding: const EdgeInsets.only(top: 4),
     physics: const BouncingScrollPhysics(),
     itemCount: itens.length,
-    gridController: controllerdrag,
+    gridController: _c.controllerdrag,
     itemBuilder: (BuildContext ctxt, index, selected) {
       return AnimationConfiguration.staggeredGrid(
         columnCount: itens.length,
@@ -36,7 +39,7 @@ Widget gridbuild({itens, scrollController, controllerdrag}) {
                 closedShape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15))),
                 transitionType: ContainerTransitionType.fade,
-                transitionDuration: const Duration(milliseconds: 1500),
+                transitionDuration: const Duration(milliseconds: 1650),
                 openBuilder: (context, _) => MangaPage(
                     title: itens[index].title,
                     image: itens[index].urlfoto,

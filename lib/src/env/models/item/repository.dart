@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, avoid_function_literals_in_foreach_calls
 
 import 'package:void_01/src/env/models/item/item.dart';
 
@@ -13,7 +13,6 @@ class Itemrepository {
     key.forEach((c) {
       if (!_item2.any((a) => a.key == c.key)) {
         _item2.add(c);
-        print(_item2);
       }
     });
     return _item2;
@@ -102,6 +101,10 @@ class Itemrepository {
 
   readitens() {
     return _Item;
+  }
+
+  readitens2() {
+    return _item2;
   }
 
   List<Item> removeItem(List<int> key) {

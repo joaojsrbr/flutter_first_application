@@ -11,7 +11,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
   ItemBloc() : super(ItemInitialState()) {
     on<LoadItemEvent>(
       (event, emit) => emit(
-        ItemSuccessState(itens: _itemRepo.loadItem()),
+        ItemSuccessState(itens: _itemRepo.loadItem(), itens2: []),
       ),
     );
     on<AddItemEvent>(
