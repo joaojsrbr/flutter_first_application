@@ -6,7 +6,7 @@ class ScrollToHideWidgetStateController extends GetxController {
   ScrollToHideWidgetStateController({required this.scrollcontroller});
   // ScrollToHideWidgetStateController({required this.controller});
 
-  bool isVisible = true;
+  RxBool isVisible = true.obs;
   @override
   void onInit() {
     scrollcontroller.addListener(listen);
@@ -28,14 +28,16 @@ class ScrollToHideWidgetStateController extends GetxController {
   }
 
   void show() {
-    if (!isVisible) {
-      isVisible = true;
+    if (!isVisible.value) {
+      isVisible.value = true;
+      update();
     }
   }
 
   void hide() {
-    if (isVisible) {
-      isVisible = false;
+    if (isVisible.value) {
+      isVisible.value = false;
+      update();
     }
   }
 }

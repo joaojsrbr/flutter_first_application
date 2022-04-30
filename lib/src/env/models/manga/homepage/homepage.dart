@@ -34,22 +34,21 @@ class Homepage extends GetView<Homepage2Controller> {
           ? Container(
               height: 0,
             )
-          : Obx(
-              () => ScrollToHideWidgetState(
-                // controller: controller._scrollController,
-                scrollcontroller: controller.scrollController,
-                child: NavigationBarTheme(
-                  data: NavigationBarThemeData(
-                    labelTextStyle: MaterialStateProperty.all(
-                      const TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.w500),
-                    ),
+          : ScrollToHideWidgetState(
+              // controller: controller._scrollController,
+              // scrollcontroller: controller.scrollController,
+              child: NavigationBarTheme(
+                data: NavigationBarThemeData(
+                  labelTextStyle: MaterialStateProperty.all(
+                    const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                   ),
-                  child: NavigationBar(
+                ),
+                child: Obx(
+                  () => NavigationBar(
                     selectedIndex: controller.indexscreen.value,
                     onDestinationSelected: (index) =>
                         controller.downloadCondition(index),
-                    //  controller.indexscreen = index),
+                    //  controller.indexscreen = index)),
                     height: 60,
                     backgroundColor: Theme.of(context).colorScheme.onSecondary,
                     labelBehavior:
