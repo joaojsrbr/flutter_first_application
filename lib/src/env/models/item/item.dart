@@ -1,8 +1,18 @@
+import 'package:hive_flutter/hive_flutter.dart';
+
+part 'item.g.dart';
+
+@HiveType(typeId: 2)
 class Item {
+  @HiveField(0)
   String title;
+  @HiveField(1)
   String urlfoto;
+  @HiveField(2)
   String descr;
+  @HiveField(3)
   String icon;
+  @HiveField(4)
   List<int> key;
 
   Item(

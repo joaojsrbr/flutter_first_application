@@ -1,6 +1,7 @@
 import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:void_01/src/env/models/blocs/item_bloc.dart';
 import 'package:void_01/src/env/models/blocs/item_events.dart';
 
@@ -14,6 +15,7 @@ class Homepage2Controller extends GetxController {
   late ScrollController scrollController;
   // Select Controller
   final controllerdrag = DragSelectGridViewController();
+
   @override
   void onInit() {
     bloc = ItemBloc();

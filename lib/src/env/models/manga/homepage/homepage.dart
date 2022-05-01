@@ -3,9 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:void_01/main.dart';
+
 import 'package:void_01/src/env/models/blocs/item_bloc.dart';
 import 'package:void_01/src/env/models/blocs/item_events.dart';
 import 'package:void_01/src/env/models/blocs/item_state.dart';
+import 'package:void_01/src/env/models/item/adapters/item2.dart';
 import 'package:void_01/src/env/models/item/item.dart';
 import 'package:void_01/src/env/models/manga/configpage/configpage.dart';
 import 'package:void_01/src/env/models/manga/fav_page.dart';
@@ -97,7 +100,14 @@ class Homepage extends GetView<Homepage2Controller> {
 
           controller.bloc.add(AddItemEvent(key: _keys));
           // _keys.forEach((element) {
-          //   bloc.add(AddItemEvent(key: element));
+          //   box.put(
+          //       element.title,
+          //       Item(
+          //           descr: element.descr,
+          //           icon: element.icon,
+          //           key: element.key,
+          //           title: element.title,
+          //           urlfoto: element.urlfoto));
           // });
           controller.controllerdrag.clear();
         }

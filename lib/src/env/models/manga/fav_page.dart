@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:void_01/src/env/models/item/item.dart';
+
+import 'package:void_01/src/env/models/item/repository.dart';
+
 import 'package:get/get.dart';
-import 'package:void_01/src/env/models/blocs/item_bloc.dart';
+
 import 'package:void_01/src/env/models/manga/homepage/homepage_controller.dart';
 
 import 'package:void_01/src/env/models/manga/widget/sliverheader/custom_sliver_person.dart';
-
-import '../blocs/item_state.dart';
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({
@@ -23,19 +25,22 @@ class _FavoritePageState extends State<FavoritePage> {
     final Homepage2Controller _c = Get.find();
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: BlocBuilder<ItemBloc, ItemState>(
-        bloc: _c.bloc,
-        builder: (context, state) {
-          final itens = state.itens2;
+      body: Consumer<Itemrepository>(builder: (context, value, child) {
+        // print(box.keys);
+        print(value.lista);
+        final _keys = _c.controllerdrag.value.selectedIndexes
+            .map<Item>((index) => value.lista[index]);
 
-          return CustomSliverPerson2(
-            itens: itens,
-            onaddPressed: () {},
-            onremovePresed: () {},
-            title: "Favorito",
-          );
-        },
-      ),
+        print(_keys);
+        return CustomSliverPerson2(
+          itens: value.lista,
+          onaddPressed: () {},
+          onremovePresed: () {
+            value.removebox(_keys);
+          },
+          title: "Favorito",
+        );
+      }),
     );
   }
 }

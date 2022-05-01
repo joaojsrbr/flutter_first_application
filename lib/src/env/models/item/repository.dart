@@ -1,23 +1,56 @@
 // ignore_for_file: non_constant_identifier_names, avoid_function_literals_in_foreach_calls
 
-import 'package:void_01/src/env/models/item/item.dart';
+import 'dart:collection';
 
+import 'package:void_01/src/env/models/item/item.dart';
+import 'package:flutter/material.dart';
 import 'package:xid/xid.dart';
 
-class Itemrepository {
-  final List<Item> _Item = [];
+import '../../../../main.dart';
 
+class Itemrepository extends ChangeNotifier {
+  final List<Item> _Item = [];
   final List<Item> _item2 = [];
 
-  List<Item> addItem(List<Item> key) {
+  Itemrepository() {
+    _startRepository();
+  }
+
+  _startRepository() async {
+    await _readFavoritas();
+  }
+
+  // _openBox() async {
+  //   Hive.registerAdapter(Item2Adapter());
+  //   box = await Hive.openLazyBox<Item>('item_favoritas');
+  // }
+
+  _readFavoritas() {
+    box.keys.forEach((c) async {
+      Item m = await box.get(c);
+      _item2.add(m);
+      notifyListeners();
+    });
+  }
+
+  addItem(List<Item> key) {
     key.forEach((c) {
       if (!_item2.any((a) => a.key == c.key)) {
+        box.put(
+            c.title,
+            Item(
+                descr: c.descr,
+                icon: c.icon,
+                key: c.key,
+                title: c.title,
+                urlfoto: c.urlfoto));
         _item2.add(c);
       }
     });
-    return _item2;
+    notifyListeners();
   }
 
+  UnmodifiableListView<Item> get lista => UnmodifiableListView(_item2);
   var xid = Xid();
 
   List<Item> loadItem() {
@@ -103,8 +136,14 @@ class Itemrepository {
     return _Item;
   }
 
-  readitens2() {
-    return _item2;
+  // readitens2() {
+  //   return box.read('Item');
+  // }
+
+  removebox(item) {
+    _item2.remove(item);
+    box.delete(item.title);
+    notifyListeners();
   }
 
   List<Item> removeItem(List<int> key) {
