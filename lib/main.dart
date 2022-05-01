@@ -3,19 +3,19 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:void_01/src/env/models/item/hive_config.dart';
-import 'package:void_01/src/env/models/item/item.dart';
+import 'package:void_01/src/env/models/item/adapters/item.dart';
 import 'package:void_01/src/env/models/item/repository.dart';
 import 'package:void_01/src/env/models/manga/homepage/homepage.dart';
 import 'package:void_01/theme/dark_theme_provider.dart';
 import 'package:void_01/theme/hex_color.dart';
 import 'package:void_01/theme/texttheme.dart';
 
-late Box box;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await HiveConfig.start();
+  await Hive.openBox<Item>('favorite_books');
   Hive.registerAdapter(ItemAdapter());
-  box = await Hive.openBox<Item>('item_favoritas');
+
   runApp(
     const _Myapphome(),
   );

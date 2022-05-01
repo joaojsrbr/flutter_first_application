@@ -2,14 +2,17 @@
 
 import 'dart:collection';
 
-import 'package:void_01/src/env/models/item/item.dart';
-import 'package:flutter/material.dart';
-import 'package:xid/xid.dart';
+import 'package:void_01/src/env/models/item/adapters/item.dart';
 
-import '../../../../main.dart';
+import 'package:flutter/material.dart';
+import 'package:void_01/src/env/models/item/adapters/itemadapter.dart';
+import 'package:xid/xid.dart';
+import 'package:hive/hive.dart';
 
 class Itemrepository extends ChangeNotifier {
   final List<Item> _Item = [];
+  // late LazyBox favoriteBox;
+  late LazyBox box;
   final List<Item> _item2 = [];
 
   Itemrepository() {
@@ -18,36 +21,29 @@ class Itemrepository extends ChangeNotifier {
 
   _startRepository() async {
     await _readFavoritas();
+    await _openBox();
   }
 
-  // _openBox() async {
-  //   Hive.registerAdapter(Item2Adapter());
-  //   box = await Hive.openLazyBox<Item>('item_favoritas');
-  // }
+  _openBox() async {
+    Hive.registerAdapter(ItemHiveAdapter());
+    box = await Hive.openLazyBox<Item>('item_favoritas');
+  }
 
   _readFavoritas() {
     box.keys.forEach((c) async {
       Item m = await box.get(c);
       _item2.add(m);
-      notifyListeners();
     });
+    notifyListeners();
   }
 
   addItem(List<Item> key) {
     key.forEach((c) {
       if (!_item2.any((a) => a.key == c.key)) {
-        box.put(
-            c.title,
-            Item(
-                descr: c.descr,
-                icon: c.icon,
-                key: c.key,
-                title: c.title,
-                urlfoto: c.urlfoto));
+        box.put(c.title, c);
         _item2.add(c);
       }
     });
-    notifyListeners();
   }
 
   UnmodifiableListView<Item> get lista => UnmodifiableListView(_item2);
@@ -134,16 +130,6 @@ class Itemrepository extends ChangeNotifier {
 
   readitens() {
     return _Item;
-  }
-
-  // readitens2() {
-  //   return box.read('Item');
-  // }
-
-  removebox(item) {
-    _item2.remove(item);
-    box.delete(item.title);
-    notifyListeners();
   }
 
   List<Item> removeItem(List<int> key) {

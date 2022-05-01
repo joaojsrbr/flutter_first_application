@@ -1,4 +1,4 @@
-import '../item/item.dart';
+import 'package:void_01/src/env/models/item/adapters/item.dart';
 
 abstract class ItemEvent {}
 
