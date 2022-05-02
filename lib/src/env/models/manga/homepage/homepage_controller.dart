@@ -52,30 +52,25 @@ class Homepage2Controller extends GetxController {
         .map<Item>((index) => itens![index])
         .toList();
 
-    // bloc.add(AddItemEvent(key: _keys));
-    _keys.forEach(
-      (element) {
-        favoritebox.put(
-          element.title,
-          Item(
-              descr: element.descr,
-              icon: element.icon,
-              key: element.key,
-              title: element.title,
-              urlfoto: element.urlfoto),
-        );
-      },
-    );
+    for (var element in _keys) {
+      favoritebox.put(
+        element.title,
+        Item(
+            descr: element.descr,
+            icon: element.icon,
+            key: element.key,
+            title: element.title,
+            urlfoto: element.urlfoto),
+      );
+    }
     controllerdrag.clear();
   }
 
   void onremovePressed(itens, Itemrepository state) {
     final key = controllerdrag.value.selectedIndexes
         .map<dynamic>((index) => itens![index].key);
-    key.forEach(
-      (element) {
-        state.removeItem(element);
-      },
-    );
+    for (var element in key) {
+      state.removeItem(element);
+    }
   }
 }
