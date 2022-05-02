@@ -32,14 +32,14 @@ class AnimatedDetailHeader extends GetView<AnimatedDetailController> {
     //Opacity
     double disappear(double percent) => 1 - percent;
 
-    const _toptext = 90.0;
+    const _toptext = 95.0;
 
     const _toptext1 = 160.0;
 
-    //Positioned >top< Tittle
-    final _currenttitle = (_toptext * (1 - percent)).clamp(165.0 / 2, _toptext);
+    //Position >top< Tittle
+    final _currenttitle = (_toptext * (1 - percent)).clamp(175.0 / 2, _toptext);
 
-    //Positioned >top< Descrição
+    //Position >top< Descrição
     final _currentdescricao =
         (_toptext1 * (1 - percent)).clamp(160.0, _toptext1);
 
@@ -58,8 +58,8 @@ class AnimatedDetailHeader extends GetView<AnimatedDetailController> {
           child: BackButton(color: Colors.white),
         ),
         Positioned(
-          top: _toptext / 2.8,
-          right: 1,
+          top: _toptext / 3.55,
+          right: 0,
           child: GestureDetector(
             onTap: () {
               if (_themeChange.darkTheme == false) {
