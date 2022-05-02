@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:void_01/src/env/models/manga/favoritepage/favorite_pageController.dart';
 import 'package:void_01/src/env/models/manga/homepage/homepage_controller.dart';
 
 import 'package:void_01/src/env/models/manga/widget/sliverheader/sliver_header_prod.dart';
@@ -16,10 +17,12 @@ class CustomSliverPerson2 extends StatelessWidget {
   final bool floating;
   final bool pinned;
   final String title;
+  final bool homepage;
   final ScrollPhysics physics;
 
   const CustomSliverPerson2({
     Key? key,
+    required this.homepage,
     required this.itens,
     this.title = '',
     this.physics = const BouncingScrollPhysics(),
@@ -34,6 +37,8 @@ class CustomSliverPerson2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Homepage2Controller _c = Get.find();
+    final FavoritePageController _d = Get.find();
+
     return CustomScrollView(
       controller: _c.scrollController,
       physics: physics,
@@ -51,7 +56,8 @@ class CustomSliverPerson2 extends StatelessWidget {
                 title: title,
                 onremovePresed: onremovePresed,
                 onaddPressed: onaddPressed,
-                controllerdrag: _c.controllerdrag,
+                controllerdrag:
+                    homepage ? _c.controllerdrag : _d.controllerdragfavorite,
                 scrollController: _c.scrollController,
                 itens: itens,
                 percent: percent,
@@ -60,7 +66,10 @@ class CustomSliverPerson2 extends StatelessWidget {
           ),
         ),
         SliverToBoxAdapter(
-          child: gridbuild(
+          child: Gridbuild(
+            homepage: homepage,
+            controllers:
+                homepage ? _c.controllerdrag : _d.controllerdragfavorite,
             itens: itens,
           ),
         ),

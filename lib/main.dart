@@ -1,23 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/get_navigation.dart';
+import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+
 import 'package:void_01/src/env/models/item/hive_config.dart';
 import 'package:void_01/src/env/models/item/adapters/item.dart';
 import 'package:void_01/src/env/models/item/repository.dart';
+import 'package:void_01/src/env/models/manga/favoritepage/favorite_pageController.dart';
 import 'package:void_01/src/env/models/manga/homepage/homepage.dart';
+
 import 'package:void_01/theme/dark_theme_provider.dart';
 import 'package:void_01/theme/hex_color.dart';
 import 'package:void_01/theme/texttheme.dart';
 
+const favoritesBox = 'item_favoritas';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await HiveConfig.start();
-  await Hive.openBox<Item>('favorite_books');
   Hive.registerAdapter(ItemAdapter());
+  await Hive.openBox<Item>(favoritesBox);
+  Get.put(FavoritePageController());
 
   runApp(
-    const _Myapphome(),
+    ChangeNotifierProvider(
+      create: (context) => Itemrepository(),
+      child: const _Myapphome(),
+    ),
   );
 }
 
@@ -54,9 +63,6 @@ class __MyapphomeState extends State<_Myapphome> {
         ChangeNotifierProvider(
           create: (context) => _themeChangeProvider,
         ),
-        ChangeNotifierProvider(
-          create: (context) => Itemrepository(),
-        ),
       ],
       child: Consumer<DarkThemeProvider>(
         builder: (BuildContext context, value, child) => GetMaterialApp(
@@ -71,7 +77,7 @@ class __MyapphomeState extends State<_Myapphome> {
               brightness: value.darkTheme ? Brightness.dark : Brightness.light,
             ),
           ),
-          home: const Homepage(),
+          home: Homepage(),
         ),
       ),
     );

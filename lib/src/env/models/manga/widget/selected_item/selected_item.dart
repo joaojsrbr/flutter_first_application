@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 // import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:void_01/src/env/models/manga/widget/build_image/build_image.dart';
@@ -178,6 +179,7 @@ class _SelectViewState extends State<SelectView>
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
+
     return AnimatedBuilder(
       animation: scaleAnimation,
       builder: (context, child) => Transform.scale(
@@ -185,6 +187,8 @@ class _SelectViewState extends State<SelectView>
         child: Stack(
           children: [
             buildImage(
+                height: context.mediaQuerySize.height,
+                width: context.mediaQuerySize.width,
                 image: widget.itens[widget.index].urlfoto!,
                 fit: BoxFit.cover,
                 color: Colors.black.withOpacity(0.32),
@@ -217,8 +221,8 @@ class _SelectViewState extends State<SelectView>
                 child: buildImage(
                     image: widget.itens[widget.index].icon!,
                     width: 40,
-                    borderradius: 36,
                     height: 40,
+                    borderradius: 36,
                     avatar: true),
               ),
             ),

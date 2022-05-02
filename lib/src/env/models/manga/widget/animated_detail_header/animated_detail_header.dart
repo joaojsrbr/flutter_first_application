@@ -6,7 +6,7 @@ import 'package:void_01/src/env/models/manga/widget/animated_detail_header/anima
 import 'package:void_01/src/env/models/manga/widget/build_image/build_image.dart';
 import 'package:void_01/theme/dark_theme_provider.dart';
 
-import '../../sumary.dart';
+import '../../sumary/sumary.dart';
 
 class AnimatedDetailHeader extends GetView<AnimatedDetailController> {
   final String? imageURL;
