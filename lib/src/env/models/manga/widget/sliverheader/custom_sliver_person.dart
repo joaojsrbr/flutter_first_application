@@ -127,6 +127,8 @@ class CustomSliverPerson2 extends GetView<CustomSliverPerson2Controller> {
                         elevation: 0,
                         toolbarHeight: 70,
                         floating: false,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.background,
                         snap: false,
                         pinned: true,
                         bottom: TabBar(
@@ -154,6 +156,8 @@ class CustomSliverPerson2 extends GetView<CustomSliverPerson2Controller> {
                     : SliverAppBar(
                         leading: Container(),
                         leadingWidth: 0,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.background,
                         title: Text(
                           title,
                           style: TextStyle(
@@ -162,7 +166,7 @@ class CustomSliverPerson2 extends GetView<CustomSliverPerson2Controller> {
                         elevation: 0,
                         toolbarHeight: 70,
                         floating: true,
-                        snap: true,
+                        snap: false,
                         pinned: true,
                         bottom: TabBar(
                           controller: _e._tabController,
@@ -199,7 +203,6 @@ class CustomSliverPerson2 extends GetView<CustomSliverPerson2Controller> {
                 controller: _e._tabController,
                 children: [
                   SingleChildScrollView(
-                    controller: _c.scrollController,
                     physics: const BouncingScrollPhysics(),
                     child: Gridbuild(
                       homepage: homepage,
@@ -242,6 +245,8 @@ class CustomSliverPerson2 extends GetView<CustomSliverPerson2Controller> {
                         floating: false,
                         snap: false,
                         pinned: true,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.background,
                         bottom: TabBar(
                           controller: _e._tabController,
                           tabs: [
@@ -267,6 +272,8 @@ class CustomSliverPerson2 extends GetView<CustomSliverPerson2Controller> {
                     : SliverAppBar(
                         leading: Container(),
                         leadingWidth: 0,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.background,
                         title: Text(
                           title,
                           style: TextStyle(
