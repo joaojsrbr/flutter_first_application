@@ -7,7 +7,7 @@ import 'package:void_01/main.dart';
 import 'package:void_01/src/env/models/item/adapters/item.dart';
 import 'package:void_01/src/env/models/item/repository.dart';
 
-class Homepage2Controller extends GetxController {
+class Homepage2Controller extends GetxController with WidgetsBindingObserver {
   RxList selecionadas = [].obs;
 
   final controllerdrag = DragSelectGridViewController();
@@ -42,10 +42,17 @@ class Homepage2Controller extends GetxController {
   @override
   void onClose() {
     scrollController.dispose();
-
     controllerdrag.removeListener(rebuild);
+    WidgetsBinding.instance!.removeObserver(this);
+
     super.onClose();
   }
+
+//   void drag(){
+//     if (AppLifecycleState state){
+// controllerdrag.dispose();
+//     }
+//   }
 
   void addonPressed(itens) {
     final _keys = controllerdrag.value.selectedIndexes

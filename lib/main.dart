@@ -8,6 +8,7 @@ import 'package:void_01/src/env/models/item/adapters/item.dart';
 import 'package:void_01/src/env/models/item/repository.dart';
 import 'package:void_01/src/env/models/manga/favoritepage/favorite_pageController.dart';
 import 'package:void_01/src/env/models/manga/homepage/homepage.dart';
+import 'package:void_01/src/env/models/manga/homepage/life_cycle_controller.dart';
 
 import 'package:void_01/theme/theme_provider.dart';
 import 'package:void_01/theme/hex_color.dart';
@@ -17,6 +18,7 @@ const favoritesBox = 'item_favoritas';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Get.put(LifeCycleController());
   await HiveConfig.start();
   Hive.registerAdapter(ItemAdapter());
   await Hive.openBox<Item>(favoritesBox);

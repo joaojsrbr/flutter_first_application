@@ -102,6 +102,8 @@ class Homepage extends GetResponsiveView<Homepage2Controller> {
         final itens = state.lista;
 
         return CustomSliverPerson2(
+          maxExtend: 60,
+          mixExtend: 50,
           homepage: true,
           pinned: true,
           isNotEmpty: true,
