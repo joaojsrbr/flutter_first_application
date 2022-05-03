@@ -9,7 +9,7 @@ import 'package:void_01/src/env/models/item/repository.dart';
 import 'package:void_01/src/env/models/manga/favoritepage/favorite_pageController.dart';
 import 'package:void_01/src/env/models/manga/homepage/homepage.dart';
 
-import 'package:void_01/theme/dark_theme_provider.dart';
+import 'package:void_01/theme/theme_provider.dart';
 import 'package:void_01/theme/hex_color.dart';
 import 'package:void_01/theme/texttheme.dart';
 
@@ -21,7 +21,7 @@ void main() async {
   Hive.registerAdapter(ItemAdapter());
   await Hive.openBox<Item>(favoritesBox);
   Get.put(FavoritePageController());
-
+  Get.put(ThemeController());
   runApp(
     ChangeNotifierProvider(
       create: (context) => Itemrepository(),
@@ -38,7 +38,7 @@ class _Myapphome extends StatefulWidget {
 }
 
 class __MyapphomeState extends State<_Myapphome> {
-  final DarkThemeProvider _themeChangeProvider = DarkThemeProvider();
+  final ColorThemeProvider _themeChangeProvider = ColorThemeProvider();
   @override
   void initState() {
     _getCurrentAppTheme();
@@ -46,8 +46,6 @@ class __MyapphomeState extends State<_Myapphome> {
   }
 
   void _getCurrentAppTheme() async {
-    _themeChangeProvider.darkTheme =
-        await _themeChangeProvider.darkThemePreference.getTheme();
     _themeChangeProvider.colorTheme =
         await _themeChangeProvider.colorThemePreference.getColor();
     _themeChangeProvider.config1 =
@@ -58,13 +56,14 @@ class __MyapphomeState extends State<_Myapphome> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeController.to.loadThemeMode();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
           create: (context) => _themeChangeProvider,
         ),
       ],
-      child: Consumer<DarkThemeProvider>(
+      child: Consumer<ColorThemeProvider>(
         builder: (BuildContext context, value, child) => GetMaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
@@ -74,7 +73,17 @@ class __MyapphomeState extends State<_Myapphome> {
               seedColor: Color(
                 hexStringToHexInt(value.colorTheme),
               ),
-              brightness: value.darkTheme ? Brightness.dark : Brightness.light,
+              brightness: Brightness.light,
+            ),
+          ),
+          darkTheme: ThemeData(
+            useMaterial3: true,
+            textTheme: texttheme1(),
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Color(
+                hexStringToHexInt(value.colorTheme),
+              ),
+              brightness: Brightness.dark,
             ),
           ),
           home: Homepage(),

@@ -1,5 +1,6 @@
 import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:void_01/theme/theme_provider.dart';
 
 class AnimatedDetailGridView extends StatefulWidget {
   final double percent;
@@ -72,11 +73,13 @@ class _AnimatedDetailGridViewState extends State<AnimatedDetailGridView> {
         (50.0 * (1.0 - widget.percent)).clamp(45.0, 100.0 / 2);
     final _currentsizetes2t =
         (_toptext * (1.0 - widget.percent)).clamp(35.0, 55.0);
-
+    final _darkChange = ThemeController.to;
     // final _themeChange = Provider.of<DarkThemeProvider>(context);
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.onSecondary,
+      backgroundColor: _darkChange.isDark.value
+          ? Theme.of(context).colorScheme.onSecondary
+          : Theme.of(context).colorScheme.secondaryContainer,
       body: Column(
         children: [
           Expanded(

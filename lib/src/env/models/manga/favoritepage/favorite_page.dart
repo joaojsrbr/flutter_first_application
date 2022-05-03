@@ -21,22 +21,30 @@ class FavoritePage extends GetResponsiveView<FavoritePageController> {
       body: ValueListenableBuilder(
         valueListenable: controller.favoritebox.listenable(),
         builder: (ctx, Box<Item> box, _) {
-          final itens = box.values.toList();
-
           return CustomSliverPerson2(
+            isNotEmpty: box.values.isNotEmpty,
             homepage: false,
-            itens: itens,
+            itens: box.values.toList(),
             onaddPressed: () {},
             onremovePresed: () {
               final _keys = controller
                   .controllerdragfavorite.value.selectedIndexes
-                  .map<Item>((index) => itens[index])
+                  .map<Item>((index) => box.values.toList()[index])
                   .toList();
               controller.onremovePresed(_keys);
               controller.controllerdragfavorite.clear();
             },
             title: "Favorito",
           );
+
+          // return CustomSliverPerson2(
+          //   isNotEmpty: box.values.isNotEmpty,
+          //   homepage: false,
+          //   itens: itens,
+          //   onaddPressed: () {},
+          //   onremovePresed: () {},
+          //   title: "Favorito",
+          // );
         },
       ),
     );

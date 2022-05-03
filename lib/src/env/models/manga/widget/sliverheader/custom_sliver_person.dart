@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:void_01/src/env/models/manga/favoritepage/favorite_pageController.dart';
 import 'package:void_01/src/env/models/manga/homepage/homepage_controller.dart';
@@ -19,12 +20,13 @@ class CustomSliverPerson2 extends StatelessWidget {
   final String title;
   final bool homepage;
   final ScrollPhysics physics;
-
+  final bool isNotEmpty;
   const CustomSliverPerson2({
     Key? key,
     required this.homepage,
     required this.itens,
     this.title = '',
+    required this.isNotEmpty,
     this.physics = const BouncingScrollPhysics(),
     this.floating = false,
     this.pinned = false,
@@ -39,41 +41,91 @@ class CustomSliverPerson2 extends StatelessWidget {
     final Homepage2Controller _c = Get.find();
     final FavoritePageController _d = Get.find();
 
-    return CustomScrollView(
-      controller: _c.scrollController,
-      physics: physics,
-      slivers: [
-        SliverPersistentHeader(
-          // pinned: controllerdrag.value.isSelecting ? true : false,
-          pinned: pinned,
-          floating: floating,
-          delegate: SliverHeaderenv(
-            // maxExtend: MediaQuery.of(context).size.height,
-            maxExtend: maxExtend,
-            mixExtend: mixExtend,
-            builder: (percent) {
-              return AnimatedDetailGridView(
-                title: title,
-                onremovePresed: onremovePresed,
-                onaddPressed: onaddPressed,
-                controllerdrag:
-                    homepage ? _c.controllerdrag : _d.controllerdragfavorite,
-                scrollController: _c.scrollController,
-                itens: itens,
-                percent: percent,
-              );
-            },
-          ),
-        ),
-        SliverToBoxAdapter(
-          child: Gridbuild(
-            homepage: homepage,
-            controllers:
-                homepage ? _c.controllerdrag : _d.controllerdragfavorite,
-            itens: itens,
-          ),
-        ),
-      ],
-    );
+    return isNotEmpty
+        ? CustomScrollView(
+            key: const Key('isEmpty'),
+            controller: _c.scrollController,
+            physics: physics,
+            slivers: [
+              SliverPersistentHeader(
+                // pinned: controllerdrag.value.isSelecting ? true : false,
+                pinned: pinned,
+                floating: floating,
+                delegate: SliverHeaderenv(
+                  // maxExtend: MediaQuery.of(context).size.height,
+                  maxExtend: maxExtend,
+                  mixExtend: mixExtend,
+                  builder: (percent) {
+                    return AnimatedDetailGridView(
+                      title: title,
+                      onremovePresed: onremovePresed,
+                      onaddPressed: onaddPressed,
+                      controllerdrag: homepage
+                          ? _c.controllerdrag
+                          : _d.controllerdragfavorite,
+                      scrollController: _c.scrollController,
+                      itens: itens,
+                      percent: percent,
+                    );
+                  },
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Gridbuild(
+                  homepage: homepage,
+                  controllers:
+                      homepage ? _c.controllerdrag : _d.controllerdragfavorite,
+                  itens: itens,
+                ),
+              ),
+            ],
+          )
+        : CustomScrollView(
+            key: const Key('isNotEmpty'),
+            controller: _c.scrollController,
+            physics: physics,
+            slivers: [
+              SliverPersistentHeader(
+                // pinned: controllerdrag.value.isSelecting ? true : false,
+                pinned: pinned,
+                floating: floating,
+                delegate: SliverHeaderenv(
+                  // maxExtend: MediaQuery.of(context).size.height,
+                  maxExtend: maxExtend,
+                  mixExtend: mixExtend,
+                  builder: (percent) {
+                    return AnimatedDetailGridView(
+                      title: title,
+                      onremovePresed: onremovePresed,
+                      onaddPressed: onaddPressed,
+                      controllerdrag: homepage
+                          ? _c.controllerdrag
+                          : _d.controllerdragfavorite,
+                      scrollController: _c.scrollController,
+                      itens: itens,
+                      percent: percent,
+                    );
+                  },
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      top: context.mediaQueryViewPadding.top * 9.5),
+                  child: Center(
+                    child: Text(
+                      '¯\\_(ツ)_/¯',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontSize: 50,
+                        letterSpacing: -0.2,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
   }
 }

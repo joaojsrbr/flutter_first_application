@@ -5,7 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:void_01/src/env/models/manga/configpage/configpage_controller.dart';
-import 'package:void_01/theme/dark_theme_provider.dart';
+import 'package:void_01/theme/theme_provider.dart';
 import 'package:void_01/theme/hex_color.dart';
 
 class ConfigPage extends GetView<ConfigPageController> {
@@ -13,7 +13,8 @@ class ConfigPage extends GetView<ConfigPageController> {
 
   @override
   Widget build(BuildContext context) {
-    final _themeChange = Provider.of<DarkThemeProvider>(context);
+    final _themeChange = Provider.of<ColorThemeProvider>(context);
+    final darkChange = ThemeController.to;
     Get.put(ConfigPageController(themeChange: _themeChange));
 
     return Scaffold(
@@ -48,24 +49,24 @@ class ConfigPage extends GetView<ConfigPageController> {
                 SettingsTile.switchTile(
                   activeSwitchColor: Theme.of(context).colorScheme.primary,
                   key: const Key('DarkMode'),
-                  initialValue: _themeChange.darkTheme,
+                  initialValue: darkChange.isDark.value,
                   onToggle: (value) {
                     // _themeChange.darkTheme = value;
-                    if (_themeChange.darkTheme == false) {
-                      _themeChange.darkTheme = true;
+                    if (darkChange.isDark.value == false) {
+                      darkChange.changeTheme();
                       controller.controller.forward();
                     } else {
-                      _themeChange.darkTheme = false;
+                      darkChange.changeTheme();
                       controller.controller.reverse();
                     }
                   },
-                  leading: _themeChange.darkTheme
+                  leading: darkChange.isDark.value
                       ? Lottie.asset(
                           'assets/lottie/53164-light-dark-mode-button.json',
                           width: 70,
                           onLoaded: (c) {
                             controller.controller.duration = c.duration;
-                            _themeChange.darkTheme
+                            darkChange.isDark.value
                                 ? controller.controller.forward()
                                 : controller.controller.reverse();
                           },
@@ -81,9 +82,6 @@ class ConfigPage extends GetView<ConfigPageController> {
                             controller.controller.forward();
                           },
                         ),
-                  // leading: Icon(_themeChange.darkTheme
-                  //     ? Icons.dark_mode
-                  //     : Icons.light_mode),
                   title: const Text('DarkMode'),
                 ),
                 SettingsTile(

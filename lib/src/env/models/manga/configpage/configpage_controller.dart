@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
-import 'package:void_01/theme/dark_theme_provider.dart';
+import 'package:void_01/theme/theme_provider.dart';
 
 class ConfigPageController extends GetxController
     with GetTickerProviderStateMixin {
-  DarkThemeProvider themeChange;
+  ColorThemeProvider themeChange;
   final PaletteType paletteType = PaletteType.hsl;
   ConfigPageController({required this.themeChange});
   late final AnimationController controller;

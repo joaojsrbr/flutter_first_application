@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:provider/provider.dart';
+
 import 'package:void_01/src/env/models/manga/widget/animated_detail_header/animated_modal_controller.dart';
 import 'package:void_01/src/env/models/manga/widget/build_image/build_image.dart';
-import 'package:void_01/theme/dark_theme_provider.dart';
+import 'package:void_01/theme/theme_provider.dart';
 
 import '../../sumary/sumary.dart';
 
@@ -23,8 +23,8 @@ class AnimatedDetailHeader extends GetView<AnimatedDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    //Provide DarkMode
-    final _themeChange = Provider.of<DarkThemeProvider>(context);
+    //DarkMode
+    final themeChange = ThemeController.to;
 
     //Getput AnimatedDetailModalController
     Get.put(AnimatedDetailController());
@@ -62,11 +62,11 @@ class AnimatedDetailHeader extends GetView<AnimatedDetailController> {
           right: 0,
           child: GestureDetector(
             onTap: () {
-              if (_themeChange.darkTheme == false) {
-                _themeChange.darkTheme = true;
+              if (themeChange.isDark.value == false) {
+                themeChange.changeTheme();
                 controller.controller.forward();
               } else {
-                _themeChange.darkTheme = false;
+                themeChange.changeTheme();
                 controller.controller.reverse();
               }
             },
@@ -74,7 +74,7 @@ class AnimatedDetailHeader extends GetView<AnimatedDetailController> {
                 'assets/lottie/53164-light-dark-mode-button.json',
                 width: 70, onLoaded: (c) {
               controller.controller.duration = c.duration;
-              _themeChange.darkTheme
+              themeChange.isDark.value
                   ? controller.controller.forward()
                   : controller.controller.reverse();
             }, controller: controller.controller, height: 70),
@@ -88,7 +88,7 @@ class AnimatedDetailHeader extends GetView<AnimatedDetailController> {
             title,
             style: TextStyle(
               fontSize: 23,
-              color: _themeChange.darkTheme
+              color: themeChange.isDark.value
                   ? Theme.of(context).colorScheme.secondary
                   : Theme.of(context).colorScheme.onTertiary,
               letterSpacing: -0.2,
@@ -112,7 +112,7 @@ class AnimatedDetailHeader extends GetView<AnimatedDetailController> {
                 style: TextStyle(
                     fontSize: 15,
                     letterSpacing: -0.2,
-                    color: _themeChange.darkTheme
+                    color: themeChange.isDark.value
                         ? Theme.of(context).colorScheme.onSurfaceVariant
                         : Theme.of(context).colorScheme.surfaceVariant),
               ),
