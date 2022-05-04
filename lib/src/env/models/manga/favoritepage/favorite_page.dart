@@ -7,15 +7,15 @@ import 'package:void_01/src/env/models/manga/favoritepage/favorite_pageControlle
 
 import 'package:void_01/src/env/models/manga/widget/sliverheader/custom_sliver_person.dart';
 
-class FavoritePage extends GetResponsiveView<FavoritePageController> {
+class FavoritePage extends GetResponsiveWidget<FavoritePageController> {
+  final GetxController? favoritepageController;
   FavoritePage({
+    this.favoritepageController,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.put(FavoritePageController());
-
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: ValueListenableBuilder(

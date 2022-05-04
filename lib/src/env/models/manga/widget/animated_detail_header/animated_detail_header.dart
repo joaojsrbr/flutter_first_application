@@ -103,9 +103,11 @@ class AnimatedDetailHeader extends GetView<AnimatedDetailController> {
           child: Opacity(
             opacity: disappear(percent),
             child: GestureDetector(
-              onTap: () => Get.to(Sumary(
-                descricao: descricao,
-              )),
+              onTap: () => Get.to(
+                Sumary(
+                  descricao: descricao,
+                ),
+              ),
               child: Text(
                 descricao,
                 maxLines: 10,

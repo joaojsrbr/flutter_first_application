@@ -4,15 +4,22 @@ import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:void_01/main.dart';
 
 import 'package:void_01/src/env/models/item/adapters/item.dart';
+import 'package:void_01/src/env/models/item/hive_config.dart';
 import 'package:void_01/src/env/models/item/repository.dart';
 
 class Homepage2Controller extends GetxController
-    with WidgetsBindingObserver, GetSingleTickerProviderStateMixin {
+    with GetSingleTickerProviderStateMixin {
   RxList selecionadas = [].obs;
+
   late TabController tabController;
+
+  // void resetForm() {
+  //   key.currentState.reset();
+  //   controllerdrag.text = '';
+  //   focusNode.requestFocus();
+  // }
 
   late Box<Item> favoritebox;
 
@@ -30,7 +37,10 @@ class Homepage2Controller extends GetxController
     favoritebox = Hive.box(favoritesBox);
     controllerdrag.addListener(rebuild);
     scrollController = ScrollController();
-    WidgetsBinding.instance!.addObserver(this);
+
+    // if (Get.routing.current == "/home") {
+    //   controllerdrag.dispose();
+    // }
     tabController = TabController(
       initialIndex: 0,
       length: 2,
@@ -53,7 +63,6 @@ class Homepage2Controller extends GetxController
     tabController.dispose();
     scrollController.dispose();
     controllerdrag.removeListener(rebuild);
-    WidgetsBinding.instance!.removeObserver(this);
 
     super.onClose();
   }

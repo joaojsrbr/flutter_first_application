@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class Sumary extends StatefulWidget {
-  final String descricao;
+  final String? descricao;
 
-  const Sumary({Key? key, required this.descricao}) : super(key: key);
+  const Sumary({Key? key, this.descricao}) : super(key: key);
 
   @override
   State<Sumary> createState() => _SumaryState();
@@ -45,7 +45,7 @@ class _SumaryState extends State<Sumary> {
                       ),
                     ),
                     Text(
-                      widget.descricao,
+                      widget.descricao!,
                       style: const TextStyle(
                           letterSpacing: -0.2,
                           fontWeight: FontWeight.bold,

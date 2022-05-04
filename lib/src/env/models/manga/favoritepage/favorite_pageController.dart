@@ -4,8 +4,9 @@ import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:void_01/main.dart';
+
 import 'package:void_01/src/env/models/item/adapters/item.dart';
+import 'package:void_01/src/env/models/item/hive_config.dart';
 
 class FavoritePageController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -15,6 +16,7 @@ class FavoritePageController extends GetxController
   void onInit() {
     favoritebox = Hive.box(favoritesBox);
     controllerdragfavorite.addListener(update);
+
     tabController = TabController(
       initialIndex: 0,
       length: 2,
@@ -26,6 +28,7 @@ class FavoritePageController extends GetxController
   @override
   void onClose() {
     controllerdragfavorite.removeListener(update);
+
     tabController.dispose();
     super.onClose();
   }

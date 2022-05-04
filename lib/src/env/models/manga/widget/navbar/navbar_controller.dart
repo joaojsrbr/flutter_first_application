@@ -20,7 +20,7 @@ class ScrollToHideWidgetStateController extends GetxController {
   }
 
   void listen() {
-    if (scrollcontroller.position.pixels >= 200) {
+    if (scrollcontroller.position.pixels >= 68) {
       hide();
     } else {
       show();

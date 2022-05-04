@@ -14,18 +14,24 @@ import 'package:void_01/src/env/models/manga/widget/sliverheader/custom_sliver_p
 import 'package:void_01/src/env/models/manga/favoritepage/favorite_pageController.dart';
 
 class Homepage extends GetResponsiveView<Homepage2Controller> {
-  Homepage({Key? key}) : super(key: key);
+  final GetxController homepage2controller;
+  final GetxController favoritepagecontroller;
+  Homepage(
+      {Key? key,
+      required this.homepage2controller,
+      required this.favoritepagecontroller})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.put(Homepage2Controller());
+    // Get.put(Homepage2Controller());
 
-    Get.put(FavoritePageController());
+    // Get.put(FavoritePageController());
 
     final _screen = [
       _listaManga(),
       FavoritePage(),
-      const ConfigPage(),
+      ConfigPage(),
     ];
 
     return GetBuilder<Homepage2Controller>(
@@ -105,6 +111,7 @@ class Homepage extends GetResponsiveView<Homepage2Controller> {
           itens: itens,
           controllerdrag: controller.controllerdrag,
           title: 'HomePage',
+          scrollController: controller.scrollController,
           maxExtend: 60,
           mixExtend: 50,
           style: TextStyle(color: Theme.of(context).colorScheme.primary),

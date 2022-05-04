@@ -8,13 +8,15 @@ import 'package:void_01/src/env/models/manga/configpage/configpage_controller.da
 import 'package:void_01/theme/theme_provider.dart';
 import 'package:void_01/theme/hex_color.dart';
 
-class ConfigPage extends GetView<ConfigPageController> {
-  const ConfigPage({Key? key}) : super(key: key);
+class ConfigPage extends GetResponsiveWidget<ConfigPageController> {
+  final GetxController? configpageController;
+
+  ConfigPage({Key? key, this.configpageController}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final _darkChange = ThemeController.to;
     final _themeChange = Provider.of<ColorThemeProvider>(context);
-    final darkChange = ThemeController.to;
     Get.put(ConfigPageController(themeChange: _themeChange));
 
     return Scaffold(
@@ -50,39 +52,28 @@ class ConfigPage extends GetView<ConfigPageController> {
                   SettingsTile.switchTile(
                     activeSwitchColor: Theme.of(context).colorScheme.primary,
                     key: const Key('DarkMode'),
-                    initialValue: darkChange.isDark.value,
+                    initialValue: _darkChange.isDark.value,
                     onToggle: (value) {
                       // _themeChange.darkTheme = value;
-                      if (darkChange.isDark.value == false) {
-                        darkChange.changeTheme();
+                      if (_darkChange.isDark.value == false) {
+                        _darkChange.changeTheme();
                         controller.controller.forward();
                       } else {
-                        darkChange.changeTheme();
+                        _darkChange.changeTheme();
                         controller.controller.reverse();
                       }
                     },
-                    leading: darkChange.isDark.value
-                        ? Lottie.asset(
-                            'assets/lottie/53164-light-dark-mode-button.json',
-                            width: 70,
-                            onLoaded: (c) {
-                              controller.controller.duration = c.duration;
-                              darkChange.isDark.value
-                                  ? controller.controller.forward()
-                                  : controller.controller.reverse();
-                            },
-                            controller: controller.controller,
-                          )
-                        : Lottie.asset(
-                            'assets/lottie/53164-light-dark-mode-button.json',
-                            width: 70,
-                            controller: controller.controller,
-                            onLoaded: (c) {
-                              controller.controller.duration = c.duration;
-
-                              controller.controller.forward();
-                            },
-                          ),
+                    leading: Lottie.asset(
+                      'assets/lottie/53164-light-dark-mode-button.json',
+                      width: 70,
+                      onLoaded: (c) {
+                        controller.controller.duration = c.duration;
+                        _darkChange.isDark.value
+                            ? controller.controller.forward()
+                            : controller.controller.reverse();
+                      },
+                      controller: controller.controller,
+                    ),
                     title: const Text('DarkMode'),
                   ),
                   SettingsTile(

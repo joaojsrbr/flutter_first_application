@@ -15,7 +15,8 @@ class CustomSliverPerson2Controller extends GetxController {
   }
 }
 
-class CustomSliverPerson<T extends GetxController> extends StatelessWidget {
+class CustomSliverPerson<T extends GetxController> extends StatelessWidget
+    implements PreferredSizeWidget {
   final bool isNotEmpty;
   final List itens;
   final double maxExtend;
@@ -38,7 +39,7 @@ class CustomSliverPerson<T extends GetxController> extends StatelessWidget {
   final List<Widget> tabs;
   final double titleSpacing;
   final List<Widget>? actions;
-
+  final ScrollController? scrollController;
   const CustomSliverPerson({
     required this.tabController,
     required this.isNotEmpty,
@@ -46,6 +47,7 @@ class CustomSliverPerson<T extends GetxController> extends StatelessWidget {
     required this.homepage,
     required this.controllerdrag,
     required this.tabs,
+    this.scrollController,
     this.titleSpacing = 0.0,
     this.toolbarHeight = 70.0,
     this.pinned = true,
@@ -66,25 +68,26 @@ class CustomSliverPerson<T extends GetxController> extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  @override
   Widget build(BuildContext context) {
+    print('asdasd');
     // final _e = Get.put(CustomSliverPerson2Controller());
     final _ = Get.put(CustomSliverPerson2Controller());
     return GetBuilder<T>(
       init: init,
       builder: (controllermain) => NestedScrollView(
+        controller: scrollController,
         physics: physics,
         body: TabBarView(
-          physics: const NeverScrollableScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           controller: tabController,
           children: [
             isNotEmpty
-                ? SingleChildScrollView(
-                    physics: physics,
-                    child: Gridbuild(
-                      homepage: homepage,
-                      controllers: controllerdrag,
-                      itens: itens,
-                    ),
+                ? Gridbuild<T>(
+                    controllerdrag: controllerdrag,
+                    itens: itens,
                   )
                 : Center(
                     child: Text(
@@ -132,7 +135,8 @@ class CustomSliverPerson<T extends GetxController> extends StatelessWidget {
                       backgroundColor: backgroundColor,
                       toolbarHeight: toolbarHeight,
                       pinned: pinned,
-                      floating: floating,
+                      floating:
+                          controllerdrag.value.isSelecting ? false : floating,
                       titleSpacing: titleSpacing,
                       snap: snap,
                       bottom: TabBar(
