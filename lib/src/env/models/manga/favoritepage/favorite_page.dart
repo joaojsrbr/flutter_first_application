@@ -21,30 +21,49 @@ class FavoritePage extends GetResponsiveView<FavoritePageController> {
       body: ValueListenableBuilder(
         valueListenable: controller.favoritebox.listenable(),
         builder: (ctx, Box<Item> box, _) {
-          return CustomSliverPerson2(
-            isNotEmpty: box.values.isNotEmpty,
+          return CustomSliverPerson<FavoritePageController>(
+            tabController: controller.tabController,
+            isNotEmpty: box.isNotEmpty,
+            title: "Favorito",
+            pinned: true,
+            floating: true,
+            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+            controllerdrag: controller.controllerdragfavorite,
             homepage: false,
             itens: box.values.toList(),
-            onaddPressed: () {},
-            onremovePresed: () {
-              final _keys = controller
-                  .controllerdragfavorite.value.selectedIndexes
-                  .map<Item>((index) => box.values.toList()[index])
-                  .toList();
-              controller.onremovePresed(_keys);
-              controller.controllerdragfavorite.clear();
-            },
-            title: "Favorito",
+            backgroundColor: Theme.of(context).colorScheme.background,
+            tabs: [
+              Tab(
+                child: Text(
+                  "asdasd",
+                  style:
+                      TextStyle(color: Theme.of(context).colorScheme.outline),
+                ),
+              ),
+              Tab(
+                child: Text(
+                  "asdasd",
+                  style:
+                      TextStyle(color: Theme.of(context).colorScheme.outline),
+                ),
+              ),
+            ],
+            actions: [
+              IconButton(
+                key: const Key('onHiveremovePresed'),
+                color: Theme.of(context).colorScheme.secondary,
+                icon: const Icon(Icons.delete_outline),
+                onPressed: () {
+                  final _keys = controller
+                      .controllerdragfavorite.value.selectedIndexes
+                      .map<Item>((index) => box.values.toList()[index])
+                      .toList();
+                  controller.onremovePresed(_keys);
+                  controller.controllerdragfavorite.clear();
+                },
+              )
+            ],
           );
-
-          // return CustomSliverPerson2(
-          //   isNotEmpty: box.values.isNotEmpty,
-          //   homepage: false,
-          //   itens: itens,
-          //   onaddPressed: () {},
-          //   onremovePresed: () {},
-          //   title: "Favorito",
-          // );
         },
       ),
     );

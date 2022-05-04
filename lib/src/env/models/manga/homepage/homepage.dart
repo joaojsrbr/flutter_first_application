@@ -97,23 +97,54 @@ class Homepage extends GetResponsiveView<Homepage2Controller> {
       builder: (context, state, _) {
         final itens = state.lista;
 
-        return CustomSliverPerson2(
+        return CustomSliverPerson<Homepage2Controller>(
+          isNotEmpty: state.lista.isNotEmpty,
+          tabController: controller.tabController,
+          key: const Key('SliverHomepage'),
+          homepage: true,
+          itens: itens,
+          controllerdrag: controller.controllerdrag,
+          title: 'HomePage',
           maxExtend: 60,
           mixExtend: 50,
-          homepage: true,
+          style: TextStyle(color: Theme.of(context).colorScheme.primary),
           pinned: true,
-          isNotEmpty: true,
           floating: true,
-          itens: itens,
-          onaddPressed: () {
-            controller.addonPressed(itens);
-            controller.controllerdrag.clear();
-          },
-          onremovePresed: () {
-            controller.onremovePressed(itens, state);
-            controller.controllerdrag.clear();
-          },
-          title: 'HomePage',
+          backgroundColor: Theme.of(context).colorScheme.background,
+          tabs: [
+            Tab(
+              child: Text(
+                "asdasd",
+                style: TextStyle(color: Theme.of(context).colorScheme.outline),
+              ),
+            ),
+            Tab(
+              child: Text(
+                "asdasd",
+                style: TextStyle(color: Theme.of(context).colorScheme.outline),
+              ),
+            ),
+          ],
+          actions: [
+            IconButton(
+              key: const Key('onaddPressed'),
+              color: Theme.of(context).colorScheme.secondary,
+              onPressed: () {
+                controller.addonPressed(itens);
+                controller.controllerdrag.clear();
+              },
+              icon: const Icon(Icons.add),
+            ),
+            // IconButton(
+            //   key: const Key('onremovePresed'),
+            //   color: Theme.of(context).colorScheme.secondary,
+            //   icon: const Icon(Icons.delete_outline),
+            //   onPressed: () {
+            //     controller.onremovePressed(itens, state);
+            //     controller.controllerdrag.clear();
+            //   },
+            // )
+          ],
         );
       },
     );

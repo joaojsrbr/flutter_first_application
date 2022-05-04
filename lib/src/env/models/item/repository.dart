@@ -26,7 +26,7 @@ class Itemrepository extends ChangeNotifier {
   loadItem() {
     _Item.addAll([
       Item(
-          key: xid.toBytes(),
+          key: Xid().toBytes(),
           urlfoto:
               "https://www.asurascans.com/wp-content/uploads/2021/02/cover4.gif",
           title: "1",
@@ -35,7 +35,7 @@ class Itemrepository extends ChangeNotifier {
           descr:
               "Deuses de outro mundo, os Deuses Externos.\n<Desespero que Alcança os Céus>, <Tristeza Presa no Pântano>, <Aquele que não Pôde Nascer>, <Caos Tolo>.\nPessoas normais perdiam suas vidas só de olhar para eles. Esses serem estavam destruindo o mundo… Depois de anos de lutas, os sobreviventes finais chegaram a uma conclusão.\n“Um Interno não pode derrotar um Externo.”\nNaquele momento, Cronos, um ser divino capaz de manipular o tempo, se sacrificou e girou os Mecanismos do Relógio.\n“Não temos como vencer. Por enquanto.”\n“Volte para uma linha do tempo antiga. E recomece.”\nA pessoa escolhida por todos os deuses para voltar ao passado. O último humano a escalar a Torre, mas que conseguiu lutar com os deuses até o fim – Kim Yuwon.\n“Um Interno não pode derrotar um Externo. Sendo assim…”\n“Ainda vencerei no final.”\nSerá que ele poderá recuperar os companheiros que lutaram juntos até o final para liderá-los a uma vitória contra os Deuses Externos?"),
       Item(
-          key: xid.toBytes(),
+          key: Xid().toBytes(),
           urlfoto:
               "https://www.asurascans.com/wp-content/uploads/2021/02/cover4.gif",
           title: "2",
@@ -44,7 +44,7 @@ class Itemrepository extends ChangeNotifier {
           descr:
               "Deuses de outro mundo, os Deuses Externos.\n<Desespero que Alcança os Céus>, <Tristeza Presa no Pântano>, <Aquele que não Pôde Nascer>, <Caos Tolo>.\nPessoas normais perdiam suas vidas só de olhar para eles. Esses serem estavam destruindo o mundo… Depois de anos de lutas, os sobreviventes finais chegaram a uma conclusão.\n“Um Interno não pode derrotar um Externo.”\nNaquele momento, Cronos, um ser divino capaz de manipular o tempo, se sacrificou e girou os Mecanismos do Relógio.\n“Não temos como vencer. Por enquanto.”\n“Volte para uma linha do tempo antiga. E recomece.”\nA pessoa escolhida por todos os deuses para voltar ao passado. O último humano a escalar a Torre, mas que conseguiu lutar com os deuses até o fim – Kim Yuwon.\n“Um Interno não pode derrotar um Externo. Sendo assim…”\n“Ainda vencerei no final.”\nSerá que ele poderá recuperar os companheiros que lutaram juntos até o final para liderá-los a uma vitória contra os Deuses Externos?"),
       Item(
-          key: xid.toBytes(),
+          key: Xid().toBytes(),
           urlfoto:
               "https://www.asurascans.com/wp-content/uploads/2021/02/cover4.gif",
           title: "3",
@@ -53,7 +53,7 @@ class Itemrepository extends ChangeNotifier {
           descr:
               "Deuses de outro mundo, os Deuses Externos.\n<Desespero que Alcança os Céus>, <Tristeza Presa no Pântano>, <Aquele que não Pôde Nascer>, <Caos Tolo>.\nPessoas normais perdiam suas vidas só de olhar para eles. Esses serem estavam destruindo o mundo… Depois de anos de lutas, os sobreviventes finais chegaram a uma conclusão.\n“Um Interno não pode derrotar um Externo.”\nNaquele momento, Cronos, um ser divino capaz de manipular o tempo, se sacrificou e girou os Mecanismos do Relógio.\n“Não temos como vencer. Por enquanto.”\n“Volte para uma linha do tempo antiga. E recomece.”\nA pessoa escolhida por todos os deuses para voltar ao passado. O último humano a escalar a Torre, mas que conseguiu lutar com os deuses até o fim – Kim Yuwon.\n“Um Interno não pode derrotar um Externo. Sendo assim…”\n“Ainda vencerei no final.”\nSerá que ele poderá recuperar os companheiros que lutaram juntos até o final para liderá-los a uma vitória contra os Deuses Externos?"),
       Item(
-          key: xid.toBytes(),
+          key: Xid().toBytes(),
           urlfoto:
               "https://www.asurascans.com/wp-content/uploads/2021/02/cover4.gif",
           title: "4",
@@ -62,7 +62,7 @@ class Itemrepository extends ChangeNotifier {
           descr:
               "Deuses de outro mundo, os Deuses Externos.\n<Desespero que Alcança os Céus>, <Tristeza Presa no Pântano>, <Aquele que não Pôde Nascer>, <Caos Tolo>.\nPessoas normais perdiam suas vidas só de olhar para eles. Esses serem estavam destruindo o mundo… Depois de anos de lutas, os sobreviventes finais chegaram a uma conclusão.\n“Um Interno não pode derrotar um Externo.”\nNaquele momento, Cronos, um ser divino capaz de manipular o tempo, se sacrificou e girou os Mecanismos do Relógio.\n“Não temos como vencer. Por enquanto.”\n“Volte para uma linha do tempo antiga. E recomece.”\nA pessoa escolhida por todos os deuses para voltar ao passado. O último humano a escalar a Torre, mas que conseguiu lutar com os deuses até o fim – Kim Yuwon.\n“Um Interno não pode derrotar um Externo. Sendo assim…”\n“Ainda vencerei no final.”\nSerá que ele poderá recuperar os companheiros que lutaram juntos até o final para liderá-los a uma vitória contra os Deuses Externos?"),
       Item(
-          key: xid.toBytes(),
+          key: Xid().toBytes(),
           urlfoto:
               "https://www.asurascans.com/wp-content/uploads/2021/02/cover4.gif",
           title: "5",
@@ -71,7 +71,7 @@ class Itemrepository extends ChangeNotifier {
           descr:
               "Deuses de outro mundo, os Deuses Externos.\n<Desespero que Alcança os Céus>, <Tristeza Presa no Pântano>, <Aquele que não Pôde Nascer>, <Caos Tolo>.\nPessoas normais perdiam suas vidas só de olhar para eles. Esses serem estavam destruindo o mundo… Depois de anos de lutas, os sobreviventes finais chegaram a uma conclusão.\n“Um Interno não pode derrotar um Externo.”\nNaquele momento, Cronos, um ser divino capaz de manipular o tempo, se sacrificou e girou os Mecanismos do Relógio.\n“Não temos como vencer. Por enquanto.”\n“Volte para uma linha do tempo antiga. E recomece.”\nA pessoa escolhida por todos os deuses para voltar ao passado. O último humano a escalar a Torre, mas que conseguiu lutar com os deuses até o fim – Kim Yuwon.\n“Um Interno não pode derrotar um Externo. Sendo assim…”\n“Ainda vencerei no final.”\nSerá que ele poderá recuperar os companheiros que lutaram juntos até o final para liderá-los a uma vitória contra os Deuses Externos?"),
       Item(
-          key: xid.toBytes(),
+          key: Xid().toBytes(),
           urlfoto:
               "https://www.asurascans.com/wp-content/uploads/2021/02/cover4.gif",
           title: "6",
@@ -80,7 +80,7 @@ class Itemrepository extends ChangeNotifier {
           descr:
               "Deuses de outro mundo, os Deuses Externos.\n<Desespero que Alcança os Céus>, <Tristeza Presa no Pântano>, <Aquele que não Pôde Nascer>, <Caos Tolo>.\nPessoas normais perdiam suas vidas só de olhar para eles. Esses serem estavam destruindo o mundo… Depois de anos de lutas, os sobreviventes finais chegaram a uma conclusão.\n“Um Interno não pode derrotar um Externo.”\nNaquele momento, Cronos, um ser divino capaz de manipular o tempo, se sacrificou e girou os Mecanismos do Relógio.\n“Não temos como vencer. Por enquanto.”\n“Volte para uma linha do tempo antiga. E recomece.”\nA pessoa escolhida por todos os deuses para voltar ao passado. O último humano a escalar a Torre, mas que conseguiu lutar com os deuses até o fim – Kim Yuwon.\n“Um Interno não pode derrotar um Externo. Sendo assim…”\n“Ainda vencerei no final.”\nSerá que ele poderá recuperar os companheiros que lutaram juntos até o final para liderá-los a uma vitória contra os Deuses Externos?"),
       Item(
-          key: xid.toBytes(),
+          key: Xid().toBytes(),
           urlfoto:
               "https://www.asurascans.com/wp-content/uploads/2021/02/cover4.gif",
           title: "7",
@@ -89,7 +89,7 @@ class Itemrepository extends ChangeNotifier {
           descr:
               "Deuses de outro mundo, os Deuses Externos.\n<Desespero que Alcança os Céus>, <Tristeza Presa no Pântano>, <Aquele que não Pôde Nascer>, <Caos Tolo>.\nPessoas normais perdiam suas vidas só de olhar para eles. Esses serem estavam destruindo o mundo… Depois de anos de lutas, os sobreviventes finais chegaram a uma conclusão.\n“Um Interno não pode derrotar um Externo.”\nNaquele momento, Cronos, um ser divino capaz de manipular o tempo, se sacrificou e girou os Mecanismos do Relógio.\n“Não temos como vencer. Por enquanto.”\n“Volte para uma linha do tempo antiga. E recomece.”\nA pessoa escolhida por todos os deuses para voltar ao passado. O último humano a escalar a Torre, mas que conseguiu lutar com os deuses até o fim – Kim Yuwon.\n“Um Interno não pode derrotar um Externo. Sendo assim…”\n“Ainda vencerei no final.”\nSerá que ele poderá recuperar os companheiros que lutaram juntos até o final para liderá-los a uma vitória contra os Deuses Externos?"),
       Item(
-          key: xid.toBytes(),
+          key: Xid().toBytes(),
           urlfoto:
               "https://www.asurascans.com/wp-content/uploads/2021/02/cover4.gif",
           title: "8",

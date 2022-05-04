@@ -1,315 +1,182 @@
 import 'dart:math';
 
+import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:void_01/src/env/models/manga/favoritepage/favorite_pageController.dart';
-import 'package:void_01/src/env/models/manga/homepage/homepage_controller.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 
 import '../grid_build/gridbuild_widget.dart';
 
-class CustomSliverPerson2Controller extends GetxController
-    with GetSingleTickerProviderStateMixin {
-  late TabController _tabController;
-  late ScrollController scrollController;
-
-  @override
-  void onInit() {
-    _tabController = TabController(
-      initialIndex: 0,
-      length: 2,
-      vsync: this,
-    );
-    scrollController = ScrollController();
-    super.onInit();
-  }
-
-  @override
-  void onClose() {
-    _tabController.dispose();
-    scrollController.dispose();
-    super.onClose();
+class CustomSliverPerson2Controller extends GetxController {
+  String randomName() {
+    final rand = Random();
+    return ['¯\\_(ツ)_/¯', '乁( ⁰͡ Ĺ̯ ⁰͡ ) ㄏ', ':\')'].elementAt(rand.nextInt(3));
   }
 }
 
-class CustomSliverPerson2 extends GetView<CustomSliverPerson2Controller> {
-  final dynamic itens;
+class CustomSliverPerson<T extends GetxController> extends StatelessWidget {
+  final bool isNotEmpty;
+  final List itens;
   final double maxExtend;
   final double mixExtend;
-  final VoidCallback? onaddPressed;
-  final VoidCallback? onremovePresed;
-  final bool floating;
-  final bool pinned;
-  final String title;
+  // final VoidCallback? onaddPressed;
+  // final VoidCallback? onremovePresed;
   final bool homepage;
+  final TabController tabController;
   final ScrollPhysics physics;
-  final bool isNotEmpty;
-  final VoidCallback? onPressed;
-  const CustomSliverPerson2({
-    Key? key,
-    required this.homepage,
-    this.onPressed,
-    required this.itens,
-    this.title = '',
+  final DragSelectGridViewController controllerdrag;
+  final T? init;
+  final String title;
+  final TextStyle? style;
+  // final TextStyle styletab;
+  final Color? backgroundColor;
+  final double toolbarHeight;
+  final bool pinned;
+  final bool floating;
+  final bool snap;
+  final List<Widget> tabs;
+  final double titleSpacing;
+  final List<Widget>? actions;
+
+  const CustomSliverPerson({
+    required this.tabController,
     required this.isNotEmpty,
-    this.physics = const BouncingScrollPhysics(),
+    required this.itens,
+    required this.homepage,
+    required this.controllerdrag,
+    required this.tabs,
+    this.titleSpacing = 0.0,
+    this.toolbarHeight = 70.0,
+    this.pinned = true,
     this.floating = false,
-    this.pinned = false,
+    this.snap = false,
+    this.backgroundColor,
+    this.actions,
+    this.init,
+    this.title = '',
+    // this.styletab = const TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+    this.style,
     this.maxExtend = 110.0,
     this.mixExtend = 90.0,
-    this.onaddPressed,
-    this.onremovePresed,
+    this.physics = const BouncingScrollPhysics(),
+    // this.onaddPressed,
+    // this.onremovePresed,
+    Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String randomName() {
-      final rand = Random();
-      return ['¯\\_(ツ)_/¯', '乁( ⁰͡ Ĺ̯ ⁰͡ ) ㄏ', ':\')']
-          .elementAt(rand.nextInt(3));
-    }
-
-    final Homepage2Controller _c = Get.find();
-    final FavoritePageController _d = Get.find();
-    final _e = Get.put(CustomSliverPerson2Controller());
-
-    return homepage
-        ? GetBuilder<Homepage2Controller>(
-            builder: (controller) => NestedScrollView(
-              physics: physics,
-              body: TabBarView(
-                physics: const NeverScrollableScrollPhysics(),
-                controller: _e._tabController,
-                children: [
-                  SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+    // final _e = Get.put(CustomSliverPerson2Controller());
+    final _ = Get.put(CustomSliverPerson2Controller());
+    return GetBuilder<T>(
+      init: init,
+      builder: (controllermain) => NestedScrollView(
+        physics: physics,
+        body: TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: tabController,
+          children: [
+            isNotEmpty
+                ? SingleChildScrollView(
+                    physics: physics,
                     child: Gridbuild(
                       homepage: homepage,
-                      controllers: _c.controllerdrag,
+                      controllers: controllerdrag,
                       itens: itens,
                     ),
-                  ),
-                  Center(
+                  )
+                : Center(
                     child: Text(
-                      randomName(),
+                      _.randomName(),
                       style: const TextStyle(
                           fontSize: 50, fontWeight: FontWeight.bold),
                     ),
                   ),
-                ],
+            Center(
+              child: Text(
+                _.randomName(),
+                style:
+                    const TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
               ),
-              floatHeaderSlivers: true,
-              key: const Key('isEmpty'),
-              controller: _c.scrollController,
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxIsScrolled) => [
-                controller.controllerdrag.value.isSelecting
-                    ? SliverAppBar(
-                        titleSpacing: 0,
-                        leading: const CloseButton(),
-                        actions: [
-                          IconButton(
-                            color: Theme.of(context).colorScheme.secondary,
-                            onPressed: onaddPressed,
-                            icon: const Icon(Icons.add),
-                          ),
-                          IconButton(
-                            color: Theme.of(context).colorScheme.secondary,
-                            icon: const Icon(Icons.delete_outline),
-                            onPressed: onremovePresed,
-                          )
-                        ],
-                        title: Text(
-                          '${controller.controllerdrag.value.amount}',
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary),
-                        ),
-                        elevation: 0,
-                        toolbarHeight: 70,
-                        floating: false,
-                        backgroundColor:
-                            Theme.of(context).colorScheme.background,
-                        snap: false,
-                        pinned: true,
-                        bottom: TabBar(
-                          controller: _e._tabController,
-                          tabs: [
-                            Tab(
-                              child: Text(
-                                "asdasd",
-                                style: TextStyle(
-                                    color:
-                                        Theme.of(context).colorScheme.outline),
-                              ),
-                            ),
-                            Tab(
-                              child: Text(
-                                "asdasd",
-                                style: TextStyle(
-                                    color:
-                                        Theme.of(context).colorScheme.outline),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : SliverAppBar(
-                        leading: Container(),
-                        leadingWidth: 0,
-                        backgroundColor:
-                            Theme.of(context).colorScheme.background,
-                        title: Text(
-                          title,
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary),
-                        ),
-                        elevation: 0,
-                        toolbarHeight: 70,
-                        floating: true,
-                        snap: false,
-                        pinned: true,
-                        bottom: TabBar(
-                          controller: _e._tabController,
-                          tabs: [
-                            Tab(
-                              child: Text(
-                                "asdasd",
-                                style: TextStyle(
-                                    color:
-                                        Theme.of(context).colorScheme.outline),
-                              ),
-                            ),
-                            Tab(
-                              child: Text(
-                                "asdasd",
-                                style: TextStyle(
-                                    color:
-                                        Theme.of(context).colorScheme.outline),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-
-                // ),
-              ],
             ),
-          )
-        : GetBuilder<FavoritePageController>(
-            builder: (controller) => NestedScrollView(
-              physics: physics,
-              body: TabBarView(
-                physics: const NeverScrollableScrollPhysics(),
-                controller: _e._tabController,
-                children: [
-                  SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: Gridbuild(
-                      homepage: homepage,
-                      controllers: _d.controllerdragfavorite,
-                      itens: itens,
+          ],
+        ),
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAnimatedSwitcher(
+              duration: kThemeAnimationDuration,
+              child: homepage
+                  ? SliverAppBar(
+                      actions: controllerdrag.value.isSelecting
+                          ? actions
+                          : <Widget>[],
+                      leading: controllerdrag.value.isSelecting
+                          ? const CloseButton()
+                          : const SizedBox(
+                              width: 0,
+                              height: 0,
+                            ),
+                      leadingWidth: controllerdrag.value.isSelecting
+                          ? 56.0
+                          : NavigationToolbar.kMiddleSpacing,
+                      title: Text(
+                        controllerdrag.value.isSelecting
+                            ? '${controllerdrag.value.amount}'
+                            : title,
+                        style: controllerdrag.value.isSelecting
+                            ? TextStyle(
+                                color: Theme.of(context).colorScheme.primary)
+                            : style,
+                      ),
+                      backgroundColor: backgroundColor,
+                      toolbarHeight: toolbarHeight,
+                      pinned: pinned,
+                      floating: floating,
+                      titleSpacing: titleSpacing,
+                      snap: snap,
+                      bottom: TabBar(
+                        controller: tabController,
+                        tabs: tabs,
+                      ),
+                    )
+                  : SliverAppBar(
+                      actions: controllerdrag.value.isSelecting
+                          ? actions
+                          : <Widget>[],
+                      leading: controllerdrag.value.isSelecting
+                          ? const CloseButton()
+                          : const SizedBox(
+                              width: 0,
+                              height: 0,
+                            ),
+                      leadingWidth: controllerdrag.value.isSelecting
+                          ? 56.0
+                          : NavigationToolbar.kMiddleSpacing,
+                      title: Text(
+                        controllerdrag.value.isSelecting
+                            ? '${controllerdrag.value.amount}'
+                            : title,
+                        style: controllerdrag.value.isSelecting
+                            ? TextStyle(
+                                color: Theme.of(context).colorScheme.primary)
+                            : style,
+                      ),
+                      backgroundColor: backgroundColor,
+                      toolbarHeight: toolbarHeight,
+                      titleSpacing: titleSpacing,
+                      pinned: pinned,
+                      floating: floating,
+                      snap: snap,
+                      bottom: TabBar(
+                        controller: tabController,
+                        tabs: tabs,
+                      ),
                     ),
-                  ),
-                  Center(
-                    child: Text(
-                      randomName(),
-                      style: const TextStyle(
-                          fontSize: 50, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
-              ),
-              floatHeaderSlivers: true,
-              key: const Key('isEmpty'),
-              controller: _c.scrollController,
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxIsScrolled) => [
-                controller.controllerdragfavorite.value.isSelecting
-                    ? SliverAppBar(
-                        titleSpacing: 0,
-                        leading: const CloseButton(),
-                        actions: [
-                          IconButton(
-                            color: Theme.of(context).colorScheme.secondary,
-                            icon: const Icon(Icons.delete_outline),
-                            onPressed: onremovePresed,
-                          )
-                        ],
-                        title: Text(
-                          '${controller.controllerdragfavorite.value.amount}',
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary),
-                        ),
-                        elevation: 0,
-                        toolbarHeight: 70,
-                        floating: false,
-                        snap: false,
-                        pinned: true,
-                        backgroundColor:
-                            Theme.of(context).colorScheme.background,
-                        bottom: TabBar(
-                          controller: _e._tabController,
-                          tabs: [
-                            Tab(
-                              child: Text(
-                                "asdasd",
-                                style: TextStyle(
-                                    color:
-                                        Theme.of(context).colorScheme.outline),
-                              ),
-                            ),
-                            Tab(
-                              child: Text(
-                                "asdasd",
-                                style: TextStyle(
-                                    color:
-                                        Theme.of(context).colorScheme.outline),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : SliverAppBar(
-                        leading: Container(),
-                        leadingWidth: 0,
-                        backgroundColor:
-                            Theme.of(context).colorScheme.background,
-                        title: Text(
-                          title,
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary),
-                        ),
-                        elevation: 0,
-                        toolbarHeight: 70,
-                        floating: true,
-                        snap: false,
-                        pinned: true,
-                        bottom: TabBar(
-                          controller: _e._tabController,
-                          tabs: [
-                            Tab(
-                              child: Text(
-                                "asdasd",
-                                style: TextStyle(
-                                    color:
-                                        Theme.of(context).colorScheme.outline),
-                              ),
-                            ),
-                            Tab(
-                              child: Text(
-                                "asdasd",
-                                style: TextStyle(
-                                    color:
-                                        Theme.of(context).colorScheme.outline),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-
-                // ),
-              ],
-            ),
-          );
+            )
+          ];
+        },
+      ),
+    );
   }
 }

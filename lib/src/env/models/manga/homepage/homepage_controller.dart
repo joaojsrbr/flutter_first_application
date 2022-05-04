@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:drag_select_grid_view/drag_select_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,26 +9,33 @@ import 'package:void_01/main.dart';
 import 'package:void_01/src/env/models/item/adapters/item.dart';
 import 'package:void_01/src/env/models/item/repository.dart';
 
-class Homepage2Controller extends GetxController with WidgetsBindingObserver {
+class Homepage2Controller extends GetxController
+    with WidgetsBindingObserver, GetSingleTickerProviderStateMixin {
   RxList selecionadas = [].obs;
-
-  final controllerdrag = DragSelectGridViewController();
+  late TabController tabController;
 
   late Box<Item> favoritebox;
 
   // sreen index
   RxInt indexscreen = 0.obs;
-  // Bloc
 
   // Scroll Controller
   late ScrollController scrollController;
+
   // Select Controller
+  final controllerdrag = DragSelectGridViewController();
 
   @override
   void onInit() {
     favoritebox = Hive.box(favoritesBox);
     controllerdrag.addListener(rebuild);
     scrollController = ScrollController();
+    WidgetsBinding.instance!.addObserver(this);
+    tabController = TabController(
+      initialIndex: 0,
+      length: 2,
+      vsync: this,
+    );
 
     super.onInit();
   }
@@ -41,6 +50,7 @@ class Homepage2Controller extends GetxController with WidgetsBindingObserver {
 
   @override
   void onClose() {
+    tabController.dispose();
     scrollController.dispose();
     controllerdrag.removeListener(rebuild);
     WidgetsBinding.instance!.removeObserver(this);
@@ -70,14 +80,19 @@ class Homepage2Controller extends GetxController with WidgetsBindingObserver {
             urlfoto: element.urlfoto),
       );
     }
-    controllerdrag.clear();
   }
 
-  void onremovePressed(itens, Itemrepository state) {
+  void onremovePressed(List<Item> itens, Itemrepository state) {
     final key = controllerdrag.value.selectedIndexes
-        .map<dynamic>((index) => itens![index].key);
+        .map<dynamic>((index) => itens[index].key)
+        .toList();
     for (var element in key) {
       state.removeItem(element);
     }
+  }
+
+  String randomName() {
+    final rand = Random();
+    return ['¯\\_(ツ)_/¯', '乁( ⁰͡ Ĺ̯ ⁰͡ ) ㄏ', ':\')'].elementAt(rand.nextInt(3));
   }
 }
