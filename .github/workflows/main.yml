@@ -33,15 +33,21 @@ jobs:
           tag: v1.0.${{ github.run_number }}
           token: ${{ secrets.TOKEN }}      
 
+on: 
+  push:
+    tags:
+    - '*'
 
+name: "Telegram Post"
 
-  # notifyTelegram:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - name: Telegram<apk>
-  #     uses: appleboy/telegram-action@master
-  #     with:
-  #       to: ${{ secrets.TELEGRAM_TO }}
-  #       token: ${{ secrets.TELEGRAM_TOKEN }}
-  #       document: build/app/outputs/flutter-apk/*.apk
+jobs:
+  notifyTelegram:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Telegram<apk>
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        document: build/app/outputs/flutter-apk/*.apk
           
