@@ -16,41 +16,23 @@
 #         token: ${{ secrets.TELEGRAM_TOKEN }}
 #         document: build/app/outputs/flutter-apk/*.apk
 
-name: "Check"
-on: [push, pull_request]
+# name: Releases
 
-jobs:
-  check:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v1
+# on: 
+#   push:
+#     tags:
+#     - '*'
 
-    - name: "npm ci"
-      if: endsWith(github.ref, '-release')
-      run: npm ci
+# jobs:
 
-    - name: "npm install"
-      if: endsWith(github.ref, '-release') == false
-      run: npm install
-
-    - name: "npm run build"
-      run: npm run build
-
-    - name: "npm run test"
-      run: npm run test
-
-    - name: "check for uncommitted changes"
-      if: endsWith(github.ref, '-release')
-      run: |
-        git diff --exit-code --stat -- . ':!node_modules' \
-        || (echo "##[error] found changed files after build. please 'npm run build && npm run format'" \
-                 "and check in all changes" \
-            && exit 1)
-    - name: notification
-      if: cancelled() == false
-      uses: ./
-      with:
-        botToken: ${{ secrets.TELEGRAM_TOKEN }}
-        chatId: ${{ secrets.TELEGRAM_TO }}
-        jobStatus: ${{ job.status }}
-        skipSuccess: false
+#   build:
+#     runs-on: ubuntu-latest
+#     permissions:
+#       contents: write
+#     steps:
+#     - uses: actions/checkout@v2
+#     - uses: ncipollo/release-action@v1
+#       with:
+#         artifacts: "release.tar.gz,foo/*.txt"
+#         bodyFile: "body.md"
+#         token: ${{ secrets.GITHUB_TOKEN }}
