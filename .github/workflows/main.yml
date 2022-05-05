@@ -32,8 +32,8 @@ jobs:
           artifacts: "build/app/outputs/flutter-apk/*.apk"
           tag: v1.0.${{ github.run_number }}
           token: ${{ secrets.TOKEN }}      
-      - name: Telegram<apk>
         runs-on: ubuntu-latest
+      - name: Telegram<apk>
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
