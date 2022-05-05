@@ -44,9 +44,11 @@ class CustomSliverPerson<T extends GetxController> extends StatelessWidget
   final double titleSpacing;
   final List<Widget>? actions;
   final ScrollController scrollController;
+  final VoidCallback? onPressed;
   const CustomSliverPerson({
     required this.tabController,
     required this.isNotEmpty,
+    this.onPressed,
     required this.itens,
     required this.homepage,
     required this.controllerdrag,
@@ -121,7 +123,9 @@ class CustomSliverPerson<T extends GetxController> extends StatelessWidget
                           ? actions
                           : <Widget>[],
                       leading: controllerdrag.value.isSelecting
-                          ? const CloseButton()
+                          ? CloseButton(
+                              key: ValueKey(controllerdrag.value.isSelecting),
+                            )
                           : const SizedBox(
                               width: 0,
                               height: 0,
@@ -157,7 +161,18 @@ class CustomSliverPerson<T extends GetxController> extends StatelessWidget
                           ? actions
                           : <Widget>[],
                       leading: controllerdrag.value.isSelecting
-                          ? const CloseButton()
+                          ? IconButton(
+                              icon: const Icon(Icons.close),
+                              tooltip: MaterialLocalizations.of(context)
+                                  .closeButtonTooltip,
+                              onPressed: () {
+                                if (onPressed != null) {
+                                  onPressed!();
+                                } else {
+                                  Navigator.maybePop(context);
+                                }
+                              },
+                            )
                           : const SizedBox(
                               width: 0,
                               height: 0,

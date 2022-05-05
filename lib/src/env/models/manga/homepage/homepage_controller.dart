@@ -36,7 +36,7 @@ class Homepage2Controller extends GetxController
   void onInit() {
     favoritebox = Hive.box(favoritesBox);
     controllerdrag.addListener(rebuild);
-    scrollController = ScrollController();
+    scrollController = ScrollController()..addListener(() => update());
 
     // if (Get.routing.current == "/home") {
     //   controllerdrag.dispose();
