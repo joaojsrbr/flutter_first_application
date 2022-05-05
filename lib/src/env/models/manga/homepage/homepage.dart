@@ -1,8 +1,10 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import 'package:get/get.dart';
+
 import 'package:provider/provider.dart';
 
 import 'package:void_01/src/env/models/item/repository.dart';
@@ -103,55 +105,64 @@ class Homepage extends GetResponsiveView<Homepage2Controller> {
       builder: (context, state, _) {
         final itens = state.lista;
 
-        return CustomSliverPerson<Homepage2Controller>(
-          isNotEmpty: state.lista.isNotEmpty,
-          tabController: controller.tabController,
-          key: const Key('SliverHomepage'),
-          homepage: true,
-          itens: itens,
-          controllerdrag: controller.controllerdrag,
-          title: 'HomePage',
-          scrollController: controller.scrollController,
-          maxExtend: 60,
-          mixExtend: 50,
-          style: TextStyle(color: Theme.of(context).colorScheme.primary),
-          pinned: true,
-          floating: true,
-          backgroundColor: Theme.of(context).colorScheme.background,
-          tabs: [
-            Tab(
-              child: Text(
-                "asdasd",
-                style: TextStyle(color: Theme.of(context).colorScheme.outline),
+        return AnimationConfiguration.synchronized(
+          child: ScaleAnimation(
+            duration: const Duration(milliseconds: 100),
+            child: FadeInAnimation(
+              child: CustomSliverPerson<Homepage2Controller>(
+                isNotEmpty: state.lista.isNotEmpty,
+                tabController: controller.tabController,
+                key: const Key('SliverHomepage'),
+                homepage: true,
+                itens: itens,
+                controllerdrag: controller.controllerdrag,
+                title: 'HomePage',
+                scrollController: controller.scrollController,
+                maxExtend: 60,
+                mixExtend: 50,
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                pinned: true,
+                floating: true,
+                backgroundColor: Theme.of(context).colorScheme.background,
+                tabs: [
+                  Tab(
+                    child: Text(
+                      "asdasd",
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.outline),
+                    ),
+                  ),
+                  Tab(
+                    child: Text(
+                      "asdasd",
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.outline),
+                    ),
+                  ),
+                ],
+                actions: [
+                  IconButton(
+                    key: const Key('onaddPressed'),
+                    color: Theme.of(context).colorScheme.secondary,
+                    onPressed: () {
+                      controller.addonPressed(itens);
+                      controller.controllerdrag.clear();
+                    },
+                    icon: const Icon(Icons.add),
+                  ),
+                  // IconButton(
+                  //   key: const Key('onremovePresed'),
+                  //   color: Theme.of(context).colorScheme.secondary,
+                  //   icon: const Icon(Icons.delete_outline),
+                  //   onPressed: () {
+                  //     controller.onremovePressed(itens, state);
+                  //     controller.controllerdrag.clear();
+                  //   },
+                  // )
+                ],
               ),
             ),
-            Tab(
-              child: Text(
-                "asdasd",
-                style: TextStyle(color: Theme.of(context).colorScheme.outline),
-              ),
-            ),
-          ],
-          actions: [
-            IconButton(
-              key: const Key('onaddPressed'),
-              color: Theme.of(context).colorScheme.secondary,
-              onPressed: () {
-                controller.addonPressed(itens);
-                controller.controllerdrag.clear();
-              },
-              icon: const Icon(Icons.add),
-            ),
-            // IconButton(
-            //   key: const Key('onremovePresed'),
-            //   color: Theme.of(context).colorScheme.secondary,
-            //   icon: const Icon(Icons.delete_outline),
-            //   onPressed: () {
-            //     controller.onremovePressed(itens, state);
-            //     controller.controllerdrag.clear();
-            //   },
-            // )
-          ],
+          ),
         );
       },
     );

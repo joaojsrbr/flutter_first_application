@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:drag_select_grid_view/drag_select_grid_view.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -11,7 +12,10 @@ import '../grid_build/gridbuild_widget.dart';
 class CustomSliverPerson2Controller extends GetxController {
   String randomName() {
     final rand = Random();
-    return ['¯\\_(ツ)_/¯', '乁( ⁰͡ Ĺ̯ ⁰͡ ) ㄏ', ':\')'].elementAt(rand.nextInt(3));
+    return [
+      '¯\\_(ツ)_/¯',
+      //  '乁( ⁰͡ Ĺ̯ ⁰͡ ) ㄏ', ':\')'
+    ].elementAt(rand.nextInt(1));
   }
 }
 
@@ -39,7 +43,7 @@ class CustomSliverPerson<T extends GetxController> extends StatelessWidget
   final List<Widget> tabs;
   final double titleSpacing;
   final List<Widget>? actions;
-  final ScrollController? scrollController;
+  final ScrollController scrollController;
   const CustomSliverPerson({
     required this.tabController,
     required this.isNotEmpty,
@@ -47,7 +51,7 @@ class CustomSliverPerson<T extends GetxController> extends StatelessWidget
     required this.homepage,
     required this.controllerdrag,
     required this.tabs,
-    this.scrollController,
+    required this.scrollController,
     this.titleSpacing = 0.0,
     this.toolbarHeight = 70.0,
     this.pinned = true,
@@ -72,7 +76,9 @@ class CustomSliverPerson<T extends GetxController> extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    print('asdasd');
+    if (kDebugMode) {
+      print('asdasd');
+    }
     // final _e = Get.put(CustomSliverPerson2Controller());
     final _ = Get.put(CustomSliverPerson2Controller());
     return GetBuilder<T>(
@@ -140,6 +146,8 @@ class CustomSliverPerson<T extends GetxController> extends StatelessWidget
                       titleSpacing: titleSpacing,
                       snap: snap,
                       bottom: TabBar(
+                        indicatorSize: TabBarIndicatorSize.label,
+                        indicatorColor: Theme.of(context).colorScheme.primary,
                         controller: tabController,
                         tabs: tabs,
                       ),
@@ -173,6 +181,8 @@ class CustomSliverPerson<T extends GetxController> extends StatelessWidget
                       floating: floating,
                       snap: snap,
                       bottom: TabBar(
+                        indicatorSize: TabBarIndicatorSize.label,
+                        indicatorColor: Theme.of(context).colorScheme.primary,
                         controller: tabController,
                         tabs: tabs,
                       ),

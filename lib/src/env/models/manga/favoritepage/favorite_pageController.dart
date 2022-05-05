@@ -12,10 +12,12 @@ class FavoritePageController extends GetxController
     with GetSingleTickerProviderStateMixin {
   final controllerdragfavorite = DragSelectGridViewController();
   late TabController tabController;
+  late ScrollController scrollController;
   @override
   void onInit() {
     favoritebox = Hive.box(favoritesBox);
     controllerdragfavorite.addListener(update);
+    scrollController = ScrollController();
 
     tabController = TabController(
       initialIndex: 0,
@@ -28,7 +30,7 @@ class FavoritePageController extends GetxController
   @override
   void onClose() {
     controllerdragfavorite.removeListener(update);
-
+    scrollController.dispose();
     tabController.dispose();
     super.onClose();
   }

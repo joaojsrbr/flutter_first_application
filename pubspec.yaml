@@ -37,6 +37,7 @@ dependencies:
   hive: 
   hive_flutter: 
   sliver_tools: ^0.2.6
+  page_transition: ^2.0.5
  
 
 flutter_native_splash:

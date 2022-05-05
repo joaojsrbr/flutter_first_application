@@ -1,15 +1,15 @@
-import 'package:get/get.dart';
+// import 'package:get/get.dart';
 
-class LifeCycleController extends SuperController {
-  @override
-  void onDetached() {}
+// class LifeCycleController extends SuperController {
+//   @override
+//   void onDetached() {}
 
-  @override
-  void onInactive() {}
+//   @override
+//   void onInactive() {}
 
-  @override
-  void onPaused() {}
+//   @override
+//   void onPaused() {}
 
-  @override
-  void onResumed() {}
-}
+//   @override
+//   void onResumed() {}
+// }

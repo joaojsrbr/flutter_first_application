@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
 import 'package:provider/provider.dart';
 
 import 'package:void_01/src/env/models/bindings/favoritepage_bindings.dart';
@@ -11,7 +12,6 @@ import 'package:void_01/src/env/models/item/hive_config.dart';
 import 'package:void_01/src/env/models/item/adapters/item.dart';
 import 'package:void_01/src/env/models/item/repository.dart';
 import 'package:void_01/src/env/models/manga/configpage/configpage.dart';
-import 'package:void_01/src/env/models/manga/configpage/configpage_controller.dart';
 import 'package:void_01/src/env/models/manga/favoritepage/favorite_page.dart';
 import 'package:void_01/src/env/models/manga/favoritepage/favorite_pageController.dart';
 import 'package:void_01/src/env/models/manga/homepage/homepage.dart';
@@ -55,10 +55,6 @@ class __MyapphomeState extends State<_Myapphome> {
   void _getCurrentAppTheme() async {
     _themeChangeProvider.colorTheme =
         await _themeChangeProvider.colorThemePreference.getColor();
-    _themeChangeProvider.config1 =
-        await _themeChangeProvider.config1TrueorFalsePreference.getbool1();
-    _themeChangeProvider.config2 =
-        await _themeChangeProvider.config1TrueorFalsePreference.getbool2();
   }
 
   @override
@@ -67,13 +63,10 @@ class __MyapphomeState extends State<_Myapphome> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => _themeChangeProvider,
-        ),
-        ChangeNotifierProvider(
           create: (context) => Itemrepository(),
         ),
         ChangeNotifierProvider(
-          create: (context) => ColorThemeProvider(),
+          create: (context) => _themeChangeProvider,
         ),
       ],
       child: Consumer<ColorThemeProvider>(
@@ -112,15 +105,14 @@ class __MyapphomeState extends State<_Myapphome> {
             GetPage(
               name: '/fav',
               binding: FavoritePageBinding(),
+              transition: Transition.fadeIn,
               page: () => FavoritePage(
                 favoritepageController: Get.find<FavoritePageController>(),
               ),
             ),
             GetPage(
               name: '/config',
-              page: () => ConfigPage(
-                configpageController: Get.find<ConfigPageController>(),
-              ),
+              page: () => ConfigPage(),
             ),
             GetPage(
               name: '/sumary',

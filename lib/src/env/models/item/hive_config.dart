@@ -10,8 +10,4 @@ class HiveConfig {
     Directory dir = await getApplicationDocumentsDirectory();
     await Hive.initFlutter(dir.path);
   }
-
-  // static ready() async {
-  //   await Hive.openBox<Item>(favoritesBox);
-  // }
 }

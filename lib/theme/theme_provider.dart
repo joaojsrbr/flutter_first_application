@@ -37,10 +37,18 @@ class ColorThemeProvider with ChangeNotifier {
   Config1TrueorFalsePreference config1TrueorFalsePreference =
       Config1TrueorFalsePreference();
 
+  // ColorThemeProvider() {
+  //   _getCurrentAppTheme;
+  // }
+
+  // void _getCurrentAppTheme() async {
+  //   colorTheme = await colorThemePreference.getColor();
+  // }
+
   bool _config1 = false;
   bool _config2 = false;
 
-  String _colorTheme = '#ff020106';
+  String _colorTheme = '#ffc0921f';
 
   bool get config1 => _config1;
   bool get config2 => _config2;

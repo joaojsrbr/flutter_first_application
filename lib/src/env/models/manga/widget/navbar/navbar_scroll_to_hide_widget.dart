@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:void_01/src/env/models/manga/favoritepage/favorite_pageController.dart';
 import 'package:void_01/src/env/models/manga/homepage/homepage_controller.dart';
 import 'package:void_01/src/env/models/manga/widget/navbar/navbar_controller.dart';
 
@@ -18,10 +19,11 @@ class ScrollToHideWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final Homepage2Controller c = Get.find();
-    // Get.put(Homepage2Controller());
+    final Homepage2Controller _m = Get.find();
+    final FavoritePageController _f = Get.find();
     Get.put(ScrollToHideWidgetStateController(
-        scrollcontroller: c.scrollController));
+        scrollcontrollerfav: _f.scrollController,
+        scrollcontrollerhome: _m.scrollController));
     return Obx(
       () => AnimatedContainer(
         duration: duration,
