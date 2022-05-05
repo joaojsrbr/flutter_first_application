@@ -1,19 +1,20 @@
-on:
-  pull_request:
-    branches:
-      - master
-  push:
-    branches:
-      - master
+# This is a basic workflow to help you get started with Actions
+name: Releases
 
-name: "Build & Release"
+# Controls when the workflow will run
+on: 
+  push:
+    tags:
+    - '*'
+  
+
 jobs:
-  build:
-    name: Build & Release
-    runs-on: macos-latest
+  releases:
+    name: release apk
+    runs-on: ubuntu-latest
     env:
       JAVA_VERSION: "11.0"
-      FLUTTER_VERSION: "2.10.5"
+      FLUTTER_VERSION: "2.5.3"
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
@@ -24,18 +25,9 @@ jobs:
           flutter-version: ${{env.FLUTTER_VERSION}}
       - run: flutter pub get
       - run: flutter analyze
-      - run: flutter build apk --debug --split-per-abi
-      - name: Push to Releases
-        uses: ncipollo/release-action@v1
+      - run: flutter test
+      - run: flutter build apk --release
+      - uses: ncipollo/release-action@v1
         with:
-          artifacts: "build/app/outputs/apk/debug/*"
-          tag: v1.0.${{ github.run_number }}
-          token: ${{ secrets.TOKEN }}
-
-
-
-
-
-
-# push to master, main, develop
-# pull request on main master
+         artifacts: "build/app/outputs/flutter-apk/*.apk"
+         token: ${{ secrets.TOKEN }}
