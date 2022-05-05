@@ -7,6 +7,7 @@ on:
       - master
 
 name: "Build & Release"
+
 jobs:
   build:
     name: Build & Release
@@ -31,4 +32,13 @@ jobs:
           artifacts: "build/app/outputs/flutter-apk/*.apk"
           tag: v1.0.${{ github.run_number }}
           token: ${{ secrets.TOKEN }}
-
+  notifyTelegram:
+    runs-on: ubuntu-latest
+    steps:
+    - name: send custom message
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        document: build/app/outputs/flutter-apk/*.apk
+          
